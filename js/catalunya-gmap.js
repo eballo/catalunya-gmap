@@ -8,5 +8,11 @@
 
 	//create the map
 	var map = catmap.create(element, options);
+
+	map._on('click', function(e){
+		alert('click');
+		console.log(e);
+		console.log(this);
+	});
 	
 }(window, window.Catmap ));

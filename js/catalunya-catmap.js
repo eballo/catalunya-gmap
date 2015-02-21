@@ -5,13 +5,20 @@
  		this.gMap = new google.maps.Map(element, opts);
  	}
  	Catmap.prototype ={
- 		
+
  		zoom: function(level){
  			if(level){
  				this.gMap.setZoom(level);
  			}else{
  				return this.gMap.getZoom();
  			}
+ 		},
+
+ 		_on: function(event, callback){
+ 			var self = this;
+			google.maps.event.addListener(this.gMap, event, function(e){
+				callback.call(self, e);
+			});
  		}
 
  	};
