@@ -1,4 +1,4 @@
-(function(window, google, catmap) {
+(function(window, catmap) {
 
 	//load the configuration of the map
 	var options = catmap.MAP_OPTIONS;
@@ -9,4 +9,4 @@
 	//create the map
 	var map = catmap.create(element, options);
 	
-}(window, google, window.Catmap ));
+}(window, window.Catmap ));
