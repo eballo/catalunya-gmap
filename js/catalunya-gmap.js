@@ -7,6 +7,6 @@
 	var element =  document.getElementById('gMap');
 
 	//create the map
-	var map = new google.maps.Map(element, options);
+	var map = catmap.create(element, options);
 	
-}(window, google, window.Catmap || (window.Catmap = {}) ));
+}(window, google, window.Catmap ));
