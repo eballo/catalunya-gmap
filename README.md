@@ -12,7 +12,7 @@ http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries
 
 # How to use this library
 
-Add the following files to your html page
+1. Add the following files to your html page
 
 ```
 		<div id="mapContainer">
@@ -23,6 +23,28 @@ Add the following files to your html page
 		<script type="text/javascript" src="js/catalunya-catmap.js" ></script>
 		<script type="text/javascript" src="js/catalunya-options-gmap.js" ></script>
 		<script type="text/javascript" src="js/catalunya-gmap.js" ></script>
+```
+2. Edit the content of catalunya-gmap.js to add, remove the markers that you want to print.
+
+example:
+```
+	//load the configuration of the map
+	var options = catmap.MAP_OPTIONS;
+
+	//get the gMap element
+	var element =  document.getElementById('gMap');
+
+	//create the map
+	var map = catmap.create(element, options);
+
+	map.addMarker({
+		lat: 42.307682, 
+		lng: 3.011110,
+		drabagle: false,
+		visible: true,
+		id:1,
+		content: 'Castell de la Montanya'
+	});
 ```
 
 ## Versions
