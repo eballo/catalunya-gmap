@@ -7,21 +7,18 @@
  	}
  	Catmap.prototype ={
 
- 		// Public funtion to set up the zoom
- 		zoom: function(level){
- 			if(level){
- 				this.gMap.setZoom(level);
- 			}else{
- 				return this.gMap.getZoom();
- 			}
- 		},
-
  		// Private function to create an event to the given object
  		_on: function(opts){
  			var self = this;
 			google.maps.event.addListener(opts.obj, opts.event, function(e){
 				opts.callback.call(self, e);
 			});
+ 		},
+
+ 		// Private function thaat create the marker with the given options
+ 		_createMarker: function(opts){
+ 			opts.map = this.gMap;
+ 			return new google.maps.Marker(opts);
  		},
 
  		// Public function to add a marker in the map with the given options
@@ -65,10 +62,12 @@
  			
  		},
 
+		// Public function to findBy given a callback function
  		findBy: function(callback){
  			return this.markers.find(callback);
  		},
 
+ 		// Public function to removeBy given a callback function
  		removeBy: function(callback){
  			this.markers.find(callback, function(markers){
  				markers.forEach(function(marker){
@@ -77,10 +76,13 @@
  			});
  		},
 
- 		// Private function thaat create the marker with the given options
- 		_createMarker: function(opts){
- 			opts.map = this.gMap;
- 			return new google.maps.Marker(opts);
+ 		// Public funtion to set up the zoom
+ 		zoom: function(level){
+ 			if(level){
+ 				this.gMap.setZoom(level);
+ 			}else{
+ 				return this.gMap.getZoom();
+ 			}
  		}
 
  	};

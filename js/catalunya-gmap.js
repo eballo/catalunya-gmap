@@ -31,14 +31,6 @@
 		return marker.id === 2;
 	});
 
-	console.log(found);
-
-	console.log(map.markers);
-
-	map.removeBy(function(marker){
-		return marker.id === 2;
-	});
-
 	console.log(map.markers);
 
 /*
