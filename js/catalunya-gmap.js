@@ -9,7 +9,11 @@
 	//create the map
 	var map = catmap.create(element, options);
 
-	map.addMarker(42.307682, 3.011110);
+	map.addMarker({
+		lat: 42.307682, 
+		lng: 3.011110,
+		drabagle: false,
+	});
 
 /*
 	map._on('click', function(e){

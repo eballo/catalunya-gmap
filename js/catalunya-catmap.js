@@ -21,18 +21,16 @@
 			});
  		},
 
- 		addMarker: function(lat, lng){
- 			this._createMarker(lat,lng);
+ 		addMarker: function(opts){
+ 			opts.position = {
+ 				lat: opts.lat,
+ 				lng: opts.lng
+ 			}
+ 			this._createMarker(opts);
  		},
 
- 		_createMarker: function(lat, lng){
- 			var opts = {
- 				position:{
- 					lat: lat,
- 					lng: lng
- 				},
-				map: this.gMap
- 			};
+ 		_createMarker: function(opts){
+ 			opts.map = this.gMap;
  			return new google.maps.Marker(opts);
  		}
 
