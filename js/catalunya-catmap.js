@@ -65,14 +65,16 @@
  			
  		},
 
- 		findMarkerByLat: function(lat){
- 			var i=0;
- 			for(; i< this.markers.length; i++){
- 				var marker = this.markers[i];
- 				if(marker.position.lat() === lat){
- 					return marker;
- 				}
- 			}
+ 		findBy: function(callback){
+ 			return this.markers.find(callback);
+ 		},
+
+ 		removeBy: function(callback){
+ 			this.markers.find(callback, function(markers){
+ 				markers.forEach(function(marker){
+ 					marker.setMap(null);
+ 				});
+ 			});
  		},
 
  		// Private function thaat create the marker with the given options

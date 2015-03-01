@@ -18,11 +18,29 @@
 		content: 'Castell de la Montanya'
 	});
 
-	var found = map.findMarkerByLat(42.307682);
+	map.addMarker({
+		lat: 42.000682, 
+		lng: 3.071110,
+		drabagle: false,
+		visible: true,
+		id:2,
+		content: 'Castell de la Montanya test 2'
+	});
+
+	var found = map.findBy(function(marker){
+		return marker.id === 2;
+	});
 
 	console.log(found);
 
 	console.log(map.markers);
+
+	map.removeBy(function(marker){
+		return marker.id === 2;
+	});
+
+	console.log(map.markers);
+
 /*
 	map._on('click', function(e){
 		alert('click');
