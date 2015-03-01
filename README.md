@@ -1,7 +1,7 @@
 # Interactive Map of Catalunya using GoogleMaps - Demo
 Interactive vectorial map of Catalunya using GoogleMaps library.
 
-<img src="https://github.com/eballo/catalunya-gmap/blob/master/screenshot/screenshot-v1.png" alt="screen-shot" align="center" />
+<img src="https://github.com/eballo/catalunya-gmap/blob/develop/screenshot/screenshot-v1.png" alt="screen-shot" align="center" />
 
 ## Demo
 
