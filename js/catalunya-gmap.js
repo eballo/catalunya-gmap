@@ -13,6 +13,14 @@
 		lat: 42.307682, 
 		lng: 3.011110,
 		drabagle: false,
+		visible: true,
+		id:1,
+		event: { 
+			name: 'click',
+			callback: function(){
+				alert('Im clicked');
+			}
+		}
 	});
 
 /*
