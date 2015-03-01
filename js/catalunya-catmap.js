@@ -1,9 +1,9 @@
-(function(window, google){
+(function(window, google, List){
 
  var Catmap = (function(){
  	function Catmap(element, opts){
  		this.gMap = new google.maps.Map(element, opts);
- 		this.markers = [];
+ 		this.markers = List.create();
  	}
  	Catmap.prototype ={
 
@@ -36,7 +36,7 @@
  			// create the marker with the given options
  			marker = this._createMarker(opts);
  			// Add the created marker to the markers array
- 			this._addMarker(marker);
+ 			this.markers.add(marker);
 
  			// if we have the event object set up
  			if(opts.event){
@@ -75,20 +75,6 @@
  			}
  		},
 
- 		// Private function that add the given marker to the array of markers
- 		_addMarker: function(marker){
- 			this.markers.push(marker);
- 		},
-
- 		// Private function that will remove from the map the given marker
- 		_removeMarker: function(marker){
- 			var indexOf = this.markers.indexOf(marker);
- 			if(indexOf !== -1){
- 				this.markers.splice(indexOf,1);
- 				marker.setMap(null);
- 			}
- 		},
-
  		// Private function thaat create the marker with the given options
  		_createMarker: function(opts){
  			opts.map = this.gMap;
@@ -106,4 +92,4 @@
 
  window.Catmap = Catmap;
 
-}(window, google));
+}(window, google, List));
