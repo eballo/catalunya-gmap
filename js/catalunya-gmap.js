@@ -18,6 +18,11 @@
 		content: 'Castell de la Montanya'
 	});
 
+	var found = map.findMarkerByLat(42.307682);
+
+	console.log(found);
+
+	console.log(map.markers);
 /*
 	map._on('click', function(e){
 		alert('click');
