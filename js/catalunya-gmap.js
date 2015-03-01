@@ -15,12 +15,7 @@
 		drabagle: false,
 		visible: true,
 		id:1,
-		event: { 
-			name: 'click',
-			callback: function(){
-				alert('Im clicked');
-			}
-		}
+		content: 'Castell de la Montanya'
 	});
 
 /*

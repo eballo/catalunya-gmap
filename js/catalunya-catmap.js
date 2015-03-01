@@ -39,6 +39,20 @@
  				});
  			}
 
+ 			if(opts.content){
+ 				this._on({
+ 					obj: marker,
+ 					event: 'click',
+ 					callback: function(){
+ 						var infowindow = new google.maps.InfoWindow({
+ 							content: opts.content
+ 						});
+
+ 						infowindow.open(this.gMap, marker);
+ 					}
+ 				});
+ 			}
+
  			
  		},
 
