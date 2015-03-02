@@ -9,36 +9,29 @@
 	//create the map
 	var map = catmap.create(element, options);
 
-	map.addMarker({
-		lat: 42.307682, 
-		lng: 3.011110,
-		drabagle: false,
-		visible: true,
-		id:1,
-		content: 'Castell de la Montanya'
-	});
+	//console.log(aCastells);
+	
+	for(var x =0; x < aCastells.length; x ++){
+		
+		map.addMarker({
+			id: x,
+			lat: Number(aCastells[x].position.lat), 
+			lng: Number(aCastells[x].position.lng),
+			visible: true,
+			content: aCastells[x].title,
+			icon: 'http://www.catalunyamedieval.es/wp-content/themes/catalunyamedieval/images/gmap/militar/castell/castell7.png'
+		});
+	}
 
-	map.addMarker({
-		lat: 42.000682, 
-		lng: 3.071110,
-		drabagle: false,
-		visible: true,
-		id:2,
-		content: 'Castell de la Montanya test 2'
-	});
+	//console.log(map.markers);
 
-	var found = map.findBy(function(marker){
-		return marker.id === 2;
+	/*
+	map.removeBy(function(marker){
+		if(marker.id === 0){
+			console.log(marker);
+		}
+		return marker.id ===0;
 	});
-
-	console.log(map.markers);
-
-/*
-	map._on('click', function(e){
-		alert('click');
-		console.log(e);
-		console.log(this);
-	});
-*/
+	*/
 	
 }(window, window.Catmap ));

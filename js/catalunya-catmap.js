@@ -4,6 +4,7 @@
  	function Catmap(element, opts){
  		this.gMap = new google.maps.Map(element, opts);
  		this.markers = List.create();
+ 		this.markerClusterer = new MarkerClusterer(this.gMap, []);
  	}
  	Catmap.prototype ={
 
@@ -32,6 +33,10 @@
 
  			// create the marker with the given options
  			marker = this._createMarker(opts);
+
+ 			// Add marker to the marker cluster
+ 			this.markerClusterer.addMarker(marker);
+
  			// Add the created marker to the markers array
  			this.markers.add(marker);
 
@@ -69,9 +74,14 @@
 
  		// Public function to removeBy given a callback function
  		removeBy: function(callback){
- 			this.markers.find(callback, function(markers){
+ 			var self = this;
+ 			self.markers.find(callback, function(markers){
  				markers.forEach(function(marker){
- 					marker.setMap(null);
+ 					if(self.markerClusterer){
+ 						self.markerClusterer.removeMarker(marker);
+ 					}else{
+ 						marker.setMap(null);		
+ 					}
  				});
  			});
  		},
