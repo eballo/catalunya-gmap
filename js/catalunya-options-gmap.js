@@ -13,7 +13,7 @@ var catalunya = new google.maps.LatLng(latitud, longitude);
 catmap.MAP_OPTIONS = {
 	center: catalunya,
 	zoom: 7,
-	maxZoom: 10,
+	maxZoom: 20,
 	minZoom: 4,
 	streetViewControl: false,
 	disableDefaultUI: false,

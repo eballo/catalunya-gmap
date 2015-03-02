@@ -9,7 +9,7 @@
 	//create the map
 	var map = catmap.create(element, options);
 
-	console.log(aCastells);
+	//console.log(aCastells);
 	
 	for(var x =0; x < aCastells.length; x ++){
 		
@@ -23,6 +23,15 @@
 		});
 	}
 
-	console.log(map.markers);
+	//console.log(map.markers);
+
+	/*
+	map.removeBy(function(marker){
+		if(marker.id === 0){
+			console.log(marker);
+		}
+		return marker.id ===0;
+	});
+	*/
 	
 }(window, window.Catmap ));

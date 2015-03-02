@@ -1,11 +1,12 @@
 # Interactive Map of Catalunya using GoogleMaps - Demo
 Interactive vectorial map of Catalunya using GoogleMaps library.
 
-<img src="https://github.com/eballo/catalunya-gmap/blob/develop/screenshot/screenshot-v1.png" alt="screen-shot" align="center" />
+<img src="https://github.com/eballo/catalunya-gmap/blob/develop/screenshot/screenshot-v2.png" alt="screen-shot" align="center" />
 
 ## Demo
 
 - [Demo v1.0](http://demo.catalunyamedieval.es/gmap1)
+- [Demo v2.0](http://demo.catalunyamedieval.es/gmap2)
 
 # Marker cluster Info
 http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries
@@ -53,4 +54,4 @@ V1.0
 - Create a Map using catmap libs
 
 V2.0
-- Markers clustering ( work in progress )
+- Markers clustering
