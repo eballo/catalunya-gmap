@@ -4,6 +4,7 @@
  	function Catmap(element, opts){
  		this.gMap = new google.maps.Map(element, opts);
  		this.markers = List.create();
+ 		this.markerClusterer = new MarkerClusterer(this.gMap,[]);
  	}
  	Catmap.prototype ={
 
@@ -32,6 +33,10 @@
 
  			// create the marker with the given options
  			marker = this._createMarker(opts);
+
+ 			// Add marker to the marker cluster
+ 			this.markerClusterer.addMarker(marker);
+
  			// Add the created marker to the markers array
  			this.markers.add(marker);
 

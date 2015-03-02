@@ -18,7 +18,7 @@
 			lat: Number(aCastells[x].position.lat), 
 			lng: Number(aCastells[x].position.lng),
 			visible: true,
-			content: aCastells[x].position.title,
+			content: aCastells[x].title,
 			icon: 'http://www.catalunyamedieval.es/wp-content/themes/catalunyamedieval/images/gmap/militar/castell/castell7.png'
 		});
 	}
