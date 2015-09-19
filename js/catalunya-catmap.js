@@ -6,6 +6,7 @@
  		this.markers = List.create();
  		this.icons = List.create();
  		this.markerClusterer = new MarkerClusterer(this.gMap, []);
+ 		this.infowindow = new google.maps.InfoWindow();
  	}
  	Catmap.prototype ={
 
@@ -128,11 +129,8 @@
  					obj: marker,
  					event: 'click',
  					callback: function(){
- 						var infowindow = new google.maps.InfoWindow({
- 							content: opts.content
- 						});
-
- 						infowindow.open(this.gMap, marker);
+ 						this.infowindow.setContent(opts.content);
+ 						this.infowindow.open(this.gMap, marker);
  					}
  				});
  			}
