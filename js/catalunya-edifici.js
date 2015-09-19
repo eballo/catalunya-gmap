@@ -1,11 +1,11 @@
 (function(window){
-	var List = (function(){
+	var Edifici = (function(){
 
 		//Constructor function
-		function List(params){
+		function Edifici(params){
 			this.items = [];
 		}
-		List.prototype = {
+		Edifici.prototype = {
 
 			add: function(item){
 				this.items.push(item);
@@ -25,7 +25,7 @@
 					items = this.items,
 					length = items.length,
 					matches = [],
-					i=0;
+					i = 0;
 				for(; i < length; i++){
 					callbackReturn = callback(items[i],i);
 					if(callbackReturn){
@@ -49,6 +49,6 @@
 		return new List(params);
 	};
 
-	window.List = List;
+	window.Edifici = Edifici;
 
 }(window));
