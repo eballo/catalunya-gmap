@@ -67,8 +67,6 @@
  		},
 
  		_setVisible: function(categoria, visible){
-
- 			console.log(this.markerClusterer);
  			
  			if(visible){
 				this.enableBy(function(marker){
@@ -84,9 +82,7 @@
  		addIcon: function(edifici){
 
  			var icon;
-
  			icon = this._createIcon(edifici);
-
  			this.icons.add(icon);
 
  		},

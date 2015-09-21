@@ -11,10 +11,11 @@
 
 	//console.log(aCastells);
 	
-	for(var x =0; x < aCastells.length; x ++){
+
+	for(var x =0; x < aEsglesia.length; x ++){
 		
 		map.addMarker({
-			id: 'castell'+x,
+			id: 'esglesia'+x,
 			lat: Number(aCastells[x].position.lat), 
 			lng: Number(aCastells[x].position.lng),
 			visible: true,
@@ -23,6 +24,7 @@
 			categoria: 'castell'
 		});
 	}
+
 
 	for(var x =0; x < aEsglesia.length; x ++){
 		
@@ -38,7 +40,7 @@
 	}
 
 
-	map.addIcon({
+		map.addIcon({
 			id: 1,
 			visible: true,
 			title: 'castells',
