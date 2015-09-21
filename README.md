@@ -55,3 +55,6 @@ V1.0
 
 V2.0
 - Markers clustering
+
+V3.0
+- Add Remove/Add button by type of building + unique infoWindow
