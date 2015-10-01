@@ -131,10 +131,31 @@
 			lat: Number(edifici.position.lat), 
 			lng: Number(edifici.position.lng),
 			visible: true,
-			content: edifici.title,
+			content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia),
 			icon: icon,
 			categoria: categoria
 			};
+		},
+
+		_createContent: function(title, link, thumbs, municipi, poblacio, provincia){
+			var content = "";
+
+			content += "<div class='infoWindowz' >";
+			content += "<a href="+link+" >";
+			content += "<div class='edifici_tile-header-titles'>";
+          	content += "<h3>"+title+"</h3>";
+          	content += "<div class='infowindow_text'>";
+            content += "<h2> municipi: "+municipi+" </h2>";
+            content += "<h2> poblacio: "+poblacio+" </h2>";
+            content += "<h2> provincia: "+provincia+"</h2>";
+            content += "</div>";
+            content += "<img src="+thumbs+" >";
+        	content += "</div>";
+        	content += "</a>";
+			content += "</div>";
+
+			return content;
+
 		},
 
 		_addEdifici : function(id, arrayName, categoria, icon){
