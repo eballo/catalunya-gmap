@@ -48,8 +48,8 @@
 
 			this.gMap.controls[google.maps.ControlPosition.RIGHT_TOP].push(controlDiv);
 
-			var self = this;
-			 // Setup the click event listeners
+            var self = this;
+            // Setup the click event listeners
 	      	google.maps.event.addDomListener(controlUI, 'click', function() {
 		    	if(edifici.visible){
 		    		edifici.visible = false;
@@ -57,8 +57,9 @@
 		    		edifici.visible = true;
 		      	}
 	      	  	self._setVisible(edifici.categoria,edifici.visible);
-	      	  	self.markerClusterer.resetViewport();
-    			self.markerClusterer.redraw();
+                console.log(self.markerClusterer);
+	      	  	self.markerClusterer.resetViewport_();
+    			self.markerClusterer.redraw_();
 	      	});
 	      	
 
@@ -138,7 +139,7 @@
  			return this.markers.find(callback);
  		},
 
- 		 		// Public function to removeBy given a callback function
+        // Public function to removeBy given a callback function
  		removeBy: function(callback){
  			var self = this;
  			self.markers.find(callback, function(markers){
