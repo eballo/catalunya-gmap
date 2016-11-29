@@ -4,7 +4,7 @@
 		//Constructor function
 		function Edifici(mapName){
 			this.options = catmap.MAP_OPTIONS;
-			this.serverHost =  'http://localhost:8888/gmaps/';//'<?php echo get_stylesheet_directory_uri(); ?>';
+			this.serverHost =  'http://gmap.catalunyamedieval.dev/';//'<?php echo get_stylesheet_directory_uri(); ?>';
 			//get the gMap element
 			this.element =  document.getElementById(mapName);
 			this.styleType = 7;
