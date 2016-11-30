@@ -9,6 +9,14 @@
  		this.infowindow = new google.maps.InfoWindow();
  	}
  	Catmap.prototype ={
+        
+        _resize:function(){
+            var center = this.gMap.getCenter();
+            
+            google.maps.event.trigger(this.gMap, "resize");
+            this.gMap.setCenter(center); 
+            
+        },
 
  		// Private function to create an event to the given object
  		_on: function(opts){
@@ -54,7 +62,7 @@
 		    	if(edifici.visible){
 		    		edifici.visible = false;
                     controlText.style.opacity= '0.5';
-		      	}else{
+                }else{
 		    		edifici.visible = true;
                     controlText.style.opacity= '1';
 		      	}
@@ -192,6 +200,7 @@
  }());
 
  Catmap.create = function(element, opts){
+    var element =  document.getElementById(element);
  	return new Catmap(element, opts);
  };
 

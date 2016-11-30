@@ -2,8 +2,13 @@
 #mapContainer { 
     position:relative;
     width:600px;
-    height:500px;
+    height:550px;
     margin: 20px auto;
+}
+
+#mapContainer.fullscreen {
+  width:100%;
+  height: 100%;
 }
 
 #gMap {
@@ -14,6 +19,11 @@
 	width: 100%; 
 	border: 2px solid rgba(0,0,0,0.15);
     box-shadow: 0 1px 1px rgba(50,50,50,0.1);
+}
+
+#gMap.fullscreen {
+  width:100%;
+  height: 100%;
 }
 
 /** sobrescriure styles google */

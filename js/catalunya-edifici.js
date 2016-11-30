@@ -2,15 +2,10 @@
 	var Edifici = (function(){
 
 		//Constructor function
-		function Edifici(mapName){
-			this.options = catmap.MAP_OPTIONS;
+		function Edifici(map){
 			this.serverHost =  'http://gmap.catalunyamedieval.dev/';//'<?php echo get_stylesheet_directory_uri(); ?>';
-			//get the gMap element
-			this.element =  document.getElementById(mapName);
 			this.styleType = 7;
-
-			//create the map
-			this.map = catmap.create(this.element, this.options);
+            this.map = map;
 		}
 
 		Edifici.prototype = {
@@ -175,6 +170,10 @@
 			});
 
 		},
+        
+        getMap: function(){
+          return this.map;  
+        },
 
 		print : function(){
 			console.log('print!');
