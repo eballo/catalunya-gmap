@@ -7,6 +7,7 @@ Interactive vectorial map of Catalunya using GoogleMaps library.
 
 - [Demo v1.0](http://demo.catalunyamedieval.es/gmap1)
 - [Demo v2.0](http://demo.catalunyamedieval.es/gmap2)
+- [Demo v3.0](http://demo.catalunyamedieval.es/gmap3)
 
 # Marker cluster Info
 http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries
@@ -19,11 +20,14 @@ http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries
 		<div id="mapContainer">
 			<div id="gMap"></div>
 		</div>
-		<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
-		<script type="text/javascript" src="js/catalunya-list.js" ></script>
-		<script type="text/javascript" src="js/catalunya-catmap.js" ></script>
-		<script type="text/javascript" src="js/catalunya-options-gmap.js" ></script>
-		<script type="text/javascript" src="js/catalunya-gmap.js" ></script>
+        ...
+        <footer>
+            <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=YOUR_API_KEY"></script>
+            <script type="text/javascript" src="js/catalunya-list.js" ></script>
+            <script type="text/javascript" src="js/catalunya-catmap.js" ></script>
+            <script type="text/javascript" src="js/catalunya-options-gmap.js" ></script>
+            <script type="text/javascript" src="js/catalunya-gmap.js" ></script>
+        </footer>
 ```
 2. Edit the content of catalunya-gmap.js to add, remove the markers that you want to print.
 
@@ -55,3 +59,7 @@ V1.0
 
 V2.0
 - Markers clustering
+
+V3.0
+- Add Remove/Add button by type of building + unique infoWindow
+- Change icon to a different one when is disabled (removed)

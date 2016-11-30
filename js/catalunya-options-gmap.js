@@ -30,14 +30,16 @@ catmap.MAP_OPTIONS = {
     },
     zoomControl: true,
     zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.NORMAL
+        style: google.maps.ZoomControlStyle.NORMAL,
+        position: google.maps.ControlPosition.TOP_LEFT
     },
     scaleControl: true,  // fixed to BOTTOM_RIGHT
     streetViewControl: true,
     streetViewControlOptions: {
-        position: google.maps.ControlPosition.LEFT_TOP
+        position: google.maps.ControlPosition.TOP_LEFT
     },
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    cluster: true
 };
 
 }(window, google, window.Catmap || (window.Catmap = {}) ));

@@ -25,7 +25,7 @@
 					items = this.items,
 					length = items.length,
 					matches = [],
-					i = 0;
+					i=0;
 				for(; i < length; i++){
 					callbackReturn = callback(items[i],i);
 					if(callbackReturn){
