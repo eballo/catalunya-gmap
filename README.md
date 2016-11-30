@@ -33,14 +33,8 @@ http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries
 
 example:
 ```
-	//load the configuration of the map
-	var options = catmap.MAP_OPTIONS;
-
-	//get the gMap element
-	var element =  document.getElementById('gMap');
-
 	//create the map
-	var map = catmap.create(element, options);
+	var map = catmap.create('gMap', catmap.MAP_OPTIONS);
 
 	map.addMarker({
 		lat: 42.307682, 
