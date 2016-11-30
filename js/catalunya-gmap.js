@@ -1,18 +1,12 @@
 (function(window, catmap) {
 
-	//load the configuration of the map
-	var options = catmap.MAP_OPTIONS;
-
-	//get the gMap element
-	var element =  document.getElementById('gMap');
-
 	//create the map
-	var map = catmap.create(element, options);
+	var map = catmap.create('gMap', catmap.MAP_OPTIONS);
 
 	//console.log(aCastells);
 	
 
-	for(var x =0; x < aEsglesia.length; x ++){
+	for(var x =0; x < aCastells.length; x ++){
 		
 		map.addMarker({
 			id: 'esglesia'+x,
