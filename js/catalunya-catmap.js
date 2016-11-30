@@ -53,8 +53,10 @@
 	      	google.maps.event.addDomListener(controlUI, 'click', function() {
 		    	if(edifici.visible){
 		    		edifici.visible = false;
+                    controlText.style.opacity= '0.5';
 		      	}else{
 		    		edifici.visible = true;
+                    controlText.style.opacity= '1';
 		      	}
 	      	  	self._setVisible(edifici.categoria,edifici.visible);
                 console.log(self.markerClusterer);
