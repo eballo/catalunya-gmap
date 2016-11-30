@@ -62,4 +62,5 @@ V2.0
 
 V3.0
 - Add Remove/Add button by type of building + unique infoWindow
-- Change icon to a different one when is disabled (removed)
+- Change icon when removed
+- Full screen option
