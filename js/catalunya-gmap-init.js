@@ -1,8 +1,8 @@
-(function(window, edifici, catmap) {
+(function(window, edifici, gmap) {
 
     
     //Create the map
-	var map = catmap.create('gMap',catmap.MAP_OPTIONS);
+	var map = gmap.create('gMap', gmap.MAP_OPTIONS);
     
 	//Load the configuration of the map
 	var edifici = edifici.create(map);
@@ -25,4 +25,4 @@
         map._resize();
     })
 	
-}(window, window.Edifici, window.Catmap));
+}(window, window.Edifici, window.Gmap));

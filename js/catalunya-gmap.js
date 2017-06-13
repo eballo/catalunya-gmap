@@ -1,7 +1,7 @@
-(function(window, catmap) {
+(function(window, gmap) {
 
 	//create the map
-	var map = catmap.create('gMap', catmap.MAP_OPTIONS);
+	var map = gmap.create('gMap', gmap.MAP_OPTIONS);
 
 	//console.log(aCastells);
 	
@@ -61,4 +61,4 @@
 	});
 	*/
 	
-}(window, window.Catmap ));
+}(window, window.Gmap ));

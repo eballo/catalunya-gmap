@@ -1,14 +1,14 @@
 (function(window, google, List){
 
- var Catmap = (function(){
- 	function Catmap(element, opts){
+ var Gmap = (function(){
+ 	function Gmap(element, opts){
  		this.gMap = new google.maps.Map(element, opts);
  		this.markers = List.create();
  		this.icons = List.create();
  		this.markerClusterer = new MarkerClusterer(this.gMap, []);
  		this.infowindow = new google.maps.InfoWindow();
  	}
- 	Catmap.prototype ={
+ 	Gmap.prototype ={
         
         _resize:function(){
             var center = this.gMap.getCenter();
@@ -196,14 +196,14 @@
 
  	};
 
- 	return Catmap;
+ 	return Gmap;
  }());
 
- Catmap.create = function(element, opts){
+ Gmap.create = function(element, opts){
     var element =  document.getElementById(element);
- 	return new Catmap(element, opts);
+ 	return new Gmap(element, opts);
  };
 
- window.Catmap = Catmap;
+ window.Gmap = Gmap;
 
 }(window, google, List));

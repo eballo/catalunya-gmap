@@ -2,7 +2,7 @@
  * Catalunya options for GoogleMaps
  * 
  */
-(function(window, google, catmap) {
+(function(window, google, gmap) {
 
 //Position of Catalunya 
 var latitud = 41.440908754848165;
@@ -10,7 +10,7 @@ var longitude = 1.81713925781257;
 var catalunya = new google.maps.LatLng(latitud, longitude);
 
 //maps options
-catmap.MAP_OPTIONS = {
+gmap.MAP_OPTIONS = {
 	center: catalunya,
 	zoom: 7,
 	maxZoom: 20,
@@ -42,4 +42,4 @@ catmap.MAP_OPTIONS = {
     cluster: true
 };
 
-}(window, google, window.Catmap || (window.Catmap = {}) ));
+}(window, google, window.Gmap || (window.Gmap = {}) ));

@@ -1,4 +1,4 @@
-(function(window, catmap){
+(function(window, gmap){
 	var Edifici = (function(){
 
 		//Constructor function
@@ -190,4 +190,4 @@
 
 	window.Edifici = Edifici;
 
-}(window, window.Catmap ));
+}(window, window.gmap ));
