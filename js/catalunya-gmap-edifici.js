@@ -148,7 +148,7 @@
 			return {
 			id: categoria+x,
 			lat: Number(edifici.position.lat),
-			lng: Number(edifici.position.lng),
+			lng: Number(edifici.position.long),
 			visible: true,
 			content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia),
 			icon: icon,
@@ -164,11 +164,11 @@
 			content += "<div class='edifici_tile-header-titles'>";
           	content += "<h3>"+title+"</h3>";
           	content += "<div class='infowindow_text'>";
-            content += "<h2> municipi: "+municipi+" </h2>";
-            content += "<h2> poblacio: "+poblacio+" </h2>";
+            content += "<h2> municipi: "+municipi+"</h2>";
+            content += "<h2> poblacio: "+poblacio+"</h2>";
             content += "<h2> provincia: "+provincia+"</h2>";
             content += "</div>";
-            content += "<img src="+thumbs+" >";
+            content += thumbs;
         	content += "</div>";
         	content += "</a>";
 			content += "</div>";
