@@ -10,6 +10,7 @@
 	edifici.addMilitars();
 	edifici.addCivils();
 	edifici.addReligioses();
+	edifici.addAltres();
 
     //Add some behave
     $("#fullScreen").click(function() {

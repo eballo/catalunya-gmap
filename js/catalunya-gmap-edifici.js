@@ -33,6 +33,10 @@
 			this.addMonestir();
 		},
 
+		addAltres: function(){
+			this.addAltresLlocsInteres();
+		},
+
 		/** Militars */
 		addCastells: function(){
 			var categoria = 'castell';
@@ -100,33 +104,40 @@
 		addCatedral : function(){
 			var categoria = 'catedral';
 			var icon = this._getIcon('religios', categoria)
-			this._addEdifici(9, aCatedral, categoria, icon);
+			this._addEdifici(10, aCatedral, categoria, icon);
 		},
 
 		addErmita : function(){
 			var categoria = 'ermita';
 			var icon = this._getIcon('religios', categoria);
-			this._addEdifici(10, aErmitaCapella, categoria, icon);
+			this._addEdifici(11, aErmitaCapella, categoria, icon);
 		},
 
 		addEsglesia : function(){
 			var categoria = 'esglesia';
 			var icon = this._getIcon('religios', categoria);
-			this._addEdifici(11, aEsglesia, categoria, icon);
+			this._addEdifici(12, aEsglesia, categoria, icon);
 		},
 
 		addEsglesiaFortificada : function(){
 			var categoria = 'esglesia-fortificada';
 			var icon = this._getIcon('religios', categoria);
 
-			this._addEdifici(11, aEsglesiaFortificada, categoria, icon);
+			this._addEdifici(13, aEsglesiaFortificada, categoria, icon);
 		},
 
 		addMonestir : function(){
 			var categoria = 'monestir';
 			var icon = this._getIcon('religios', categoria);
 
-			this._addEdifici(12, aMonestir, categoria, icon);
+			this._addEdifici(14, aMonestir, categoria, icon);
+		},
+
+		addAltresLlocsInteres : function(){
+			var categoria = 'altres-llocs-dinteres';
+			var icon = this._getIcon('altres', categoria);
+
+			this._addEdifici(15, aAltres, categoria, icon);
 		},
 
 		_getIcon: function(tipus, categoria){
