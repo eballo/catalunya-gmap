@@ -26,8 +26,10 @@
 
 		addReligioses: function(){
 			this.addBasilica();
+			this.addCatedral();
 			this.addErmita();
 			this.addEsglesia();
+			this.addEsglesiaFortificada();
 			this.addMonestir();
 		},
 
@@ -39,7 +41,7 @@
 		},
 
 		addEpocaCarlina: function(){
-			var categoria = 'epocaCarlina';
+			var categoria = 'epoca-carlina';
 			var icon = this._getIcon('militar',categoria);
 
 			this._addEdifici(2, aEpocaCarlina, categoria, icon);
@@ -61,7 +63,7 @@
 
 		/** Civils */
 		addCasaForta: function(){
-			var categoria = 'casaForta';
+			var categoria = 'casa-forta';
 			var icon = this._getIcon('civil', categoria);
 
 			this._addEdifici(5, aCasaForta, categoria, icon);
@@ -82,7 +84,7 @@
 		},
 
 		addTorreColomer : function(){
-			var categoria = 'torreColomer';
+			var categoria = 'torre-colomer';
 			var icon = this._getIcon('civil', categoria);
 
 			this._addEdifici(8, aTorreColomer, categoria, icon);
@@ -90,23 +92,34 @@
 
 		/** Religios */
 		addBasilica : function(){
-			var categoria = 'basilicaCatedral';
+			var categoria = 'basilica';
 			var icon = this._getIcon('religios', categoria)
-			this._addEdifici(9, aBasilicaCatedral, categoria, icon);
+			this._addEdifici(9, aBasilica, categoria, icon);
+		},
+
+		addCatedral : function(){
+			var categoria = 'catedral';
+			var icon = this._getIcon('religios', categoria)
+			this._addEdifici(9, aCatedral, categoria, icon);
 		},
 
 		addErmita : function(){
-			var categoria = 'ermitaCapella';
+			var categoria = 'ermita';
 			var icon = this._getIcon('religios', categoria);
-
 			this._addEdifici(10, aErmitaCapella, categoria, icon);
 		},
 
 		addEsglesia : function(){
 			var categoria = 'esglesia';
 			var icon = this._getIcon('religios', categoria);
-
 			this._addEdifici(11, aEsglesia, categoria, icon);
+		},
+
+		addEsglesiaFortificada : function(){
+			var categoria = 'esglesia-fortificada';
+			var icon = this._getIcon('religios', categoria);
+
+			this._addEdifici(11, aEsglesiaFortificada, categoria, icon);
 		},
 
 		addMonestir : function(){
