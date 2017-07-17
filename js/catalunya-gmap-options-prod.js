@@ -2,7 +2,7 @@
  * Catalunya options for GoogleMaps
  *
  */
-MarkerClusterer.IMAGE_PATH = 'http://gmap.catalunyamedieval.dev/images/gmap/m';
+MarkerClusterer.IMAGE_PATH = 'http://www..catalunyamedieval.es/images/gmap/m';
 (function(window, google, gmap) {
 
 //Position of Catalunya
@@ -44,7 +44,7 @@ gmap.MAP_OPTIONS = {
 };
 
 gmap.EDIFICI_OPTIONS = {
-	serverHost: 'http://gmap.catalunyamedieval.dev/',
+	serverHost: 'http://www.catalunyamedieval.es/',
 	styleType: 7
 }
 

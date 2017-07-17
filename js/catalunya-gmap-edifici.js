@@ -2,10 +2,10 @@
 	var Edifici = (function(){
 
 		//Constructor function
-		function Edifici(map){
-			this.serverHost =  'http://gmap.catalunyamedieval.dev/';//'<?php echo get_stylesheet_directory_uri(); ?>';
-			this.styleType = 7;
-            this.map = map;
+		function Edifici(map, options){
+			this.serverHost =  options.serverHost;
+			this.styleType = options.styleType;
+      this.map = map;
 		}
 
 		Edifici.prototype = {
@@ -48,7 +48,7 @@
 		addMuralles: function(){
 			var categoria = 'muralles';
 			var icon = this._getIcon('militar',categoria);
-			
+
 			this._addEdifici(3, aMuralles, categoria, icon);
 		},
 
@@ -117,13 +117,13 @@
 		},
 
 		_getIcon: function(tipus, categoria){
-			return this.serverHost + 'img/gmap/'+tipus+'/'+categoria+'/'+categoria+this.styleType+'.png';
+			return this.serverHost+'images/gmap/'+tipus+'/'+categoria+'/'+categoria+this.styleType+'.png';
 		},
 
 		_extract: function(edifici, categoria, x, icon){
 			return {
 			id: categoria+x,
-			lat: Number(edifici.position.lat), 
+			lat: Number(edifici.position.lat),
 			lng: Number(edifici.position.lng),
 			visible: true,
 			content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia),
@@ -156,7 +156,7 @@
 		_addEdifici : function(id, arrayName, categoria, icon){
 
 			for(var x =0; x < arrayName.length; x ++){
-				
+
 				opt = this._extract(arrayName[x], categoria , x, icon);
 				this.map.addMarker(opt);
 			}
@@ -170,10 +170,10 @@
 			});
 
 		},
-        
-        getMap: function(){
-          return this.map;  
-        },
+
+    getMap: function(){
+      return this.map;
+    },
 
 		print : function(){
 			console.log('print!');
@@ -184,8 +184,8 @@
 	}());
 
 	//Factory Method
-	Edifici.create = function(mapName){
-		return new Edifici(mapName);
+	Edifici.create = function(mapName, opts){
+		return new Edifici(mapName, opts);
 	};
 
 	window.Edifici = Edifici;
