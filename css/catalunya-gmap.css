@@ -1,8 +1,8 @@
 
-#mapContainer { 
+#mapContainer {
     position:relative;
-    width:600px;
-    height:550px;
+    width:800px;
+    height:650px;
     margin: 20px auto;
 }
 
@@ -12,11 +12,11 @@
 }
 
 #gMap {
-	position: relative; 
-	float: left; 
+	position: relative;
+	float: left;
 	overflow: hidden;
 	height:100%;
-	width: 100%; 
+	width: 100%;
 	border: 2px solid rgba(0,0,0,0.15);
     box-shadow: 0 1px 1px rgba(50,50,50,0.1);
 }
