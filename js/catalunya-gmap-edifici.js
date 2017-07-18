@@ -110,7 +110,7 @@
 		addErmita : function(){
 			var categoria = 'ermita';
 			var icon = this._getIcon('religios', categoria);
-			this._addEdifici(11, aErmitaCapella, categoria, icon);
+			this._addEdifici(11, aErmita, categoria, icon);
 		},
 
 		addEsglesia : function(){
