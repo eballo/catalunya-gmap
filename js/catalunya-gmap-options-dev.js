@@ -5,6 +5,11 @@
 MarkerClusterer.IMAGE_PATH = 'https://work.catalunyamedieval.dev/wp-content/themes/catalunyamedieval/images/gmap/m';
 (function(window, google, gmap) {
 
+gmap.EDIFICI_OPTIONS = {
+	serverHost: 'https://work.catalunyamedieval.dev/',
+	styleType: 7
+}
+
 //Position of Catalunya
 var latitud = 41.440908754848165;
 var longitude = 1.81713925781257;
@@ -44,10 +49,5 @@ gmap.MAP_OPTIONS = {
     cluster: true,
 		styles: styles
 };
-
-gmap.EDIFICI_OPTIONS = {
-	serverHost: 'http://work.catalunyamedieval.dev/',
-	styleType: 7
-}
 
 }(window, google, window.Gmap || (window.Gmap = {}) ));
