@@ -6,7 +6,7 @@ MarkerClusterer.IMAGE_PATH = 'https://work.catalunyamedieval.dev/wp-content/them
 (function(window, google, gmap) {
 
 gmap.EDIFICI_OPTIONS = {
-	serverHost: 'https://work.catalunyamedieval.dev/',
+	serverHost: 'https://work.catalunyamedieval.dev/wp-content/themes/catalunyamedieval/',
 	styleType: 7
 }
 
