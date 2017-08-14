@@ -22,7 +22,7 @@
     });
 
     $(window).resize(function() {
-        console.log("window resize!")
+        //console.log("window resize!")
         map._resize();
     })
 

@@ -67,7 +67,7 @@
                         controlText.style.opacity = '1';
                     }
                     self._setVisible(edifici.categoria, edifici.visible);
-                    console.log(self.markerClusterer);
+                    //console.log(self.markerClusterer);
                     self.markerClusterer.resetViewport_();
                     self.markerClusterer.redraw_();
                 });

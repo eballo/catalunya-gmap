@@ -156,7 +156,7 @@
             },
 
             _getIcon: function(tipus, categoria) {
-                return this.serverHost + 'images/gmap/' + tipus + '/' + categoria + '/' + categoria + this.styleType + '.png';
+                return this.serverHost + '/assets/images/gmap/' + tipus + '/' + categoria + '/' + categoria + this.styleType + '.png';
             },
 
             _extract: function(edifici, categoria, x, icon, type) {
