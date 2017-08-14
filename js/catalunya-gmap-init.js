@@ -2,15 +2,15 @@
 
 
     //Create the map
-	var map = gmap.create('gMap', gmap.MAP_OPTIONS);
+    var map = gmap.create('gMap', gmap.MAP_OPTIONS);
 
-	//Load the configuration of the map
-	var edifici = edifici.create(map, gmap.EDIFICI_OPTIONS);
+    //Load the configuration of the map
+    var edifici = edifici.create(map, gmap.EDIFICI_OPTIONS);
 
-	edifici.addMilitars();
-	edifici.addCivils();
-	edifici.addReligioses();
-	edifici.addAltres();
+    edifici.addMilitars();
+    edifici.addCivils();
+    edifici.addReligioses();
+    edifici.addAltres();
 
     //Add some behave
     $("#fullScreen").click(function() {
@@ -21,7 +21,7 @@
         map._resize();
     });
 
-    $(window).resize(function(){
+    $(window).resize(function() {
         console.log("window resize!")
         map._resize();
     })

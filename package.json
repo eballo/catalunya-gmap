@@ -1,0 +1,26 @@
+{
+  "name": "catalunya-gmap",
+  "version": "1.0.0",
+  "description": "Interactive vectorial map of Catalunya using GoogleMaps library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eballo/catalunya-gmap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eballo/catalunya-gmap/issues"
+  },
+  "homepage": "https://github.com/eballo/catalunya-gmap#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-js-beautify": "^0.1.4",
+    "grunt-jsbeautifier": "^0.2.13"
+  }
+}

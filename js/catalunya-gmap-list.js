@@ -1,54 +1,54 @@
-(function(window){
-	var List = (function(){
+(function(window) {
+    var List = (function() {
 
-		//Constructor function
-		function List(params){
-			this.items = [];
-		}
-		List.prototype = {
+        //Constructor function
+        function List(params) {
+            this.items = [];
+        }
+        List.prototype = {
 
-			add: function(item){
-				this.items.push(item);
+            add: function(item) {
+                this.items.push(item);
 
-			},
+            },
 
-			remove: function(item){
-				var indexOf = this.items.indexOf(item);
- 				if(indexOf !== -1){
- 					this.items.splice(indexOf,1);
- 					item.setMap(null);
- 				}
-			},
+            remove: function(item) {
+                var indexOf = this.items.indexOf(item);
+                if (indexOf !== -1) {
+                    this.items.splice(indexOf, 1);
+                    item.setMap(null);
+                }
+            },
 
-			find: function(callback, action){
-				var callbackReturn,
-					items = this.items,
-					length = items.length,
-					matches = [],
-					i=0;
-				for(; i < length; i++){
-					callbackReturn = callback(items[i],i);
-					if(callbackReturn){
-						matches.push(items[i]);
-					}
-				}
+            find: function(callback, action) {
+                var callbackReturn,
+                    items = this.items,
+                    length = items.length,
+                    matches = [],
+                    i = 0;
+                for (; i < length; i++) {
+                    callbackReturn = callback(items[i], i);
+                    if (callbackReturn) {
+                        matches.push(items[i]);
+                    }
+                }
 
-				if(action){
-					action.call(this, matches);
-				}
+                if (action) {
+                    action.call(this, matches);
+                }
 
-				return matches;
-			}
+                return matches;
+            }
 
-		};
-		return List;
-	}());
+        };
+        return List;
+    }());
 
-	//Factory Method
-	List.create = function(params){
-		return new List(params);
-	};
+    //Factory Method
+    List.create = function(params) {
+        return new List(params);
+    };
 
-	window.List = List;
+    window.List = List;
 
 }(window));
