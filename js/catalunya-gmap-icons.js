@@ -1,28 +1,27 @@
-(function(window){
-	var Icons = (function(){
+(function(window) {
+    var Icons = (function() {
 
-		//Constructor function
-		function Icons(controlDiv, map, edifici){
-			this.items = [];
-		}
-		Icons.prototype = {
+        //Constructor function
+        function Icons(controlDiv, map, edifici) {
+            this.items = [];
+        }
+        Icons.prototype = {
 
-			add: function(item){
+            add: function(item) {
 
-			},
+            },
 
-			remove: function(item){
-			}
+            remove: function(item) {}
 
-		};
-		return Icons;
-	}());
+        };
+        return Icons;
+    }());
 
-	//Factory Method
-	Icons.create = function(controlDiv, map, edifici){
-		return new Icons(controlDiv, map, edifici);
-	};
+    //Factory Method
+    Icons.create = function(controlDiv, map, edifici) {
+        return new Icons(controlDiv, map, edifici);
+    };
 
-	window.Icons = Icons;
+    window.Icons = Icons;
 
 }(window));
