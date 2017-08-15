@@ -7,7 +7,8 @@ MarkerClusterer.IMAGE_PATH = 'http://gmap.catalunyamedieval.dev/assets/images/gm
 
     gmap.CONFIG_OPTIONS = {
         serverHost: 'http://gmap.catalunyamedieval.dev/',
-        styleType: 7
+        styleType: 7,
+        debug: true
     }
 
     //Position of Catalunya

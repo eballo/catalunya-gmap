@@ -3,6 +3,7 @@
     var Gmap = (function() {
         function Gmap(element, opts, config) {
 
+            this.debug = config.debug;
             this.serverHost = config.serverHost;
             this.gMap = new google.maps.Map(element, opts);
             this.markers = List.create();
@@ -10,6 +11,8 @@
             this.markerClusterer = new MarkerClusterer(this.gMap, []);
             this.infowindow = new google.maps.InfoWindow();
 
+            //  Create a new viewpoint bound
+            this.bounds = new google.maps.LatLngBounds();
             this._setLogoCatalunyaMedieval();
         }
         Gmap.prototype = {
@@ -35,11 +38,27 @@
             },
 
             _resize: function() {
-                var center = this.gMap.getCenter();
 
-                google.maps.event.trigger(this.gMap, "resize");
-                this.gMap.setCenter(center);
-
+                if (this.markerClusterer.getMarkers().length > 0) {
+                    if (this.debug) {
+                        console.log("markerClusterer : it is not empty!");
+                        console.log("Recenter markers!");
+                    }
+                    this.markerClusterer.fitMapToMarkers();
+                    this.markerClusterer.repaint();
+                } else {
+                    if (this.debug) {
+                        console.log("markerClusterer : it is empty!");
+                        console.log("Recenter the map to Catalunya Area");
+                    }
+                    //google.maps.event.trigger(this.gMap, "resize");
+                    //var center = this.gMap.getCenter();
+                    var latitud = 41.440908754848165;
+                    var longitude = 1.81713925781257;
+                    var catalunya = new google.maps.LatLng(latitud, longitude);
+                    this.gMap.setZoom(8);
+                    this.gMap.setCenter(catalunya);
+                }
             },
 
             // Private function to create an event to the given object
@@ -145,6 +164,9 @@
                 // Add the created marker to the markers array
                 this.markers.add(marker);
 
+                // Add to Bounds
+                this.bounds.extend(marker.getPosition());
+
                 // if we have the event object set up
                 if (opts.event) {
                     this._on({
@@ -234,6 +256,7 @@
                         self.markerClusterer.addMarker(marker, true);
                     });
                 });
+                this._resize();
             },
 
             // Public function to removeBy given a callback function
@@ -245,6 +268,7 @@
                         self.markerClusterer.removeMarker(marker, true);
                     });
                 });
+                this._resize();
             },
 
             // Public funtion to set up the zoom
