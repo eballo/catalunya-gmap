@@ -1,14 +1,38 @@
 (function(window, google, List) {
 
     var Gmap = (function() {
-        function Gmap(element, opts) {
+        function Gmap(element, opts, config) {
+
+            this.serverHost = config.serverHost;
             this.gMap = new google.maps.Map(element, opts);
             this.markers = List.create();
             this.icons = List.create();
             this.markerClusterer = new MarkerClusterer(this.gMap, []);
             this.infowindow = new google.maps.InfoWindow();
+
+            this.setLogoCatalunyaMedieval();
         }
         Gmap.prototype = {
+
+            /**
+             * Set for the logo
+             */
+            setLogoCatalunyaMedieval: function() {
+
+                var logoControlDiv = document.createElement('div');
+
+                //Set CSS styles for the div containing the control
+                logoControlDiv.index = 10; // used for ordering
+                logoControlDiv.style.padding = '0px';
+
+                //Set CSS for the control border
+                var logo = document.createElement('img');
+                logo.src = this.serverHost + '/assets/images/logo/logoCM-red-mini.png';
+                logo.style.cursor = 'pointer';
+                logoControlDiv.appendChild(logo);
+
+                this.gMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(logoControlDiv);
+            },
 
             _resize: function() {
                 var center = this.gMap.getCenter();
@@ -237,9 +261,9 @@
         return Gmap;
     }());
 
-    Gmap.create = function(element, opts) {
+    Gmap.create = function(element, opts, config) {
         var element = document.getElementById(element);
-        return new Gmap(element, opts);
+        return new Gmap(element, opts, config);
     };
 
     window.Gmap = Gmap;
