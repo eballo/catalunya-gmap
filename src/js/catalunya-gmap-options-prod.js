@@ -5,7 +5,7 @@
 MarkerClusterer.IMAGE_PATH = 'https://www.catalunyamedieval.es/wp-content/themes/catalunyamedieval/images/gmap/m';
 (function(window, google, gmap) {
 
-    gmap.EDIFICI_OPTIONS = {
+    gmap.CONFIG_OPTIONS = {
         serverHost: 'https://www.catalunyamedieval.es/wp-content/themes/catalunyamedieval/',
         styleType: 7
     }
