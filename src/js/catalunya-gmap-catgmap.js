@@ -10,14 +10,14 @@
             this.markerClusterer = new MarkerClusterer(this.gMap, []);
             this.infowindow = new google.maps.InfoWindow();
 
-            this.setLogoCatalunyaMedieval();
+            this._setLogoCatalunyaMedieval();
         }
         Gmap.prototype = {
 
             /**
-             * Set for the logo
+             * Set the Logo for Catalunya Medieval in the BOTTOM_LEFT corner
              */
-            setLogoCatalunyaMedieval: function() {
+            _setLogoCatalunyaMedieval: function() {
 
                 var logoControlDiv = document.createElement('div');
 
