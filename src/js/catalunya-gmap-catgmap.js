@@ -10,10 +10,11 @@
             this.icons = List.create();
             this.markerClusterer = new MarkerClusterer(this.gMap, []);
             this.infowindow = new google.maps.InfoWindow();
+            this.fullScreen = true;
 
-            //  Create a new viewpoint bound
-            this.bounds = new google.maps.LatLngBounds();
+            // Initialize map
             this._setLogoCatalunyaMedieval();
+            this._setIconFullScreen();
         }
         Gmap.prototype = {
 
@@ -37,34 +38,95 @@
                 this.gMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(logoControlDiv);
             },
 
-            _resize: function() {
+            // Set Icon for Llistat
+            _setIconFullScreen: function(map) {
+                var self = this;
 
-                if (this.markerClusterer.getMarkers().length > 0) {
-                    if (this.debug) {
-                        console.log("markerClusterer : it is not empty!");
-                        console.log("Recenter markers!");
+                var fullScreenControlDiv = document.createElement('div');
+                // Set CSS styles for the DIV containing the control
+                // Setting padding to 5 px will offset the control
+                // from the edge of the map.
+                fullScreenControlDiv.style.padding = '2px';
+
+                // Set CSS for the control border.
+                var controlUI = document.createElement('div');
+                controlUI.style.cursor = 'pointer';
+                controlUI.style.textAlign = 'center';
+                controlUI.title = 'Click per mostrar o ocultar el llistat';
+                controlUI.style.visibility = "visible";
+                fullScreenControlDiv.appendChild(controlUI);
+
+                // Set CSS for the control interior.
+                var controlText = document.createElement('div');
+                controlText.id = "llistat";
+                controlText.innerHTML = '<img src="' + this.serverHost + '/assets/images/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >';
+                controlUI.appendChild(controlText);
+
+                this.gMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(fullScreenControlDiv);
+
+                // Setup the click event listeners:
+                google.maps.event.addDomListener(controlUI, 'click', function() {
+                    //Toggle divs + resize map
+                    $('#primaryDiv').toggleClass('primaryDiv');
+                    self._resize();
+                    $("#secondaryDiv").toggle();
+
+                    if (self.fullScreen) {
+                        self.fullScreen = false;
+                        $("#llistat").html('<img src="' + self.serverHost + '/assets/images/gmap/04.png" with="42" height="42" alt="Ocultar llistat" >');
+                    } else {
+                        self.fullScreen = true;
+                        $("#llistat").html('<img src="' + self.serverHost + '/assets/images/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >');
                     }
-                    this.markerClusterer.fitMapToMarkers();
-                    this.markerClusterer.repaint();
+
+                });
+
+            },
+
+            _resize: function(marker) {
+                if (marker) {
+                    this.gMap.setCenter(marker.getPosition());
+                    this.gMap.setZoom(18);
+                    this.gMap.setTilt(1);
                 } else {
-                    if (this.debug) {
-                        console.log("markerClusterer : it is empty!");
-                        console.log("Recenter the map to Catalunya Area");
+                    if (this.markerClusterer.getMarkers().length > 0) {
+                        if (this.debug) {
+                            console.log("markerClusterer : it is not empty!");
+                            console.log("Recenter markers!");
+                        }
+                        this._refreshMap();
+                        this.markerClusterer.fitMapToMarkers();
+                        this.markerClusterer.repaint();
+
+                    } else {
+                        if (this.debug) {
+                            console.log("markerClusterer : it is empty!");
+                            console.log("Recenter the map to Catalunya Area");
+                        }
+
+                        var latitud = 41.440908754848165;
+                        var longitude = 1.81713925781257;
+                        var catalunya = new google.maps.LatLng(latitud, longitude);
+                        this.gMap.setZoom(8);
+                        this.gMap.setCenter(catalunya);
                     }
-                    //google.maps.event.trigger(this.gMap, "resize");
-                    //var center = this.gMap.getCenter();
-                    var latitud = 41.440908754848165;
-                    var longitude = 1.81713925781257;
-                    var catalunya = new google.maps.LatLng(latitud, longitude);
-                    this.gMap.setZoom(8);
-                    this.gMap.setCenter(catalunya);
+                    this._refreshMap();
                 }
+            },
+
+            /**
+             * refresh Map triggering resize function
+             */
+            _refreshMap: function() {
+                if (this.debug) {
+                    console.log("refreshing map!");
+                }
+                google.maps.event.trigger(this.gMap, 'resize');
             },
 
             // Private function to create an event to the given object
             _on: function(opts) {
                 var self = this;
-
                 google.maps.event.addListener(opts.obj, opts.event, function(e) {
                     return opts.callback.call(self, e);
                 });
@@ -109,26 +171,24 @@
                         edifici.visible = true;
                         controlText.style.opacity = '1';
                     }
-                    self._setVisible(edifici.categoria, edifici.visible);
+                    self._setVisible(edifici.category, edifici.visible);
                     //console.log(self.markerClusterer);
                     self.markerClusterer.resetViewport_();
                     self.markerClusterer.redraw_();
                 });
 
-
                 return controlDiv;
-
             },
 
-            _setVisible: function(categoria, visible) {
+            _setVisible: function(category, visible) {
 
                 if (visible) {
                     this.enableBy(function(marker) {
-                        return marker.categoria === categoria;
+                        return marker.category === category;
                     })
                 } else {
                     this.disableBy(function(marker) {
-                        return marker.categoria === categoria;
+                        return marker.category === category;
                     })
                 }
             },
@@ -159,13 +219,9 @@
 
                 // Add marker to the marker cluster
                 this.markerClusterer.addMarker(marker);
-                //this.markerClusterer.setIgnoreHidden(true);
 
                 // Add the created marker to the markers array
                 this.markers.add(marker);
-
-                // Add to Bounds
-                this.bounds.extend(marker.getPosition());
 
                 // if we have the event object set up
                 if (opts.event) {
@@ -183,49 +239,83 @@
                         event: 'click',
                         callback: function() {
                             this.infowindow.setContent(opts.content);
+                            this.infowindow.setPosition(marker.getPosition());
                             this.infowindow.open(this.gMap, marker);
+                            this.infowindow.setZIndex(2000);
                         }
-                    });
-
-                    /*
-                     * The google.maps.event.addListener() event waits for
-                     * the creation of the infowindow HTML structure 'domready'
-                     * and before the opening of the infowindow defined styles
-                     * are applied.
-                     */
-                    google.maps.event.addListener(this.infowindow, 'domready', function() {
-
-                        // Reference to the DIV which receives the contents of the infowindow using jQuery
-                        var iwOuter = $('.gm-style-iw');
-
-                        /* The DIV we want to change is above the .gm-style-iw DIV.
-                         * So, we use jQuery and create a iwBackground variable,
-                         * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
-                         */
-                        var iwBackground = iwOuter.prev();
-
-                        // Remove the background shadow DIV
-                        iwBackground.css({
-                            'background-color': '#fff6eb'
-                        });
-
-                        // Remove the white background DIV
-                        iwBackground.children(':nth-child(4)').css({
-                            'background-color': '#fff6eb'
-                        });
-
-                        //We go to the div just before the one we changed before
-                        iwBackground.children(':nth-child(3)').children(':nth-child(1)').children(':nth-child(1)').css({
-                            'background-color': '#fff6eb'
-                        });
-                        iwBackground.children(':nth-child(3)').children(':nth-child(2)').children(':nth-child(1)').css({
-                            'background-color': '#fff6eb'
-                        });
-
                     });
 
                 }
 
+                //create marker button
+                this._createMarkerButton(marker, opts);
+
+                /*
+                 * The google.maps.event.addListener() event waits for
+                 * the creation of the infowindow HTML structure 'domready'
+                 * and before the opening of the infowindow defined styles
+                 * are applied.
+                 */
+                google.maps.event.addListener(this.infowindow, 'domready', function() {
+
+                    // Reference to the DIV which receives the contents of the infowindow using jQuery
+                    var iwOuter = $('.gm-style-iw');
+
+                    /* The DIV we want to change is above the .gm-style-iw DIV.
+                     * So, we use jQuery and create a iwBackground variable,
+                     * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
+                     */
+                    var iwBackground = iwOuter.prev();
+
+                    // Remove the background shadow DIV
+                    iwBackground.css({
+                        'background-color': '#fff6eb'
+                    });
+
+                    // Remove the white background DIV
+                    iwBackground.children(':nth-child(4)').css({
+                        'background-color': '#fff6eb'
+                    });
+
+                    //We go to the div just before the one we changed before
+                    iwBackground.children(':nth-child(3)').children(':nth-child(1)').children(':nth-child(1)').css({
+                        'background-color': '#fff6eb'
+                    });
+                    iwBackground.children(':nth-child(3)').children(':nth-child(2)').children(':nth-child(1)').css({
+                        'background-color': '#fff6eb'
+                    });
+
+                });
+
+            },
+
+            /**
+             *  create Marker Button
+             */
+            _createMarkerButton: function(marker, opts) {
+                //Creates a sidebar text link
+                var ul = document.getElementById(opts.category + "_list");
+                var li = document.createElement("li");
+                var title = opts.title;
+                li.innerHTML = title;
+                ul.appendChild(li);
+
+                var self = this;
+                //Trigger a click event to marker when the button is clicked.
+                google.maps.event.addDomListener(li, "click", function() {
+                    self.gMap.setZoom(20);
+                    google.maps.event.trigger(marker, "click");
+                });
+
+                google.maps.event.addDomListener(li, 'mouseover', function() {
+                    marker.setZIndex(2000);
+                    marker.setIcon(opts.icon2);
+                });
+
+                google.maps.event.addDomListener(li, "mouseout", function() {
+                    marker.setZIndex(1);
+                    marker.setIcon(opts.icon);
+                });
             },
 
             // Public function to findBy given a callback function

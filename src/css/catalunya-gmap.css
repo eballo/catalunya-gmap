@@ -1,6 +1,6 @@
 #mapContainer {
   position: relative;
-  width: 800px;
+  width: 90%;
   height: 700px;
   margin: 20px auto;
 }
@@ -48,8 +48,8 @@
   height: auto;
 }
 
-.infoWindowz a{
-    text-decoration: none;
+.infoWindowz a {
+  text-decoration: none;
 }
 
 .infowindow_text {
@@ -66,7 +66,8 @@
 .edifici_tile-header-titles h2 {
   float: left;
   text-align: left;
-  font-family: 'Droid Serif', serif;;
+  font-family: 'Droid Serif', serif;
+  ;
   font-size: 12px;
   font-weight: 100%;
   padding: 2px;
@@ -92,22 +93,55 @@ h3:hover {
   color: #031b33;
 }
 
+
 /** Background for each type of building */
-.militar{
-    background-color: #c14444;
+
+.militar {
+  background-color: #c14444;
 }
-.civil{
-    background-color: #66c547;
+
+.civil {
+  background-color: #66c547;
 }
-.religios{
-    background-color: #0f35f7;
+
+.religios {
+  background-color: #0f35f7;
 }
-.altres{
+
+.altres {
   background-color: #af00bf;
 }
 
+
 /** image border */
+
 .infoWindowz img {
   margin-top: 10px;
   border: 1px solid grey;
+}
+
+.primaryDiv {
+  position: relative;
+  float: left;
+  /*margin: 10px;*/
+  padding: 3px;
+  height: 100%;
+  width: 60% !important;
+}
+
+.primaryDiv_big {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 97%;
+}
+
+#secondaryDiv {
+  display: none;
+  position: relative;
+  float: right;
+  height: 98%;
+  width: 35%;
+  margin: 10px;
+  font-size: 12px;
 }
