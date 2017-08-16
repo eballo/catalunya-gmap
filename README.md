@@ -64,4 +64,6 @@ V3.0
 
 V4.0
 - New Style of the map (background)
-- New infoWindow
+- New infoWindow - new design
+- Add Logo
+- Zoom Center

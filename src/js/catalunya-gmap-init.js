@@ -12,6 +12,9 @@
     edifici.addReligioses();
     edifici.addAltres();
 
+    //To fit bounds
+    map._resize();
+
     //Add some behave
     $("#fullScreen").click(function() {
         $("#title-h1").slideToggle("slow");
