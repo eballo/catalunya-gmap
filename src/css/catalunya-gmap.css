@@ -145,11 +145,10 @@ h3:hover {
   height: 100%;
   width: auto;
   margin: 0px;
-  font-size: 12px;
 }
 
 #llista {
-  height: 700px;
+  height: 650px;
   margin: 0px 5px 0 10px;
   overflow: auto;
   width: auto;
@@ -159,41 +158,59 @@ h3:hover {
   outline: none;
 }
 
-#llista h1, #secondaryDiv h1 {
-  text-align: center;
-  float: none;
-  font-size: 14px;
-}
+#mapLlist {
 
-ul {
   text-align: left;
-  padding: 0px;
-  margin: 0px;
-  display: block;
   list-style-type: none;
-  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-.edifici_list li {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  line-height: 90%;
-}
-
-.edifici_list li:hover {
-  cursor: pointer;
-  background-color: grey;
-}
-
-.nomEdifici_list {
-  font-weight: bold;
-  font-size: 20px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-
-#llista a {
-  color: black;
+#mapLlist li {
+  border: 1px solid #ddd;
+  /* Add a border to all links */
+  margin-top: -1px;
+  /* Prevent double borders */
+  background-color: #f6f6f6;
+  /* Grey background color */
+  padding: 12px;
+  /* Add some padding */
   text-decoration: none;
+  /* Remove default text underline */
+  font-size: 12px;
+  /* Increase the font-size */
+  color: black;
+  /* Add a black text color */
+  display: block;
+  /* Make it into a block element to fill the whole list */
+}
+#mapLlist li.header {
+    background-color: #e2e2e2; /* Add a darker background color for headers */
+    cursor: default; /* Change cursor style */
+}
+
+#mapLlist li:hover:not(.header) {
+  background-color: #eee;
+  /* Add a hover effect to all links, except for headers */
+}
+
+/** Search */
+
+#search {
+  background-image: url('../images/search.png');
+  /* Add a search icon to input */
+  background-position: 10px 12px;
+  /* Position the search icon */
+  background-repeat: no-repeat;
+  /* Do not repeat the icon image */
+  width: 100%;
+  /* Full-width */
+  font-size: 16px;
+  /* Increase font-size */
+  padding: 12px 20px 12px 40px;
+  /* Add some padding */
+  border: 1px solid #ddd;
+  /* Add a grey border */
+  margin-bottom: 12px;
+  /* Add some space below the input */
 }

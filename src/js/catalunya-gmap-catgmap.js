@@ -16,6 +16,8 @@
             this.fullScreen = true;
             this.useMarkerCluster = config.useMarkerCluster;
 
+            this.arrayCategoriesText = List.create();
+
             //  Create a new viewpoint bound
             this.bounds = new google.maps.LatLngBounds();
 
@@ -304,10 +306,24 @@
             _createMarkerButton: function(marker, opts) {
 
                 //Creates a sidebar text link
-                var ul = document.getElementById(opts.category + "_list");
+                var ul = document.getElementById("mapLlist");
+
+                //Add Title Category if needed
+                if (!this.arrayCategoriesText.exist(opts.category)) {
+                    //Add to the array
+                    this.arrayCategoriesText.add(opts.category);
+                    //Create the li header
+                    var liCategory = document.createElement("li");
+                    var category = opts.category;
+                    liCategory.innerHTML = category;
+                    liCategory.setAttribute("class", opts.category + " header");
+                    ul.appendChild(liCategory);
+                }
+                //Add a normal building
                 var li = document.createElement("li");
                 var title = opts.title;
                 li.innerHTML = title;
+                li.setAttribute("class", opts.category);
                 ul.appendChild(li);
 
                 var self = this;
@@ -353,19 +369,19 @@
              * Enable Text list
              */
             _enableText: function(category) {
-                var title = "#" + category + "_title";
-                var list = "#" + category + "_list";
-                $(title).show();
-                $(list).show();
+                var category = "." + category;
+                $(category).each(function() {
+                    $(this).show();
+                });
             },
             /**
              * Disable Text list
              */
             _disableText: function(category) {
-                var title = "#" + category + "_title";
-                var list = "#" + category + "_list";
-                $(title).hide();
-                $(list).hide();
+                var category = "." + category;
+                $(category).each(function() {
+                    $(this).hide();
+                });
             },
             // Public function to removeBy given a callback function
             enableBy: function(callback) {

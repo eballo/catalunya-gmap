@@ -13,6 +13,9 @@ Interactive vectorial map of Catalunya using GoogleMaps library.
 # Marker cluster Info
 http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries
 
+# Inspiration links
+https://www.w3schools.com/howto/howto_js_filter_lists.asp
+
 # How to use this library
 
 1. Add the following files to your html page
@@ -67,3 +70,4 @@ V4.0
 - New infoWindow - new design
 - Add Logo
 - Zoom Center
+- Add Search functionality
