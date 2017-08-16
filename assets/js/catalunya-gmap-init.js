@@ -15,14 +15,9 @@
     //To fit bounds
     map._resize();
 
-    //Add some behave
-    $("#fullScreen").click(function() {
-        $("#title-h1").slideToggle("slow");
-        $("#title-h4").slideToggle("slow");
-        $("#mapContainer").toggleClass('fullscreen');
-        $("#gMap").toggleClass('fullscreen');
-        map._resize();
-    });
+    if (map._getMarkers().length() > 0) {
+        $("#error").hide();
+    }
 
     $(window).resize(function() {
         //console.log("window resize!")

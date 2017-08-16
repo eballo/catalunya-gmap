@@ -26,15 +26,15 @@ a:hover {
 }
 
 #container {
-	height: 100%;
+	height: 800px;
 	width: 100%;
 
 }
 
 .description {
-	margin-left: auto; 
-	margin-right: auto; 
-	width: 99%; 
+	margin-left: auto;
+	margin-right: auto;
+	width: 99%;
 }
 
 .description strong {
@@ -42,7 +42,7 @@ a:hover {
 }
 
 #info{
-	top: 
+	top:
 	clear: both;
 	float: left;
 }

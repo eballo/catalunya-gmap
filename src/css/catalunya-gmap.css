@@ -120,28 +120,80 @@ h3:hover {
   border: 1px solid grey;
 }
 
+
+/** list **/
+
 .primaryDiv {
   position: relative;
   float: left;
-  /*margin: 10px;*/
-  padding: 3px;
   height: 100%;
-  width: 60% !important;
+  width: 70% !important;
 }
 
 .primaryDiv_big {
   position: relative;
   float: left;
   height: 100%;
-  width: 97%;
+  width: 100%;
 }
 
 #secondaryDiv {
   display: none;
   position: relative;
-  float: right;
-  height: 98%;
-  width: 35%;
-  margin: 10px;
+  padding-top: 15px;
+  float: left;
+  height: 100%;
+  width: auto;
+  margin: 0px;
   font-size: 12px;
+}
+
+#llista {
+  height: 700px;
+  margin: 0px 5px 0 10px;
+  overflow: auto;
+  width: auto;
+  /* Size and position */
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+#llista h1, #secondaryDiv h1 {
+  text-align: center;
+  float: none;
+  font-size: 14px;
+}
+
+ul {
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+  display: block;
+  list-style-type: none;
+  width: 100%;
+}
+
+.edifici_list li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  line-height: 90%;
+}
+
+.edifici_list li:hover {
+  cursor: pointer;
+  background-color: grey;
+}
+
+.nomEdifici_list {
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+#llista a {
+  color: black;
+  text-decoration: none;
 }

@@ -9,7 +9,8 @@ MarkerClusterer.IMAGE_PATH = 'https://work.catalunyamedieval.dev/wp-content/them
         serverHost: 'https://work.catalunyamedieval.dev/wp-content/themes/catalunyamedieval/',
         styleType1: 7,
         styleType2: 8,
-        debug: false
+        debug: false,
+        useMarkerCluster: true
     }
 
     //Position of Catalunya

@@ -8,13 +8,21 @@
             this.gMap = new google.maps.Map(element, opts);
             this.markers = List.create();
             this.icons = List.create();
-            this.markerClusterer = new MarkerClusterer(this.gMap, []);
+            var mcOptions = {
+                minimumClusterSize: 15
+            };
+            this.markerClusterer = new MarkerClusterer(this.gMap, [], mcOptions);
             this.infowindow = new google.maps.InfoWindow();
             this.fullScreen = true;
+            this.useMarkerCluster = config.useMarkerCluster;
+
+            //  Create a new viewpoint bound
+            this.bounds = new google.maps.LatLngBounds();
 
             // Initialize map
             this._setLogoCatalunyaMedieval();
             this._setIconFullScreen();
+
         }
         Gmap.prototype = {
 
@@ -84,34 +92,30 @@
             },
 
             _resize: function(marker) {
-                if (marker) {
-                    this.gMap.setCenter(marker.getPosition());
-                    this.gMap.setZoom(18);
-                    this.gMap.setTilt(1);
-                } else {
-                    if (this.markerClusterer.getMarkers().length > 0) {
-                        if (this.debug) {
-                            console.log("markerClusterer : it is not empty!");
-                            console.log("Recenter markers!");
-                        }
-                        this._refreshMap();
-                        this.markerClusterer.fitMapToMarkers();
-                        this.markerClusterer.repaint();
 
-                    } else {
-                        if (this.debug) {
-                            console.log("markerClusterer : it is empty!");
-                            console.log("Recenter the map to Catalunya Area");
-                        }
-
-                        var latitud = 41.440908754848165;
-                        var longitude = 1.81713925781257;
-                        var catalunya = new google.maps.LatLng(latitud, longitude);
-                        this.gMap.setZoom(8);
-                        this.gMap.setCenter(catalunya);
+                if (this.markerClusterer.getMarkers().length > 0) {
+                    if (this.debug) {
+                        console.log("markerClusterer : it is not empty!");
+                        console.log("Recenter markers!");
                     }
                     this._refreshMap();
+                    this.markerClusterer.fitMapToMarkers();
+                    this.markerClusterer.repaint();
+
+                } else {
+                    if (this.debug) {
+                        console.log("markerClusterer : it is empty!");
+                        console.log("Recenter the map to Catalunya Area");
+                    }
+
+                    var latitud = 41.440908754848165;
+                    var longitude = 1.81713925781257;
+                    var catalunya = new google.maps.LatLng(latitud, longitude);
+                    this.gMap.setZoom(8);
+                    this.gMap.setCenter(catalunya);
                 }
+                this._refreshMap();
+
             },
 
             /**
@@ -186,10 +190,12 @@
                     this.enableBy(function(marker) {
                         return marker.category === category;
                     })
+                    this._enableText(category);
                 } else {
                     this.disableBy(function(marker) {
                         return marker.category === category;
                     })
+                    this._disableText(category);
                 }
             },
 
@@ -214,14 +220,18 @@
                     lng: opts.lng
                 }
 
-                // create the marker with the given options
+                // create a google maps marker with the given options
                 marker = this._createMarker(opts);
 
-                // Add marker to the marker cluster
-                this.markerClusterer.addMarker(marker);
+                this.bounds.extend(marker.getPosition());
 
+                // Add marker to the marker cluster
+                if (this.useMarkerCluster) {
+                    this.markerClusterer.addMarker(marker);
+                }
                 // Add the created marker to the markers array
                 this.markers.add(marker);
+
 
                 // if we have the event object set up
                 if (opts.event) {
@@ -241,7 +251,6 @@
                             this.infowindow.setContent(opts.content);
                             this.infowindow.setPosition(marker.getPosition());
                             this.infowindow.open(this.gMap, marker);
-                            this.infowindow.setZIndex(2000);
                         }
                     });
 
@@ -290,9 +299,10 @@
             },
 
             /**
-             *  create Marker Button
+             *  create Marker Button link text
              */
             _createMarkerButton: function(marker, opts) {
+
                 //Creates a sidebar text link
                 var ul = document.getElementById(opts.category + "_list");
                 var li = document.createElement("li");
@@ -303,11 +313,13 @@
                 var self = this;
                 //Trigger a click event to marker when the button is clicked.
                 google.maps.event.addDomListener(li, "click", function() {
-                    self.gMap.setZoom(20);
+                    self.gMap.setZoom(15);
+                    self.gMap.setCenter(marker.getPosition());
+                    self.gMap.setTilt(1);
                     google.maps.event.trigger(marker, "click");
                 });
 
-                google.maps.event.addDomListener(li, 'mouseover', function() {
+                google.maps.event.addDomListener(li, "mouseover", function() {
                     marker.setZIndex(2000);
                     marker.setIcon(opts.icon2);
                 });
@@ -316,6 +328,7 @@
                     marker.setZIndex(1);
                     marker.setIcon(opts.icon);
                 });
+
             },
 
             // Public function to findBy given a callback function
@@ -336,7 +349,24 @@
                     });
                 });
             },
-
+            /**
+             * Enable Text list
+             */
+            _enableText: function(category) {
+                var title = "#" + category + "_title";
+                var list = "#" + category + "_list";
+                $(title).show();
+                $(list).show();
+            },
+            /**
+             * Disable Text list
+             */
+            _disableText: function(category) {
+                var title = "#" + category + "_title";
+                var list = "#" + category + "_list";
+                $(title).hide();
+                $(list).hide();
+            },
             // Public function to removeBy given a callback function
             enableBy: function(callback) {
                 var self = this;
@@ -359,6 +389,10 @@
                     });
                 });
                 this._resize();
+            },
+
+            _getMarkers: function() {
+                return this.markers;
             },
 
             // Public funtion to set up the zoom
