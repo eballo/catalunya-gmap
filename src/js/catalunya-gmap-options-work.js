@@ -7,8 +7,10 @@ MarkerClusterer.IMAGE_PATH = 'https://work.catalunyamedieval.dev/wp-content/them
 
     gmap.CONFIG_OPTIONS = {
         serverHost: 'https://work.catalunyamedieval.dev/wp-content/themes/catalunyamedieval/',
-        styleType: 7,
-        debug: false
+        styleType1: 7,
+        styleType2: 8,
+        debug: false,
+        useMarkerCluster: true
     }
 
     //Position of Catalunya

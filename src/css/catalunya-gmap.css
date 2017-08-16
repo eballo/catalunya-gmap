@@ -1,6 +1,6 @@
 #mapContainer {
   position: relative;
-  width: 800px;
+  width: 90%;
   height: 700px;
   margin: 20px auto;
 }
@@ -48,8 +48,8 @@
   height: auto;
 }
 
-.infoWindowz a{
-    text-decoration: none;
+.infoWindowz a {
+  text-decoration: none;
 }
 
 .infowindow_text {
@@ -66,7 +66,8 @@
 .edifici_tile-header-titles h2 {
   float: left;
   text-align: left;
-  font-family: 'Droid Serif', serif;;
+  font-family: 'Droid Serif', serif;
+  ;
   font-size: 12px;
   font-weight: 100%;
   padding: 2px;
@@ -92,22 +93,107 @@ h3:hover {
   color: #031b33;
 }
 
+
 /** Background for each type of building */
-.militar{
-    background-color: #c14444;
+
+.militar {
+  background-color: #c14444;
 }
-.civil{
-    background-color: #66c547;
+
+.civil {
+  background-color: #66c547;
 }
-.religios{
-    background-color: #0f35f7;
+
+.religios {
+  background-color: #0f35f7;
 }
-.altres{
+
+.altres {
   background-color: #af00bf;
 }
 
+
 /** image border */
+
 .infoWindowz img {
   margin-top: 10px;
   border: 1px solid grey;
+}
+
+
+/** list **/
+
+.primaryDiv {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 70% !important;
+}
+
+.primaryDiv_big {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 100%;
+}
+
+#secondaryDiv {
+  display: none;
+  position: relative;
+  padding-top: 15px;
+  float: left;
+  height: 100%;
+  width: auto;
+  margin: 0px;
+  font-size: 12px;
+}
+
+#llista {
+  height: 700px;
+  margin: 0px 5px 0 10px;
+  overflow: auto;
+  width: auto;
+  /* Size and position */
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+#llista h1, #secondaryDiv h1 {
+  text-align: center;
+  float: none;
+  font-size: 14px;
+}
+
+ul {
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+  display: block;
+  list-style-type: none;
+  width: 100%;
+}
+
+.edifici_list li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  line-height: 90%;
+}
+
+.edifici_list li:hover {
+  cursor: pointer;
+  background-color: grey;
+}
+
+.nomEdifici_list {
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+#llista a {
+  color: black;
+  text-decoration: none;
 }

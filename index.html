@@ -1,67 +1,153 @@
 <html>
-    <head>
-        <title>Interactive Map of Catalunya using GoogleMaps API</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="description" content="GoogleMaps gMap Catalunya Map">
-        <meta name="author" content="Enric Ballo">
 
-        <link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="assets/css/catalunya-gmap.css">
+<head>
+  <title>Interactive Map of Catalunya using GoogleMaps API</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="GoogleMaps gMap Catalunya Map">
+  <meta name="author" content="Enric Ballo">
 
-    </head>
-    <body>
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/catalunya-gmap.css">
 
-        <h1 id="title-h1">Interactive Map of Catalunya using GoogleMaps API - Demo V3.0</h1>
-        <h4 id="title-h4"> :: Catalunya Medieval Project - <a href="http://www.catalunyamedieval.es/" target="_blank" title="Catalunya Medieval">www.catalunyamedieval.es</a> ::</h4>
+</head>
 
-        <a href="https://github.com/eballo/catalunya-gmap"><img style="position: absolute; top: 0; right: 0; border: 0;" src="assets/images/forkme_right_darkblue.png" alt="Fork me on GitHub"></a>
+<body>
 
-        <button id="fullScreen" type="button">FullScreen</button>
+  <h1 id="title-h1">Interactive Map of Catalunya using GoogleMaps API - Demo V3.0</h1>
+  <h4 id="title-h4"> :: Catalunya Medieval Project - <a href="http://www.catalunyamedieval.es/" target="_blank" title="Catalunya Medieval">www.catalunyamedieval.es</a> ::</h4>
 
-        <div id="container">
+  <a href="https://github.com/eballo/catalunya-gmap"><img style="position: absolute; top: 0; right: 0; border: 0;" src="assets/images/forkme_right_darkblue.png" alt="Fork me on GitHub"></a>
 
-            <div id="mapContainer">
-                <div id="gMap"></div>
-            </div>
+  <!-- Disable full screen functionality
+  <button id="fullScreen" type="button">FullScreen</button>
+  <script>
+  //Add some behave
+  $("#fullScreen").click(function() {
+      $("#title-h1").slideToggle("slow");
+      $("#title-h4").slideToggle("slow");
+      $("#mapContainer").toggleClass('fullscreen');
+      $("#gMap").toggleClass('fullscreen');
+      map._resize(); // this code was inside of gmap-init
+  });
+  </script>
+  -->
+  <div id="container">
 
-            <div id="info">
-                <table class="description" cellspacing="10" cellpadding="10">
-                <tbody>
-                    <tr>
-                        <td>
-                            <strong>CAT</strong>
-                            <p>Mapa interactiu de Catalunya fent ús de la llibreria GoogleMaps</p>
-                        </td>
-                        <td>
-                            <strong>EN</strong>
-                            <p>Interactive map of Catalonia based GoogleMaps library</p>
-                        </td>
-                        <td>
-                            <strong>ES</strong>
-                            <p>Mapa interactivo de Cataluña usando la libreria GoogleMaps</p>
-                        </td>
-                        <td>
-                            <strong>NL</strong>
-                            <p>Interactieve kaart van Catalonië op basis van GoogleMaps bibliotheek</p>
-                        </td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
+    <div id="primaryDiv" class="primaryDiv_big">
+      <div id="mapContainer">
+        <div id="gMap"></div>
+      </div>
+    </div>
+
+    <div id="secondaryDiv">
+      <div id="llista">
+        <h2 id="error">No hi ha cap edificaci&oacute; disponible per aquesta
+					comcarca</h2>
+
+        <!-- Militars -->
+        <a href="#"><h1 id="castell_title" class="nomEdifici_list">Castells</h1>
+				</a>
+        <ul id="castell_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="epoca-carlina_title" class="nomEdifici_list">Epoca
+						Carlina</h1> </a>
+        <ul id="epoca-carlina_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="muralles_title" class="nomEdifici_list">Muralles</h1>
+				</a>
+        <ul id="muralles_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="torre_title" class="nomEdifici_list">Torres</h1>
+				</a>
+        <ul id="torre_list" class="edifici_list"></ul>
+
+        <!-- Civils -->
+
+        <a href="#"><h1 id="casa-forta_title" class="nomEdifici_list">Cases
+						Fortes</h1> </a>
+        <ul id="casa-forta_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="palau_title" class="nomEdifici_list">Palaus</h1>
+				</a>
+        <ul id="palau_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="pont_title" class="nomEdifici_list">Ponts</h1> </a>
+        <ul id="pont_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="torre-colomer_title" class="nomEdifici_list">Torres
+						Colomer</h1> </a>
+        <ul id="torre-colomer_list" class="edifici_list"></ul>
+
+        <!-- Religioses -->
+
+        <a href="#"><h1 id="basilica_title" class="nomEdifici_list">Basíliques</h1> </a>
+        <ul id="basilica_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="catedral_title" class="nomEdifici_list">Catedral</h1> </a>
+        <ul id="catedral_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="ermita_title" class="nomEdifici_list">Ermites
+						/ Capella</h1> </a>
+        <ul id="ermita_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="esglesia_title" class="nomEdifici_list">Esglésies</h1>
+				</a>
+        <ul id="esglesia_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="esglesia-fortificada_title" class="nomEdifici_list">Esglésies</h1>
+        </a>
+        <ul id="esglesia-fortificada_list" class="edifici_list"></ul>
+
+        <a href="#"><h1 id="monestir_title" class="nomEdifici_list">Monestirs</h1>
+				</a>
+        <ul id="monestir_list" class="edifici_list"></ul>
+
+        <!-- Altres Llocs d'Interes -->
+
+        <a href="#"><h1 id="altres-llocs-dinteres_title" class="nomEdifici_list">Basíliques</h1> </a>
+        <ul id="altres-llocs-dinteres_list" class="edifici_list"></ul>
+
+      </div>
+    </div>
+  </div>
 
 
-        </div>
 
-    </body>
-    <footer>
-      <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCEHyRrPrjtOb-gleixt6yvCAhJRgPOb4w"></script>
-  		<script type="text/javascript" src="assets/js/jquery-3.1.1.min.js" ></script>
-      <script type="text/javascript" src="assets/js/catalunya-gmap-path.js" ></script>
-  		<script type="text/javascript" src="assets/js/markerclusterer.min.js" ></script>
-  		<script type="text/javascript" src="assets/js/catalunya-gmap-list.min.js" ></script>
-  		<script type="text/javascript" src="assets/js/catalunya-gmap-catgmap.min.js" ></script>
-  		<script type="text/javascript" src="assets/js/catalunya-gmap-options.js" ></script>
-  		<script type="text/javascript" src="assets/js/catalunya-gmap-edifici.min.js" ></script>
-  		<script type="text/javascript" src="assets/js/catalunya-gmap-init.js" ></script>
-    </footer>
+</body>
+<footer>
+  <div id="info">
+    <table class="description" cellspacing="10" cellpadding="10">
+      <tbody>
+        <tr>
+          <td>
+            <strong>CAT</strong>
+            <p>Mapa interactiu de Catalunya fent ús de la llibreria GoogleMaps</p>
+          </td>
+          <td>
+            <strong>EN</strong>
+            <p>Interactive map of Catalonia based GoogleMaps library</p>
+          </td>
+          <td>
+            <strong>ES</strong>
+            <p>Mapa interactivo de Cataluña usando la libreria GoogleMaps</p>
+          </td>
+          <td>
+            <strong>NL</strong>
+            <p>Interactieve kaart van Catalonië op basis van GoogleMaps bibliotheek</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCEHyRrPrjtOb-gleixt6yvCAhJRgPOb4w"></script>
+  <script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="assets/js/catalunya-gmap-path.js"></script>
+  <script type="text/javascript" src="assets/js/markerclusterer.min.js"></script>
+  <script type="text/javascript" src="assets/js/catalunya-gmap-list.min.js"></script>
+  <script type="text/javascript" src="assets/js/catalunya-gmap-catgmap.min.js"></script>
+  <script type="text/javascript" src="assets/js/catalunya-gmap-options.js"></script>
+  <script type="text/javascript" src="assets/js/catalunya-gmap-edifici.min.js"></script>
+  <script type="text/javascript" src="assets/js/catalunya-gmap-init.js"></script>
+</footer>
+
 </html>

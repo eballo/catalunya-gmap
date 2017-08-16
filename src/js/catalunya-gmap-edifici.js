@@ -4,8 +4,9 @@
         //Constructor function
         function Edifici(map, options) {
             this.serverHost = options.serverHost;
-            this.styleType = options.styleType;
-            this.map = map;
+            this.styleType1 = options.styleType1;
+            this.styleType2 = options.styleType2;
+            this.gMap = map;
         }
 
         Edifici.prototype = {
@@ -40,134 +41,122 @@
             /** Militars */
             addCastells: function() {
                 var type = 'militar';
-                var categoria = 'castell';
-                var icon = this._getIcon(type, categoria);
-                this._addEdifici(1, aCastells, categoria, icon, type);
+                var category = 'castell';
+                this._addEdifici(1, aCastells, category, type);
             },
 
             addEpocaCarlina: function() {
                 var type = 'militar';
-                var categoria = 'epoca-carlina';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(2, aEpocaCarlina, categoria, icon, type);
+                var category = 'epoca-carlina';
+                this._addEdifici(2, aEpocaCarlina, category, type);
             },
 
             addMuralles: function() {
                 var type = 'militar';
-                var categoria = 'muralles';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(3, aMuralles, categoria, icon, type);
+                var category = 'muralles';
+                this._addEdifici(3, aMuralles, category, type);
             },
 
             addTorres: function() {
                 var type = 'militar';
-                var categoria = 'torre';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(4, aTorres, categoria, icon, type);
+                var category = 'torre';
+                this._addEdifici(4, aTorres, category, type);
             },
 
             /** Civils */
             addCasaForta: function() {
                 var type = 'civil';
-                var categoria = 'casa-forta';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(5, aCasaForta, categoria, icon, type);
+                var category = 'casa-forta';
+                this._addEdifici(5, aCasaForta, category, type);
             },
 
             addPalau: function() {
                 var type = 'civil';
-                var categoria = 'palau';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(6, aPalau, categoria, icon, type);
+                var category = 'palau';
+                this._addEdifici(6, aPalau, category, type);
             },
 
             addPont: function() {
                 var type = 'civil';
-                var categoria = 'pont';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(7, aPont, categoria, icon, type);
+                var category = 'pont';
+                this._addEdifici(7, aPont, category, type);
             },
 
             addTorreColomer: function() {
                 var type = 'civil';
-                var categoria = 'torre-colomer';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(8, aTorreColomer, categoria, icon, type);
+                var category = 'torre-colomer';
+                this._addEdifici(8, aTorreColomer, category, type);
             },
 
             /** Religios */
             addBasilica: function() {
                 var type = 'religios';
-                var categoria = 'basilica';
-                var icon = this._getIcon(type, categoria)
-                this._addEdifici(9, aBasilica, categoria, icon, type);
+                var category = 'basilica';
+                this._addEdifici(9, aBasilica, category, type);
             },
 
             addCatedral: function() {
                 var type = 'religios';
-                var categoria = 'catedral';
-                var icon = this._getIcon(type, categoria)
-                this._addEdifici(10, aCatedral, categoria, icon, type);
+                var category = 'catedral';
+                this._addEdifici(10, aCatedral, category, type);
             },
 
             addErmita: function() {
                 var type = 'religios';
-                var categoria = 'ermita';
-                var icon = this._getIcon(type, categoria);
-                this._addEdifici(11, aErmita, categoria, icon, type);
+                var category = 'ermita';
+                this._addEdifici(11, aErmita, category, type);
             },
 
             addEsglesia: function() {
                 var type = 'religios';
-                var categoria = 'esglesia';
-                var icon = this._getIcon(type, categoria);
-                this._addEdifici(12, aEsglesia, categoria, icon, type);
+                var category = 'esglesia';
+                this._addEdifici(12, aEsglesia, category, type);
             },
 
             addEsglesiaFortificada: function() {
                 var type = 'religios';
-                var categoria = 'esglesia-fortificada';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(13, aEsglesiaFortificada, categoria, icon, type);
+                var category = 'esglesia-fortificada';
+                this._addEdifici(13, aEsglesiaFortificada, category, type);
             },
 
             addMonestir: function() {
                 var type = 'religios';
-                var categoria = 'monestir';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(14, aMonestir, categoria, icon, type);
+                var category = 'monestir';
+                this._addEdifici(14, aMonestir, category, type);
             },
 
             addAltresLlocsInteres: function() {
                 var type = 'altres';
-                var categoria = 'altres-llocs-dinteres';
-                var icon = this._getIcon(type, categoria);
-
-                this._addEdifici(15, aAltres, categoria, icon, type);
+                var category = 'altres-llocs-dinteres';
+                this._addEdifici(15, aAltres, category, type);
+            },
+            /**
+             * Icona 1
+             */
+            _getIcon1: function(type, category) {
+                return this.serverHost + '/assets/images/gmap/' + type + '/' + category + '/' + category + this.styleType1 + '.png';
+            },
+            /**
+             * Icona 2
+             */
+            _getIcon2: function(type, category) {
+                return this.serverHost + '/assets/images/gmap/' + type + '/' + category + '/' + category + this.styleType2 + '.png';
             },
 
-            _getIcon: function(tipus, categoria) {
-                return this.serverHost + '/assets/images/gmap/' + tipus + '/' + categoria + '/' + categoria + this.styleType + '.png';
-            },
+            _extract: function(edifici, category, x, type) {
 
-            _extract: function(edifici, categoria, x, icon, type) {
                 return {
-                    id: categoria + x,
+                    id: category + x,
+                    title: edifici.title,
+                    link: edifici.link,
+                    type: type, //(militar,civil,religios)
                     lat: Number(edifici.position.lat),
                     lng: Number(edifici.position.long),
                     visible: true,
                     content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia, type),
-                    icon: icon,
-                    categoria: categoria
+                    icon: this._getIcon1(type, category),
+                    icon2: this._getIcon2(type, category),
+                    category: category //(tipus edificacio)
                 };
             },
 
@@ -200,26 +189,26 @@
 
             },
 
-            _addEdifici: function(id, arrayName, categoria, icon, type) {
+            _addEdifici: function(id, arrayName, category, type) {
 
                 for (var x = 0; x < arrayName.length; x++) {
 
-                    opt = this._extract(arrayName[x], categoria, x, icon, type);
-                    this.map.addMarker(opt);
+                    opt = this._extract(arrayName[x], category, x, type);
+                    this.gMap.addMarker(opt);
                 }
-
-                this.map.addIcon({
+                var icon = this._getIcon1(type, category);
+                this.gMap.addIcon({
                     id: id,
                     visible: true,
-                    title: categoria,
-                    categoria: categoria,
+                    title: category,
+                    category: category,
                     icon: icon
                 });
 
             },
 
             getMap: function() {
-                return this.map;
+                return this.gMap;
             },
 
             print: function() {

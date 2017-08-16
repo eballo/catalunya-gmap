@@ -6,6 +6,9 @@
             this.items = [];
         }
         List.prototype = {
+            length: function() {
+                return this.items.length;
+            },
 
             add: function(item) {
                 this.items.push(item);

@@ -2,7 +2,7 @@
 
 
     //Create the map
-    var map = gmap.create('gMap', gmap.MAP_OPTIONS, gmap.CONFIG_OPTIONS);
+    map = gmap.create('gMap', gmap.MAP_OPTIONS, gmap.CONFIG_OPTIONS);
 
     //Load the configuration of the map
     var edifici = edifici.create(map, gmap.CONFIG_OPTIONS);
@@ -15,14 +15,9 @@
     //To fit bounds
     map._resize();
 
-    //Add some behave
-    $("#fullScreen").click(function() {
-        $("#title-h1").slideToggle("slow");
-        $("#title-h4").slideToggle("slow");
-        $("#mapContainer").toggleClass('fullscreen');
-        $("#gMap").toggleClass('fullscreen');
-        map._resize();
-    });
+    if (map._getMarkers().length() > 0) {
+        $("#error").hide();
+    }
 
     $(window).resize(function() {
         //console.log("window resize!")
