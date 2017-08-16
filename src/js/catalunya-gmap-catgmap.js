@@ -304,7 +304,7 @@
             _createMarkerButton: function(marker, opts) {
 
                 //Creates a sidebar text link
-                var ul = document.getElementById(opts.category + "_list");
+                var ul = document.getElementById("mapLlist");
                 var li = document.createElement("li");
                 var title = opts.title;
                 li.innerHTML = title;

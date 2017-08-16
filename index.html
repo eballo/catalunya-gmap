@@ -13,7 +13,7 @@
 
 <body>
 
-  <h1 id="title-h1">Interactive Map of Catalunya using GoogleMaps API - Demo V3.0</h1>
+  <h1 id="title-h1">Interactive Map of Catalunya using GoogleMaps API - Demo V4.0</h1>
   <h4 id="title-h4"> :: Catalunya Medieval Project - <a href="http://www.catalunyamedieval.es/" target="_blank" title="Catalunya Medieval">www.catalunyamedieval.es</a> ::</h4>
 
   <a href="https://github.com/eballo/catalunya-gmap"><img style="position: absolute; top: 0; right: 0; border: 0;" src="assets/images/forkme_right_darkblue.png" alt="Fork me on GitHub"></a>
@@ -40,73 +40,10 @@
     </div>
 
     <div id="secondaryDiv">
+      <div id="error"><h2>No hi ha cap edificaci&oacute; disponible per aquesta comcarca</h2></div>
+      <input type="text" id="search" onkeyup="search()" placeholder="cercar..">
       <div id="llista">
-        <h2 id="error">No hi ha cap edificaci&oacute; disponible per aquesta
-					comcarca</h2>
-
-        <!-- Militars -->
-        <a href="#"><h1 id="castell_title" class="nomEdifici_list">Castells</h1>
-				</a>
-        <ul id="castell_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="epoca-carlina_title" class="nomEdifici_list">Epoca
-						Carlina</h1> </a>
-        <ul id="epoca-carlina_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="muralles_title" class="nomEdifici_list">Muralles</h1>
-				</a>
-        <ul id="muralles_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="torre_title" class="nomEdifici_list">Torres</h1>
-				</a>
-        <ul id="torre_list" class="edifici_list"></ul>
-
-        <!-- Civils -->
-
-        <a href="#"><h1 id="casa-forta_title" class="nomEdifici_list">Cases
-						Fortes</h1> </a>
-        <ul id="casa-forta_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="palau_title" class="nomEdifici_list">Palaus</h1>
-				</a>
-        <ul id="palau_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="pont_title" class="nomEdifici_list">Ponts</h1> </a>
-        <ul id="pont_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="torre-colomer_title" class="nomEdifici_list">Torres
-						Colomer</h1> </a>
-        <ul id="torre-colomer_list" class="edifici_list"></ul>
-
-        <!-- Religioses -->
-
-        <a href="#"><h1 id="basilica_title" class="nomEdifici_list">Basíliques</h1> </a>
-        <ul id="basilica_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="catedral_title" class="nomEdifici_list">Catedral</h1> </a>
-        <ul id="catedral_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="ermita_title" class="nomEdifici_list">Ermites
-						/ Capella</h1> </a>
-        <ul id="ermita_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="esglesia_title" class="nomEdifici_list">Esglésies</h1>
-				</a>
-        <ul id="esglesia_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="esglesia-fortificada_title" class="nomEdifici_list">Esglésies</h1>
-        </a>
-        <ul id="esglesia-fortificada_list" class="edifici_list"></ul>
-
-        <a href="#"><h1 id="monestir_title" class="nomEdifici_list">Monestirs</h1>
-				</a>
-        <ul id="monestir_list" class="edifici_list"></ul>
-
-        <!-- Altres Llocs d'Interes -->
-
-        <a href="#"><h1 id="altres-llocs-dinteres_title" class="nomEdifici_list">Basíliques</h1> </a>
-        <ul id="altres-llocs-dinteres_list" class="edifici_list"></ul>
-
+        <ul id="mapLlist"></ul>
       </div>
     </div>
   </div>
