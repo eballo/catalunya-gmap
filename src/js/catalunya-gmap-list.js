@@ -23,6 +23,15 @@
                 }
             },
 
+            exist: function(item) {
+                var toReturn = false;
+                var indexOf = this.items.indexOf(item);
+                if (indexOf !== -1) {
+                    toReturn = true;
+                }
+                return toReturn;
+            },
+
             find: function(callback, action) {
                 var callbackReturn,
                     items = this.items,

@@ -184,8 +184,12 @@ h3:hover {
   display: block;
   /* Make it into a block element to fill the whole list */
 }
+#mapLlist li.header {
+    background-color: #e2e2e2; /* Add a darker background color for headers */
+    cursor: default; /* Change cursor style */
+}
 
-#mapLlist li:hover {
+#mapLlist li:hover:not(.header) {
   background-color: #eee;
   /* Add a hover effect to all links, except for headers */
 }
@@ -193,7 +197,6 @@ h3:hover {
 /** Search */
 
 #search {
-
   background-image: url('../images/search.png');
   /* Add a search icon to input */
   background-position: 10px 12px;

@@ -16,6 +16,8 @@
             this.fullScreen = true;
             this.useMarkerCluster = config.useMarkerCluster;
 
+            this.arrayCategoriesText = List.create();
+
             //  Create a new viewpoint bound
             this.bounds = new google.maps.LatLngBounds();
 
@@ -305,6 +307,19 @@
 
                 //Creates a sidebar text link
                 var ul = document.getElementById("mapLlist");
+
+                //Add Title Category if needed
+                if (!this.arrayCategoriesText.exist(opts.category)) {
+                    //Add to the array
+                    this.arrayCategoriesText.add(opts.category);
+                    //Create the li header
+                    var liCategory = document.createElement("li");
+                    var category = opts.category;
+                    liCategory.innerHTML = category;
+                    liCategory.setAttribute("class", opts.category + " header");
+                    ul.appendChild(liCategory);
+                }
+                //Add a normal building
                 var li = document.createElement("li");
                 var title = opts.title;
                 li.innerHTML = title;
