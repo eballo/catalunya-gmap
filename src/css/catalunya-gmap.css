@@ -127,7 +127,7 @@ h3:hover {
   position: relative;
   float: left;
   height: 100%;
-  width: 60% !important;
+  width: 59% !important;
 }
 
 .primaryDiv_big {
@@ -143,7 +143,7 @@ h3:hover {
   padding-top: 15px;
   float: left;
   height: 100%;
-  width: auto;
+  width: 39%;
   margin: 0px;
 }
 
@@ -206,7 +206,7 @@ h3:hover {
   /* Do not repeat the icon image */
   width: 100%;
   /* Full-width */
-  font-size: 16px;
+  font-size: 14px;
   /* Increase font-size */
   padding: 12px 20px 12px 40px;
   /* Add some padding */
