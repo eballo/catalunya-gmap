@@ -1,4 +1,4 @@
-(function(window, google, List) {
+(function(window, google, List, Icons) {
 
     var Gmap = (function() {
         function Gmap(element, opts, config) {
@@ -7,7 +7,7 @@
             this.serverHost = config.serverHost;
             this.gMap = new google.maps.Map(element, opts);
             this.markers = List.create();
-            this.icons = List.create();
+            this.icons = Icons.create();
             var mcOptions = {
                 minimumClusterSize: 15
             };
@@ -24,9 +24,56 @@
             // Initialize map
             this._setLogoCatalunyaMedieval();
             this._setIconFullScreen();
+            this._setRemoveAllIcons();
 
         }
         Gmap.prototype = {
+            /**
+             * Add Remove Icons Icon
+             */
+            _setRemoveAllIcons: function(map) {
+                var self = this;
+
+                var removeAllIconsControlDiv = document.createElement('div');
+                removeAllIconsControlDiv.style.padding = '2px';
+
+                // Set CSS for the control border.
+                var controlUI = document.createElement('div');
+                controlUI.style.cursor = 'pointer';
+                controlUI.style.textAlign = 'center';
+                controlUI.title = 'Click per mostrar o ocultar totes les edificacions';
+                removeAllIconsControlDiv.appendChild(controlUI);
+
+                // Set CSS for the control interior.
+                var controlText = document.createElement('div');
+                controlText.id = "visibleBuildings";
+                controlText.innerHTML = '<img src="' + this.serverHost + '/assets/images/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
+                controlUI.appendChild(controlText);
+
+                this.gMap.controls[google.maps.ControlPosition.RIGHT_TOP].push(removeAllIconsControlDiv);
+
+                // Setup the click event listeners: simply set the map to Chicago.
+                google.maps.event.addDomListener(controlUI, 'click', function() {
+                    if (visibleBuildings) {
+                        visibleBuildings = false;
+                        $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/gmap/05.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+                    } else {
+                        visibleBuildings = true;
+                        $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+                    }
+                    self._cangeVisibility(visibleBuildings);
+                });
+            },
+            /**
+             * change the visibility of the icons
+             */
+            _cangeVisibility: function(visibility) {
+                var arrayIcons = this.icons.getItems();
+                var self = this;
+                arrayIcons.forEach(function(category) {
+                    self._setVisible(category, visibility);
+                });
+            },
 
             /**
              * Set the Logo for Catalunya Medieval in the BOTTOM_LEFT corner
@@ -147,10 +194,6 @@
             _createIcon: function(edifici) {
 
                 var controlDiv = document.createElement('div');
-
-                // Set CSS styles for the DIV containing the control
-                // Setting padding to 5 px will offset the control
-                // from the edge of the map.
                 controlDiv.style.padding = '2px';
 
                 // Set CSS for the control border.
@@ -162,7 +205,7 @@
 
                 // Set CSS for the control interior.
                 var controlText = document.createElement('div');
-                controlText.innerHTML = '<img src="' + edifici.icon + '" alt="' + edifici.title + '" >';
+                controlText.innerHTML = '<img id="img-' + edifici.category + '" src="' + edifici.icon + '" alt="' + edifici.title + '" >';
                 controlUI.appendChild(controlText);
 
                 this.gMap.controls[google.maps.ControlPosition.RIGHT_TOP].push(controlDiv);
@@ -172,13 +215,11 @@
                 google.maps.event.addDomListener(controlUI, 'click', function() {
                     if (edifici.visible) {
                         edifici.visible = false;
-                        controlText.style.opacity = '0.5';
                     } else {
                         edifici.visible = true;
-                        controlText.style.opacity = '1';
                     }
+
                     self._setVisible(edifici.category, edifici.visible);
-                    //console.log(self.markerClusterer);
                     self.markerClusterer.resetViewport_();
                     self.markerClusterer.redraw_();
                 });
@@ -193,19 +234,21 @@
                         return marker.category === category;
                     })
                     this._enableText(category);
+                    $("#img-" + category).css("opacity", '1');
                 } else {
                     this.disableBy(function(marker) {
                         return marker.category === category;
                     })
                     this._disableText(category);
+                    $("#img-" + category).css("opacity", '0.5');
                 }
             },
 
             addIcon: function(edifici) {
 
-                var icon;
-                icon = this._createIcon(edifici);
-                this.icons.add(icon);
+                this._createIcon(edifici);
+                //Add tot the list
+                this.icons.add(edifici.category);
 
             },
 
@@ -432,4 +475,4 @@
 
     window.Gmap = Gmap;
 
-}(window, google, List));
+}(window, google, List, Icons));
