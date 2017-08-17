@@ -29,6 +29,15 @@ module.exports = function(grunt) {
             'style': 'src/css/*.css'
           }
         }
+      },
+      demo: {
+        options: {
+          variables: {
+            'environment': 'demo',
+            'configuration': 'catalunya-gmap-options-demo.js',
+            'style': 'src/css/*.css'
+          }
+        }
       }
     },
     "jsbeautifier": {
@@ -102,4 +111,5 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['config:gmap', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
   grunt.registerTask('work', ['config:work', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
   grunt.registerTask('prod', ['config:prod', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
+  grunt.registerTask('demo', ['config:demo', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
 };
