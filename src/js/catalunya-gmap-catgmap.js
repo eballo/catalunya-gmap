@@ -125,7 +125,7 @@
                 google.maps.event.addDomListener(controlUI, 'click', function() {
                     //Toggle divs + resize map
                     $('#primaryDiv').toggleClass('primaryDiv');
-                    self._resize();
+                    self._resize(true);
                     $("#secondaryDiv").toggle();
 
                     if (self.fullScreen) {
@@ -140,7 +140,7 @@
 
             },
 
-            _resize: function(marker) {
+            _resize: function(fitOption) {
 
                 if (this.markerClusterer.getMarkers().length > 0) {
                     if (this.debug) {
@@ -148,8 +148,10 @@
                         console.log("Recenter markers!");
                     }
                     this._refreshMap();
-                    this.markerClusterer.fitMapToMarkers();
-                    this.markerClusterer.repaint();
+                    if (fitOption) {
+                        this.markerClusterer.fitMapToMarkers();
+                        this.markerClusterer.repaint();
+                    }
 
                 } else {
                     if (this.debug) {
@@ -163,7 +165,6 @@
                     this.gMap.setZoom(8);
                     this.gMap.setCenter(catalunya);
                 }
-                this._refreshMap();
 
             },
 
@@ -171,9 +172,6 @@
              * refresh Map triggering resize function
              */
             _refreshMap: function() {
-                if (this.debug) {
-                    console.log("refreshing map!");
-                }
                 google.maps.event.trigger(this.gMap, 'resize');
             },
 
@@ -435,7 +433,7 @@
                         self.markerClusterer.addMarker(marker, true);
                     });
                 });
-                this._resize();
+                this._resize(true);
             },
 
             // Public function to removeBy given a callback function
@@ -447,7 +445,7 @@
                         self.markerClusterer.removeMarker(marker, true);
                     });
                 });
-                this._resize();
+                this._resize(true);
             },
 
             _getMarkers: function() {

@@ -13,7 +13,7 @@
     edifici.addAltres();
 
     //To fit bounds
-    map._resize();
+    map._resize(true);
 
     if (map._getMarkers().length() > 0) {
         $("#error").hide();
