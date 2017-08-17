@@ -187,6 +187,7 @@ h3:hover {
 #mapLlist li.header {
     background-color: #e2e2e2; /* Add a darker background color for headers */
     cursor: default; /* Change cursor style */
+    font-weight: bold;
 }
 
 #mapLlist li:hover:not(.header) {

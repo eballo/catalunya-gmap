@@ -42,93 +42,108 @@
             addCastells: function() {
                 var type = 'militar';
                 var category = 'castell';
-                this._addEdifici(1, aCastells, category, type);
+                var categoryName = 'Castells'
+                this._addEdifici(1, aCastells, category, categoryName, type);
             },
 
             addEpocaCarlina: function() {
                 var type = 'militar';
                 var category = 'epoca-carlina';
-                this._addEdifici(2, aEpocaCarlina, category, type);
+                var categoryName = 'Època Carlina';
+                this._addEdifici(2, aEpocaCarlina, category, categoryName, type);
             },
 
             addMuralles: function() {
                 var type = 'militar';
                 var category = 'muralles';
-                this._addEdifici(3, aMuralles, category, type);
+                var categoryName = 'Muralles';
+                this._addEdifici(3, aMuralles, category, categoryName, type);
             },
 
             addTorres: function() {
                 var type = 'militar';
                 var category = 'torre';
-                this._addEdifici(4, aTorres, category, type);
+                var categoryName = 'Torres';
+                this._addEdifici(4, aTorres, category, categoryName, type);
             },
 
             /** Civils */
             addCasaForta: function() {
                 var type = 'civil';
                 var category = 'casa-forta';
-                this._addEdifici(5, aCasaForta, category, type);
+                var categoryName = 'Cases Fortes';
+                this._addEdifici(5, aCasaForta, category, categoryName, type);
             },
 
             addPalau: function() {
                 var type = 'civil';
                 var category = 'palau';
-                this._addEdifici(6, aPalau, category, type);
+                var categoryName = 'Palaus';
+                this._addEdifici(6, aPalau, category, categoryName, type);
             },
 
             addPont: function() {
                 var type = 'civil';
                 var category = 'pont';
-                this._addEdifici(7, aPont, category, type);
+                var categoryName = 'Ponts';
+                this._addEdifici(7, aPont, category, categoryName, type);
             },
 
             addTorreColomer: function() {
                 var type = 'civil';
-                var category = 'torre-colomer';
-                this._addEdifici(8, aTorreColomer, category, type);
+                var category = 'torre-colomer'
+                var categoryName = 'Torres Colomer';
+                this._addEdifici(8, aTorreColomer, category, categoryName, type);
             },
 
             /** Religios */
             addBasilica: function() {
                 var type = 'religios';
                 var category = 'basilica';
-                this._addEdifici(9, aBasilica, category, type);
+                var categoryName = 'Basíliques';
+                this._addEdifici(9, aBasilica, category, categoryName, type);
             },
 
             addCatedral: function() {
                 var type = 'religios';
                 var category = 'catedral';
-                this._addEdifici(10, aCatedral, category, type);
+                var categoryName = 'Catedrals'
+                this._addEdifici(10, aCatedral, category, categoryName, type);
             },
 
             addErmita: function() {
                 var type = 'religios';
                 var category = 'ermita';
-                this._addEdifici(11, aErmita, category, type);
+                var categoryName = 'Ermites';
+                this._addEdifici(11, aErmita, category, categoryName, type);
             },
 
             addEsglesia: function() {
                 var type = 'religios';
                 var category = 'esglesia';
-                this._addEdifici(12, aEsglesia, category, type);
+                var categoryName = 'Esglésies';
+                this._addEdifici(12, aEsglesia, category, categoryName, type);
             },
 
             addEsglesiaFortificada: function() {
                 var type = 'religios';
                 var category = 'esglesia-fortificada';
-                this._addEdifici(13, aEsglesiaFortificada, category, type);
+                var categoryName = 'Esglésies fortificades'
+                this._addEdifici(13, aEsglesiaFortificada, category, categoryName, type);
             },
 
             addMonestir: function() {
                 var type = 'religios';
                 var category = 'monestir';
-                this._addEdifici(14, aMonestir, category, type);
+                var categoryName = "Monestirs";
+                this._addEdifici(14, aMonestir, category, categoryName, type);
             },
 
             addAltresLlocsInteres: function() {
                 var type = 'altres';
                 var category = 'altres-llocs-dinteres';
-                this._addEdifici(15, aAltres, category, type);
+                var categoryName = 'Altres llocs d\'Interés'
+                this._addEdifici(15, aAltres, category, categoryName, type);
             },
             /**
              * Icona 1
@@ -143,7 +158,7 @@
                 return this.serverHost + '/assets/images/gmap/' + type + '/' + category + '/' + category + this.styleType2 + '.png';
             },
 
-            _extract: function(edifici, category, x, type) {
+            _extract: function(edifici, category, categoryName, x, type) {
 
                 return {
                     id: category + x,
@@ -156,7 +171,8 @@
                     content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia, type),
                     icon: this._getIcon1(type, category),
                     icon2: this._getIcon2(type, category),
-                    category: category //(tipus edificacio)
+                    category: category, //(tipus edificacio Slug-Name)
+                    categoryName: categoryName
                 };
             },
 
@@ -189,18 +205,18 @@
 
             },
 
-            _addEdifici: function(id, arrayName, category, type) {
+            _addEdifici: function(id, arrayName, category, categoryName, type) {
 
                 for (var x = 0; x < arrayName.length; x++) {
 
-                    opt = this._extract(arrayName[x], category, x, type);
+                    opt = this._extract(arrayName[x], category, categoryName, x, type);
                     this.gMap.addMarker(opt);
                 }
                 var icon = this._getIcon1(type, category);
                 this.gMap.addIcon({
                     id: id,
                     visible: true,
-                    title: category,
+                    title: categoryName,
                     category: category,
                     icon: icon
                 });

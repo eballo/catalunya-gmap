@@ -314,7 +314,7 @@
                     this.arrayCategoriesText.add(opts.category);
                     //Create the li header
                     var liCategory = document.createElement("li");
-                    var category = opts.category;
+                    var category = opts.categoryName;
                     liCategory.innerHTML = category;
                     liCategory.setAttribute("class", opts.category + " header");
                     ul.appendChild(liCategory);
