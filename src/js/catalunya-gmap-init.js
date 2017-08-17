@@ -47,3 +47,16 @@ function search() {
         }
     }
 }
+
+/** Full Screen event */
+$(document).ready(
+    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
+        var isFullScreen = document.fullScreen ||
+            document.mozFullScreen ||
+            document.webkitIsFullScreen;
+        if (isFullScreen) {
+            $('#llistat').hide();
+        } else {
+            $('#llistat').show();
+        }
+    }));

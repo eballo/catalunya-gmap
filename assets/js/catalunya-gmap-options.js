@@ -9,7 +9,7 @@ MarkerClusterer.IMAGE_PATH = 'http://gmap.catalunyamedieval.dev/assets/images/gm
         serverHost: 'http://gmap.catalunyamedieval.dev/',
         styleType1: 7,
         styleType2: 6,
-        debug: true,
+        debug: false,
         useMarkerCluster: true
     }
 
