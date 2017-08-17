@@ -215,3 +215,9 @@ h3:hover {
   margin-bottom: 12px;
   /* Add some space below the input */
 }
+
+/** table - legend */
+table td img {
+  padding: 5px;
+  width: 30px;
+}

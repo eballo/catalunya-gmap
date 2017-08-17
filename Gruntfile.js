@@ -49,7 +49,8 @@ module.exports = function(grunt) {
           'assets/js/markerclusterer.min.js': ['src/js/markerclusterer.js'],
           'assets/js/catalunya-gmap-path.min.js': ['src/js/catalunya-gmap-path.js'],
           'assets/js/jquery-3.2.1.min.js': ['src/js/jquery-3.2.1.js'],
-          'assets/js/catalunya-gmap-init.min.js': ['src/js/catalunya-gmap-init.js']
+          'assets/js/catalunya-gmap-init.min.js': ['src/js/catalunya-gmap-init.js'],
+          'assets/js/bootstrap.min.js': ['src/js/bootstrap.js']
         }
       }
     },
