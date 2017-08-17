@@ -2,24 +2,25 @@
     var Icons = (function() {
 
         //Constructor function
-        function Icons(controlDiv, map, edifici) {
+        function Icons() {
             this.items = [];
         }
         Icons.prototype = {
 
             add: function(item) {
-
+                this.items.push(item);
             },
-
-            remove: function(item) {}
+            getItems: function() {
+                return this.items;
+            }
 
         };
         return Icons;
     }());
 
     //Factory Method
-    Icons.create = function(controlDiv, map, edifici) {
-        return new Icons(controlDiv, map, edifici);
+    Icons.create = function() {
+        return new Icons();
     };
 
     window.Icons = Icons;
