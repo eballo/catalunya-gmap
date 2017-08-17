@@ -46,7 +46,10 @@ module.exports = function(grunt) {
           'assets/js/catalunya-gmap-edifici.min.js': ['src/js/catalunya-gmap-edifici.js'],
           'assets/js/catalunya-gmap-catgmap.min.js': ['src/js/catalunya-gmap-catgmap.js'],
           'assets/js/catalunya-gmap-icons.min.js': ['src/js/catalunya-gmap-icons.js'],
-          'assets/js/markerclusterer.min.js': ['src/js/markerclusterer.js']
+          'assets/js/markerclusterer.min.js': ['src/js/markerclusterer.js'],
+          'assets/js/catalunya-gmap-path.min.js': ['src/js/catalunya-gmap-path.js'],
+          'assets/js/jquery-3.2.1.min.js': ['src/js/jquery-3.2.1.js'],
+          'assets/js/catalunya-gmap-init.min.js': ['src/js/catalunya-gmap-init.js']
         }
       }
     },
