@@ -97,7 +97,7 @@ MarkerClusterer.IMAGE_PATH = 'http://gmap.catalunyamedieval.dev/assets/images/gm
     //maps options
     gmap.MAP_OPTIONS = {
         center: catalunya,
-        zoom: 7,
+        zoom: 8,
         maxZoom: 20,
         minZoom: 4,
         streetViewControl: false,
@@ -116,11 +116,15 @@ MarkerClusterer.IMAGE_PATH = 'http://gmap.catalunyamedieval.dev/assets/images/gm
         zoomControl: true,
         zoomControlOptions: {
             style: google.maps.ZoomControlStyle.NORMAL,
-            position: google.maps.ControlPosition.TOP_LEFT
+            position: google.maps.ControlPosition.LEFT_TOP
         },
         scaleControl: true, // fixed to BOTTOM_RIGHT
         streetViewControl: true,
         streetViewControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+        },
+        fullscreenControl: true,
+        fullscreenControlOptions: {
             position: google.maps.ControlPosition.TOP_LEFT
         },
         mapTypeId: google.maps.MapTypeId.ROADMAP,
