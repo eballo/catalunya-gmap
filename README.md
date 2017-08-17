@@ -71,3 +71,4 @@ V4.0
 - Add Logo
 - Zoom Center
 - Add Search functionality
+- Remove llistat button when full screen
