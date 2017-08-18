@@ -1,8 +1,9 @@
 #mapContainer {
   position: relative;
-  width: 90%;
+  width: 100%;
   height: 700px;
-  margin: 20px auto;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 #mapContainer.fullscreen {
@@ -127,7 +128,14 @@ h3:hover {
   position: relative;
   float: left;
   height: 100%;
-  width: 59% !important;
+  /* Firefox */
+  width: -moz-calc(100% - 310px) !important;
+  /* WebKit */
+  width: -webkit-calc(100% - 310px) !important;
+  /* Opera */
+  width: -o-calc(100% - 310px) !important;
+  /* Standard */
+  width: calc(100% - 310px) !important;
 }
 
 .primaryDiv_big {
@@ -140,26 +148,24 @@ h3:hover {
 #secondaryDiv {
   display: none;
   position: relative;
-  padding-top: 15px;
   float: left;
   height: 100%;
-  width: 39%;
+  width: 300px;
   margin: 0px;
+  padding-right: 15px;
 }
 
 #llista {
   height: 650px;
-  margin: 0px 5px 0 10px;
   overflow: auto;
-  width: auto;
+  width: 300px;
   /* Size and position */
-  padding: 0;
   cursor: pointer;
   outline: none;
+  padding: 0;
 }
 
 #mapLlist {
-
   text-align: left;
   list-style-type: none;
   padding: 0;
@@ -184,16 +190,20 @@ h3:hover {
   display: block;
   /* Make it into a block element to fill the whole list */
 }
+
 #mapLlist li.header {
-    background-color: #e2e2e2; /* Add a darker background color for headers */
-    cursor: default; /* Change cursor style */
-    font-weight: bold;
+  background-color: #e2e2e2;
+  /* Add a darker background color for headers */
+  cursor: default;
+  /* Change cursor style */
+  font-weight: bold;
 }
 
 #mapLlist li:hover:not(.header) {
   background-color: #eee;
   /* Add a hover effect to all links, except for headers */
 }
+
 
 /** Search */
 
@@ -204,7 +214,7 @@ h3:hover {
   /* Position the search icon */
   background-repeat: no-repeat;
   /* Do not repeat the icon image */
-  width: 100%;
+  width: 300px;
   /* Full-width */
   font-size: 14px;
   /* Increase font-size */
@@ -216,7 +226,9 @@ h3:hover {
   /* Add some space below the input */
 }
 
+
 /** table - legend */
+
 table td img {
   padding: 5px;
   width: 30px;
