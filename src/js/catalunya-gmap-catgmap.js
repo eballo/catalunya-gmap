@@ -47,7 +47,7 @@
                 // Set CSS for the control interior.
                 var controlText = document.createElement('div');
                 controlText.id = "visibleBuildings";
-                controlText.innerHTML = '<img src="' + this.serverHost + '/assets/images/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
+                controlText.innerHTML = '<img src="' + this.serverHost + '/assets/images/catalunya-gmap/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
                 controlUI.appendChild(controlText);
 
                 this.gMap.controls[google.maps.ControlPosition.RIGHT_TOP].push(removeAllIconsControlDiv);
@@ -56,10 +56,10 @@
                 google.maps.event.addDomListener(controlUI, 'click', function() {
                     if (visibleBuildings) {
                         visibleBuildings = false;
-                        $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/gmap/05.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+                        $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/05.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
                     } else {
                         visibleBuildings = true;
-                        $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+                        $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
                     }
                     self._cangeVisibility(visibleBuildings);
                 });
@@ -88,7 +88,7 @@
 
                 //Set CSS for the control border
                 var logo = document.createElement('img');
-                logo.src = this.serverHost + '/assets/images/logo/logoCM-red-mini.png';
+                logo.src = this.serverHost + '/assets/images/catalunya-gmap/logo/logoCM-red-mini.png';
                 logo.style.cursor = 'pointer';
                 logoControlDiv.appendChild(logo);
 
@@ -116,7 +116,7 @@
                 // Set CSS for the control interior.
                 var controlText = document.createElement('div');
                 controlText.id = "llistat";
-                controlText.innerHTML = '<img src="' + this.serverHost + '/assets/images/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >';
+                controlText.innerHTML = '<img src="' + this.serverHost + '/assets/images/catalunya-gmap/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >';
                 controlUI.appendChild(controlText);
 
                 this.gMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(fullScreenControlDiv);
@@ -130,10 +130,10 @@
 
                     if (self.fullScreen) {
                         self.fullScreen = false;
-                        $("#llistat").html('<img src="' + self.serverHost + '/assets/images/gmap/04.png" with="42" height="42" alt="Ocultar llistat" >');
+                        $("#llistat").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/04.png" with="42" height="42" alt="Ocultar llistat" >');
                     } else {
                         self.fullScreen = true;
-                        $("#llistat").html('<img src="' + self.serverHost + '/assets/images/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >');
+                        $("#llistat").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >');
                     }
 
                 });
