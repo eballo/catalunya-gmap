@@ -149,13 +149,13 @@
              * Icona 1
              */
             _getIcon1: function(type, category) {
-                return this.serverHost + '/assets/images/gmap/' + type + '/' + category + '/' + category + this.styleType1 + '.png';
+                return this.serverHost + '/assets/images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + this.styleType1 + '.png';
             },
             /**
              * Icona 2
              */
             _getIcon2: function(type, category) {
-                return this.serverHost + '/assets/images/gmap/' + type + '/' + category + '/' + category + this.styleType2 + '.png';
+                return this.serverHost + '/assets/images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + this.styleType2 + '.png';
             },
 
             _extract: function(edifici, category, categoryName, x, type) {

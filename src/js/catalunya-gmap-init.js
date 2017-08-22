@@ -49,7 +49,9 @@ function search() {
 }
 
 /** Full Screen event */
-
+/**
+ * On full screen we remove the list icon
+ */
 $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
     var isFullScreen = document.fullScreen ||
         document.mozFullScreen ||
