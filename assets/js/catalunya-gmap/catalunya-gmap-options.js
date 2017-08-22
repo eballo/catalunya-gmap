@@ -2,11 +2,11 @@
  * Catalunya options for GoogleMaps
  *
  */
-MarkerClusterer.IMAGE_PATH = 'http://demo.catalunyamedieval.es/gmap4/assets/images/gmap/m';
+MarkerClusterer.IMAGE_PATH = 'https://gmap.catalunyamedieval.dev/assets/images/gmap/m';
 (function(window, google, gmap) {
 
     gmap.CONFIG_OPTIONS = {
-        serverHost: 'http://demo.catalunyamedieval.es/gmap4/',
+        serverHost: 'https://gmap.catalunyamedieval.dev/',
         styleType1: 7,
         styleType2: 6,
         debug: false,

@@ -51,15 +51,15 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-          'assets/js/catalunya-gmap-list.min.js': ['src/js/catalunya-gmap-list.js'],
-          'assets/js/catalunya-gmap-edifici.min.js': ['src/js/catalunya-gmap-edifici.js'],
-          'assets/js/catalunya-gmap-catgmap.min.js': ['src/js/catalunya-gmap-catgmap.js'],
-          'assets/js/catalunya-gmap-icons.min.js': ['src/js/catalunya-gmap-icons.js'],
-          'assets/js/markerclusterer.min.js': ['src/js/markerclusterer.js'],
-          'assets/js/catalunya-gmap-path.min.js': ['src/js/catalunya-gmap-path.js'],
-          'assets/js/jquery-3.2.1.min.js': ['src/js/jquery-3.2.1.js'],
-          'assets/js/catalunya-gmap-init.min.js': ['src/js/catalunya-gmap-init.js'],
-          'assets/js/bootstrap.min.js': ['src/js/bootstrap.js']
+          'assets/js/catalunya-gmap/catalunya-gmap-list.min.js': ['src/js/catalunya-gmap-list.js'],
+          'assets/js/catalunya-gmap/catalunya-gmap-edifici.min.js': ['src/js/catalunya-gmap-edifici.js'],
+          'assets/js/catalunya-gmap/catalunya-gmap-catgmap.min.js': ['src/js/catalunya-gmap-catgmap.js'],
+          'assets/js/catalunya-gmap/catalunya-gmap-icons.min.js': ['src/js/catalunya-gmap-icons.js'],
+          'assets/js/catalunya-gmap/markerclusterer.min.js': ['src/js/markerclusterer.js'],
+          'assets/js/catalunya-gmap/catalunya-gmap-path.min.js': ['src/js/catalunya-gmap-path.js'],
+          'assets/js/catalunya-gmap/jquery-3.2.1.min.js': ['src/js/jquery-3.2.1.js'],
+          'assets/js/catalunya-gmap/catalunya-gmap-init.min.js': ['src/js/catalunya-gmap-init.js'],
+          'assets/js/catalunya-gmap/bootstrap.min.js': ['src/js/bootstrap.js']
         }
       }
     },
@@ -70,19 +70,19 @@ module.exports = function(grunt) {
       main: {
         files: [{
             src: ['src/js/catalunya-gmap-init.js'],
-            dest: 'assets/js/catalunya-gmap-init.js'
+            dest: 'assets/js/catalunya-gmap/catalunya-gmap-init.js'
           },
           {
             src: ['src/js/<%= grunt.config.get("configuration") %>'],
-            dest: 'assets/js/catalunya-gmap-options.js'
+            dest: 'assets/js/catalunya-gmap/catalunya-gmap-options.js'
           },
           {
             src: ['src/js/catalunya-gmap-path.js'],
-            dest: 'assets/js/catalunya-gmap-path.js'
+            dest: 'assets/js/catalunya-gmap/catalunya-gmap-path.js'
           },
           {
             src: ['src/js/jquery-3.1.1.min.js'],
-            dest: 'assets/js/jquery-3.1.1.min.js'
+            dest: 'assets/js/catalunya-gmap/jquery-3.1.1.min.js'
           },
         ],
       },
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
     cssmin: {
       target: {
         files: [{
-          dest: 'assets/css/catalunya-gmap.css',
+          dest: 'assets/css/catalunya-gmap/catalunya-gmap.css',
           src: ['<%= grunt.config.get("style") %>'],
           ext: '.min.css'
         }]
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
           archive: 'dist/gmap-<%= grunt.config.get("environment") %>.zip'
         },
         files: [
-          {expand: true, cwd: 'assets/', src: ['**'], dest: 'gmap/'} // makes all src relative to cwd
+          {expand: true, cwd: 'assets/', src: ['**'], dest: 'gmap/assets'} // makes all src relative to cwd
         ]
       }
     }
