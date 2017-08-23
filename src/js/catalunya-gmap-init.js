@@ -29,10 +29,10 @@
 /**
  * Search function
  */
-function search() {
+function searchLlista() {
     // Declare variables
     var input, filter, ul, li, value, i;
-    input = document.getElementById('search');
+    input = document.getElementById('search-llista');
     filter = input.value.toUpperCase();
     ul = document.getElementById("mapLlist");
     li = ul.getElementsByTagName('li');

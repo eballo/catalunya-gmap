@@ -2,7 +2,7 @@
  * Catalunya options for GoogleMaps
  *
  */
-MarkerClusterer.IMAGE_PATH = 'https://www.catalunyamedieval.es/wp-content/themes/catalunyamedieval/images/catalunya-gmap/gmap/m';
+MarkerClusterer.IMAGE_PATH = 'https://www.catalunyamedieval.es/wp-content/themes/catalunyamedieval/assets/images/catalunya-gmap/gmap/m';
 (function(window, google, gmap) {
 
     gmap.CONFIG_OPTIONS = {

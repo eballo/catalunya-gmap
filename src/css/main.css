@@ -25,12 +25,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-#container {
-	height: 800px;
-	width: 100%;
-
-}
-
 .description {
 	margin-left: auto;
 	margin-right: auto;

@@ -129,7 +129,7 @@ module.exports = function(grunt) {
   grunt.registerTask('work-compress',['work','compress']);
   grunt.registerTask('prod-compress',['prod','compress']);
 
-  grunt.registerTask('release', ['demo-compress','work-compress','prod-compress']);
+  grunt.registerTask('release', ['demo-compress','work-compress','prod-compress','default']);
 
   grunt.registerTask('default', ['gmap']);
 };

@@ -1,7 +1,13 @@
+#container {
+	height: 800px;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
 #mapContainer {
   position: relative;
-  width: 100%;
-  height: 700px;
+  /** width: 100%; */
+  height: 800px;
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -30,6 +36,7 @@
 /** sobrescriure styles google */
 
 .gm-style-iw {
+  text-align: center;
   top: 15px !important;
   left: 15px !important;
   height: auto !important;
@@ -68,7 +75,6 @@
   float: left;
   text-align: left;
   font-family: 'Droid Serif', serif;
-  ;
   font-size: 12px;
   font-weight: 100%;
   padding: 2px;
@@ -119,6 +125,8 @@ h3:hover {
 .infoWindowz img {
   margin-top: 10px;
   border: 1px solid grey;
+  vertical-align: middle;
+
 }
 
 
@@ -152,11 +160,11 @@ h3:hover {
   height: 100%;
   width: 300px;
   margin: 0px;
-  padding-right: 15px;
+  /*padding-right: 15px;*/
 }
 
 #llista {
-  height: 650px;
+  height: 740px;
   overflow: auto;
   width: 300px;
   /* Size and position */
@@ -207,14 +215,12 @@ h3:hover {
 
 /** Search */
 
-#search {
+input#search-llista {
   background-image: url('../../images/catalunya-gmap/search.png');
   /* Add a search icon to input */
   background-position: 10px 12px;
   /* Position the search icon */
   background-repeat: no-repeat;
-  /* Do not repeat the icon image */
-  width: 300px;
   /* Full-width */
   font-size: 14px;
   /* Increase font-size */
@@ -224,8 +230,11 @@ h3:hover {
   /* Add a grey border */
   margin-bottom: 12px;
   /* Add some space below the input */
+  width: 100%;
+  width: -webkit-fill-available;
+  width: -moz-available;  /* Firefox/Gecko */
+  /* Full-width */
 }
-
 
 /** table - legend */
 
