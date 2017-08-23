@@ -208,7 +208,7 @@ h3:hover {
 /** Search */
 
 #search {
-  background-image: url('../images/search.png');
+  background-image: url('../../images/catalunya-gmap/search.png');
   /* Add a search icon to input */
   background-position: 10px 12px;
   /* Position the search icon */
