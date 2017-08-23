@@ -62,6 +62,8 @@
                         $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
                     }
                     self._cangeVisibility(visibleBuildings);
+                    self.markerClusterer.resetViewport_();
+                    self.markerClusterer.redraw_();
                 });
             },
             /**
@@ -70,8 +72,9 @@
             _cangeVisibility: function(visibility) {
                 var arrayIcons = this.icons.getItems();
                 var self = this;
-                arrayIcons.forEach(function(category) {
-                    self._setVisible(category, visibility);
+                arrayIcons.forEach(function(edifici) {
+                    edifici.visible = visibility;
+                    self._setVisible(edifici.category, visibility);
                 });
             },
 
@@ -246,7 +249,7 @@
 
                 this._createIcon(edifici);
                 //Add tot the list
-                this.icons.add(edifici.category);
+                this.icons.add(edifici);
 
             },
 
