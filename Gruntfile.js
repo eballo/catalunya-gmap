@@ -59,6 +59,7 @@ module.exports = function(grunt) {
           'assets/js/catalunya-gmap/catalunya-gmap-path.min.js': ['src/js/catalunya-gmap-path.js'],
           'assets/js/catalunya-gmap/jquery-3.2.1.min.js': ['src/js/jquery-3.2.1.js'],
           'assets/js/catalunya-gmap/catalunya-gmap-init.min.js': ['src/js/catalunya-gmap-init.js'],
+          'assets/js/catalunya-gmap/catalunya-gmap-extra.min.js': ['src/js/catalunya-gmap-extra.js'],
           'assets/js/catalunya-gmap/bootstrap.min.js': ['src/js/bootstrap.js']
         }
       }
@@ -69,10 +70,6 @@ module.exports = function(grunt) {
       },
       main: {
         files: [{
-            src: ['src/js/catalunya-gmap-init.js'],
-            dest: 'assets/js/catalunya-gmap/catalunya-gmap-init.js'
-          },
-          {
             src: ['src/js/<%= grunt.config.get("configuration") %>'],
             dest: 'assets/js/catalunya-gmap/catalunya-gmap-options.js'
           },
