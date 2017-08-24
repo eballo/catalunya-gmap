@@ -207,19 +207,20 @@
 
             _addEdifici: function(id, arrayName, category, categoryName, type) {
 
-                for (var x = 0; x < arrayName.length; x++) {
-
-                    opt = this._extract(arrayName[x], category, categoryName, x, type);
-                    this.gMap.addMarker(opt);
+                if (arrayName.length > 0) {
+                    for (var x = 0; x < arrayName.length; x++) {
+                        opt = this._extract(arrayName[x], category, categoryName, x, type);
+                        this.gMap.addMarker(opt);
+                    }
+                    var icon = this._getIcon1(type, category);
+                    this.gMap.addIcon({
+                        id: id,
+                        visible: true,
+                        title: categoryName,
+                        category: category,
+                        icon: icon
+                    });
                 }
-                var icon = this._getIcon1(type, category);
-                this.gMap.addIcon({
-                    id: id,
-                    visible: true,
-                    title: categoryName,
-                    category: category,
-                    icon: icon
-                });
 
             },
 
