@@ -1,4 +1,1049 @@
-var aCasaForta = [];
+var aCasaForta = [{
+    "title": "Ajuntament d\u2019Arnes ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/ajuntament-darnes-terra-alta\/",
+    "position": {
+        "lat": "40.909915",
+        "long": "0.260738"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/ajuntament-darnes-galeria\/dynamic\/02-ajuntament-darnes-130504_014bisblog.jpg-nggid0513415-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Ajuntament d&#039;Arnes - Malauradament, \u00e9s dif\u00edcil fer una fotografia &quot;en condicions&quot;. Els vehicles aparcats, com una plaga, escampats per tot arreu, ho impedeixen .\" title=\"ajuntament-darnes-galeria\" class=\"wp-post-image ngg-image-13415 \" \/>"
+}, {
+    "title": "Antiga pres\u00f3 d\u2019Horta ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/antiga-preso-dhorta-horta-de-sant-joan-terra-alta\/",
+    "position": {
+        "lat": "40.953871",
+        "long": "0.316882"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/antiga-preso-dhorta-de-sant-joan-galeria\/dynamic\/03-antiga-preso-dhorta-130504_503bisblog.jpg-nggid0513336-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Antiga pres\u00f3 d&#039;Horta de Sant Joan\" title=\"antiga-preso-dhorta-de-sant-joan-galeria\" class=\"wp-post-image ngg-image-13336 \" \/>"
+}, {
+    "title": "Ca La Pruna ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/ca-la-pruna-pals-baix-emporda\/",
+    "position": {
+        "lat": "41.970474",
+        "long": "3.144429"
+    },
+    "municipi": "Pals",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/ca-la-pruna-galeria\/dynamic\/ca-la-pruna-100603_506.jpg-nggid046648-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Ca La Pruna\" title=\"ca-la-pruna-galeria\" class=\"wp-post-image ngg-image-6648 \" \/>"
+}, {
+    "title": "Ca l\u2019Amar de la Torre ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/ca-lamar-de-la-torre-arenys-de-munt-maresme\/",
+    "position": {
+        "lat": "41.600727",
+        "long": "2.54599"
+    },
+    "municipi": "Arenys de Munt",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/ca-lamar-de-la-torre\/dynamic\/ca-lamat-de-la-torre-arenys-de-munt-080216_501.jpg-nggid048111-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"ca-lamat-de-la-torre-arenys-de-munt-080216_501\" title=\"ca-lamar-de-la-torre\" class=\"wp-post-image ngg-image-8111 \" \/>"
+}, {
+    "title": "Cal Llossaire ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/cal-llossaire-alt-emporda\/",
+    "position": {
+        "lat": "42.25481",
+        "long": "2.888873"
+    },
+    "municipi": "Vilanant",
+    "poblacio": "Vilanant",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/cal-llossaire-vilanant\/dynamic\/cal-llossaire-vilanant-090624_503.jpg-nggid041464-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"cal-llossaire-vilanant-090624_503\" title=\"cal-llossaire-vilanant\" class=\"wp-post-image ngg-image-1464 \" \/>"
+}, {
+    "title": "Cal Marqu\u00e8s ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/cal-marques-pau-alt-emporda\/",
+    "position": {
+        "lat": "42.315613",
+        "long": "3.116603"
+    },
+    "municipi": "Pau",
+    "poblacio": "Pau",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/cal-marques-pau\/dynamic\/cal-marques-pau-090618_501bis.jpg-nggid041465-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"cal-marques-pau-090618_501bis\" title=\"cal-marques-pau\" class=\"wp-post-image ngg-image-1465 \" \/>"
+}, {
+    "title": "Cal Ribalta de la Fortesa ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/cal-ribalta-de-la-fortesa-sant-pere-sallavinera-anoia\/",
+    "position": {
+        "lat": "41.747008",
+        "long": "1.537831"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/cal-ribalta-de-la-fortesa-galeria\/dynamic\/02-cal-ribalta-de-la-fortesa-131005_015bisblog.jpg-nggid0515144-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Cal Ribalta de la Fortesa \u2013 Sant Pere Sallavinera\" title=\"cal-ribalta-de-la-fortesa-galeria\" class=\"wp-post-image ngg-image-15144 \" \/>"
+}, {
+    "title": "Can Cabanyes ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-cabanyes-maresme\/",
+    "position": {
+        "lat": "41.56496",
+        "long": "2.411024"
+    },
+    "municipi": "Argentona",
+    "poblacio": "Argentona",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/can-cabanyes\/dynamic\/can-cabanyes-argentona-080202_505.jpg-nggid041433-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"can-cabanyes-argentona-080202_505\" title=\"can-cabanyes\" class=\"wp-post-image ngg-image-1433 \" \/>"
+}, {
+    "title": "Can F\u00e0brega ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-fabrega-cruilles-monells-i-sant-sadurni-de-lheura-baix-emporda\/",
+    "position": {
+        "lat": "41.975311",
+        "long": "3.000365"
+    },
+    "municipi": "Cru\u00eflles, Monells i Sant Sadurn\u00ed de l'Heura",
+    "poblacio": "Monells",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Fabrega-Monells-161015_2004BISBLOG-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Fabrega-Monells-161015_2004BISBLOG-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Fabrega-Monells-161015_2004BISBLOG-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Fabrega-Monells-161015_2004BISBLOG-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Can Figa ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-figa-torrent-baix-emporda\/",
+    "position": {
+        "lat": "41.959408",
+        "long": "3.125044"
+    },
+    "municipi": "Torrent",
+    "poblacio": "Torrent\u00ed",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/can-figa-torrent\/dynamic\/can-figa-torrent-100603_501.jpg-nggid046651-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"can-figa-torrent-100603_501\" title=\"can-figa-torrent\" class=\"wp-post-image ngg-image-6651 \" \/>"
+}, {
+    "title": "Can Frigola ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-frigola-cassa-de-la-selva-girones\/",
+    "position": {
+        "lat": "41.887901",
+        "long": "2.873931"
+    },
+    "municipi": "Cass\u00e0 de la Selva",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/can-frigola-flaca\/dynamic\/can-frigola-100130_503bis.jpg-nggid047765-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"can-frigola-100130_503bis\" title=\"can-frigola-flaca\" class=\"wp-post-image ngg-image-7765 \" \/>"
+}, {
+    "title": "Can Mallol de la Torre ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-mallol-de-la-torre-arenys-de-munt-maresme\/",
+    "position": {
+        "lat": "41.60627",
+        "long": "2.542222"
+    },
+    "municipi": "Arenys de Munt",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/can-mallol-de-la-torre\/dynamic\/can-mallol-de-la-torre-arenys-de-munt-080216_502.jpg-nggid048116-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"can-mallol-de-la-torre-arenys-de-munt-080216_502\" title=\"can-mallol-de-la-torre\" class=\"wp-post-image ngg-image-8116 \" \/>"
+}, {
+    "title": "Can Mas Grau ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-mas-grau-riudellots-de-la-selva-selva\/",
+    "position": {
+        "lat": "41.89822",
+        "long": "2.80468"
+    },
+    "municipi": "Riudellots de la Selva",
+    "poblacio": "Riudellots de la Selva",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Can-Masgrau-Riudellots-170225_2002-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Can-Masgrau-Riudellots-170225_2002-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Can-Masgrau-Riudellots-170225_2002-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Can-Masgrau-Riudellots-170225_2002-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Can Milans Perejordi ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-milans-perejordi-caldes-destrac-maresme\/",
+    "position": {
+        "lat": "41.572224",
+        "long": "2.526389"
+    },
+    "municipi": "Caldes d'Estrac",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/can-milans-perejordi\/dynamic\/can-milans-del-bosch-caldes-destrac-071222_506bisblog.jpg-nggid048277-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"can-milans-del-bosch-caldes-destrac-071222_506bisblog\" title=\"can-milans-perejordi\" class=\"wp-post-image ngg-image-8277 \" \/>"
+}, {
+    "title": "Can Sal\u00f3 de Casavells ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-salo-de-casavells-corca-baix-emporda\/",
+    "position": {
+        "lat": "42.00003",
+        "long": "3.032056"
+    },
+    "municipi": "Cor\u00e7\u00e0",
+    "poblacio": "Casavells",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Salo-de-Casavells-161001_2010-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Salo-de-Casavells-161001_2010-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Salo-de-Casavells-161001_2010-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Salo-de-Casavells-161001_2010-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Can Savall de Planils ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-savall-de-planils-corca-baix-emporda\/",
+    "position": {
+        "lat": "41.997769",
+        "long": "2.993183"
+    },
+    "municipi": "Cor\u00e7\u00e0",
+    "poblacio": "Planils, un ve\u00efnat de Cass\u00e0 de Pelr\u00e0s",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Savall-de-Planils-161001_2020-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Savall-de-Planils-161001_2020-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Savall-de-Planils-161001_2020-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Can-Savall-de-Planils-161001_2020-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Can Savalls ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-savalls-calonge-baix-emporda\/",
+    "position": {
+        "lat": "41.86198",
+        "long": "3.073471"
+    },
+    "municipi": "Calonge",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/can-savalls-calonge\/dynamic\/can-savalls-calonge-100522_505.jpg-nggid046654-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"can-savalls-calonge-100522_505\" title=\"can-savalls-calonge\" class=\"wp-post-image ngg-image-6654 \" \/>"
+}, {
+    "title": "Can Vinyals ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/can-vinyals-flaca-girones\/",
+    "position": {
+        "lat": "42.054626",
+        "long": "2.964018"
+    },
+    "municipi": "Fla\u00e7\u00e0",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/can-vinyals-flaca\/dynamic\/can-vinyals-flaca-090926_701.jpg-nggid047775-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"can-vinyals-flaca-090926_701\" title=\"can-vinyals-flaca\" class=\"wp-post-image ngg-image-7775 \" \/>"
+}, {
+    "title": "Casa Caramany ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-caramany-sant-pere-pescador-alt-emporda\/",
+    "position": {
+        "lat": "42.18866",
+        "long": "3.082242"
+    },
+    "municipi": "Sant Pere Pescador",
+    "poblacio": "Sant Pere Pescador",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-caramany-sant-pere-pescador\/dynamic\/casa-caramany-090528_517bis.jpg-nggid041469-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casa-caramany-090528_517bis\" title=\"casa-caramany-sant-pere-pescador\" class=\"wp-post-image ngg-image-1469 \" \/>"
+}, {
+    "title": "Casa de Santa Anna de Merola ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-de-santa-anna-de-merola-pineda-de-mar-maresme\/",
+    "position": {
+        "lat": "41.631919",
+        "long": "2.669189"
+    },
+    "municipi": "Pineda de Mar",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-de-santa-anna-de-merola-galeria\/dynamic\/02-casa-de-santa-anna-de-merola-131130_513.jpg-nggid0515703-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Casa de Santa Anna de Merola \u2013 Pineda de Mar\" title=\"casa-de-santa-anna-de-merola-galeria\" class=\"wp-post-image ngg-image-15703 \" \/>"
+}, {
+    "title": "Casa del Delme ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-del-delme-ventallo-alt-emporda\/",
+    "position": {
+        "lat": "42.148975",
+        "long": "3.026894"
+    },
+    "municipi": "Ventall\u00f3",
+    "poblacio": "Ventall\u00f3",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-del-delme-ventallo\/dynamic\/casa-del-delme-ventallo-090801_507bis.jpg-nggid041471-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casa-del-delme-ventallo-090801_507bis\" title=\"casa-del-delme-ventallo\" class=\"wp-post-image ngg-image-1471 \" \/>"
+}, {
+    "title": "Casa del Marqu\u00e8s de Camps ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-del-marques-de-camps-salt-girones\/",
+    "position": {
+        "lat": "41.973665",
+        "long": "2.776117"
+    },
+    "municipi": "Salt",
+    "poblacio": "Rodalies de Salt",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/11-Casa-Marques-de-Camps-160709_2020-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/11-Casa-Marques-de-Camps-160709_2020-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/11-Casa-Marques-de-Camps-160709_2020-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/11-Casa-Marques-de-Camps-160709_2020-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Casa del Senyor ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-del-senyor-gelida-alt-penedes\/",
+    "position": {
+        "lat": "41.440102",
+        "long": "1.865782"
+    },
+    "municipi": "Gelida",
+    "poblacio": "Gelida",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-del-senyor-gelida\/dynamic\/casa-del-senyor-gelida-070113_11bisblog.jpg-nggid043306-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"OLYMPUS DIGITAL CAMERA\" title=\"casa-del-senyor-gelida\" class=\"wp-post-image ngg-image-3306 \" \/>"
+}, {
+    "title": "Casa del Senyor del Mal \u00das ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-del-senyor-del-mal-us-calonge-baix-emporda\/",
+    "position": {
+        "lat": "41.863468",
+        "long": "3.074483"
+    },
+    "municipi": "Calonge",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-del-senyor-del-mal-us-calonge\/dynamic\/casa-del-senyor-del-mas-us-100506_501.jpg-nggid046656-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casa-del-senyor-del-mas-us-100506_501\" title=\"casa-del-senyor-del-mal-us-calonge\" class=\"wp-post-image ngg-image-6656 \" \/>"
+}, {
+    "title": "Casa dels Templers ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-dels-templers-aiguaviva-girones\/",
+    "position": {
+        "lat": "41.943459",
+        "long": "2.786598"
+    },
+    "municipi": "Aiguaviva",
+    "poblacio": "Aiguaviva",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-dels-templers-aiguaviva\/dynamic\/casa-dels-templers-090919_508.jpg-nggid047782-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casa-dels-templers-090919_508\" title=\"casa-dels-templers-aiguaviva\" class=\"wp-post-image ngg-image-7782 \" \/>"
+}, {
+    "title": "Casa Forta de la Santa Creu ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-forta-de-la-santa-creu-artesa-de-segre-noguera\/",
+    "position": {
+        "lat": "42.006879",
+        "long": "1.142262"
+    },
+    "municipi": "Artesa de Segre",
+    "poblacio": "",
+    "provincia": "Lleida",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Casa-Forta-la-Santa-Creu-160304_2032-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Casa-Forta-la-Santa-Creu-160304_2032-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Casa-Forta-la-Santa-Creu-160304_2032-144x144.jpg 144w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Casa forta de Miravet ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-forta-de-miravet\/",
+    "position": {
+        "lat": "42.108574",
+        "long": "0.840451"
+    },
+    "municipi": "Castell de Mur",
+    "poblacio": "",
+    "provincia": "Lleida",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-forta-de-miravet\/dynamic\/casa-forta-de-miravet-120316_503.jpg-nggid044973-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casa-forta-de-miravet-120316_503\" title=\"casa-forta-de-miravet\" class=\"wp-post-image ngg-image-4973 \" \/>"
+}, {
+    "title": "Casa forta de Torreferrada ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-forta-de-torreferrada-santa-eulalia-de-riuprimer-osona\/",
+    "position": {
+        "lat": "41.911842",
+        "long": "2.174797"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-forta-torreferrada\/dynamic\/casa-forta-torreferrada-080621_501.jpg-nggid0510046-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casa-forta-torreferrada-080621_501\" title=\"casa-forta-torreferrada\" class=\"wp-post-image ngg-image-10046 \" \/>"
+}, {
+    "title": "Casa forta del Mas Pontons ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-forta-del-mas-pontons\/",
+    "position": {
+        "lat": "41.43536",
+        "long": "1.536426"
+    },
+    "municipi": "Pontons",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-forta-del-mas-pontons\/dynamic\/castell-del-mas-pontons-061230_502.jpg-nggid03276-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"castell-del-mas-pontons-061230_502\" title=\"casa-forta-del-mas-pontons\" class=\"wp-post-image ngg-image-276 \" \/>"
+}, {
+    "title": "Casa G\u00f2tica ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-gotica-argentona-maresme\/",
+    "position": {
+        "lat": "41.553864",
+        "long": "2.400558"
+    },
+    "municipi": "Argentona",
+    "poblacio": "Argentona",
+    "provincia": "Barcelona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Casa-Gotica-Argentona-170603_2005BISBLOG-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Casa-Gotica-Argentona-170603_2005BISBLOG-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Casa-Gotica-Argentona-170603_2005BISBLOG-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Casa-Gotica-Argentona-170603_2005BISBLOG-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Casa Pairal del Noguer de Seguer\u00f3 ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-pairal-del-noguer-de-seguero-la-garrotxa\/",
+    "position": {
+        "lat": "42.242313",
+        "long": "2.747365"
+    },
+    "municipi": "Beuda",
+    "poblacio": "Segurer\u00f3",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-pairal-del-noguer-de-seguero\/dynamic\/casa-pairal-del-noguer-de-seguero-110915_507.jpg-nggid03935-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casa-pairal-del-noguer-de-seguero-110915_507\" title=\"casa-pairal-del-noguer-de-seguero\" class=\"wp-post-image ngg-image-935 \" \/>"
+}, {
+    "title": "Casa Periques ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-periques-puig-reig-bergueda\/",
+    "position": {
+        "lat": "41.977138",
+        "long": "1.885189"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Casa-Periques-140830_2003BISBLOG-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" \/>"
+}, {
+    "title": "Casa Portol\u00e0 ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-portola-arties-val-daran\/",
+    "position": {
+        "lat": "42.700672",
+        "long": "0.872541"
+    },
+    "municipi": "Naut Aran",
+    "poblacio": "Arties",
+    "provincia": "Lleida",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-portola\/dynamic\/casa-portola-arties-101021_504.jpg-nggid042787-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casa-portola-arties-101021_504\" title=\"casa-portola\" class=\"wp-post-image ngg-image-2787 \" \/>"
+}, {
+    "title": "Casa Tristany ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casa-tristany-pinos-solsones\/",
+    "position": {
+        "lat": "41.87065",
+        "long": "1.540239"
+    },
+    "municipi": "Pin\u00f3s",
+    "poblacio": "",
+    "provincia": "Lleida",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/06-Casa-Tristany-Pinos-170610_2007BISBLOG-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/06-Casa-Tristany-Pinos-170610_2007BISBLOG-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/06-Casa-Tristany-Pinos-170610_2007BISBLOG-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/06-Casa-Tristany-Pinos-170610_2007BISBLOG-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Casal de Bellpuig ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casal-de-bellpuig-sant-julia-de-vilatorta-osona\/",
+    "position": {
+        "lat": "41.920376",
+        "long": "2.321852"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/castell-de-bellpuig-galeria\/dynamic\/03-casal-de-bellpuig-080705_516.jpg-nggid049606-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Castell de Bellpuig\" title=\"castell-de-bellpuig-galeria\" class=\"wp-post-image ngg-image-9606 \" \/>"
+}, {
+    "title": "Casal de Blancafort ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casal-de-blancafort-la-garriga-valles-oriental\/",
+    "position": {
+        "lat": "41.699814",
+        "long": "2.283507"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/castell-de-blancafort-la-garriga\/dynamic\/casal-de-blancafort-la-garriga-080429_510.jpg-nggid0510259-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casal-de-blancafort-la-garriga-080429_510\" title=\"castell-de-blancafort-la-garriga\" class=\"wp-post-image ngg-image-10259 \" \/>"
+}, {
+    "title": "Casal de Mont-ral ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casal-de-mont-ral-gurb-osona\/",
+    "position": {
+        "lat": "41.952003",
+        "long": "2.243831"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casa-forta-de-mont-ral\/dynamic\/casa-forta-de-mont-ral-080808_001.jpg-nggid049979-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"OLYMPUS DIGITAL CAMERA\" title=\"casa-forta-de-mont-ral\" class=\"wp-post-image ngg-image-9979 \" \/>"
+}, {
+    "title": "Casal de Mont-rodon ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casal-de-mont-rodon-tona-osona\/",
+    "position": {
+        "lat": "41.864944",
+        "long": "2.266684"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casal-de-mont-rodon\/dynamic\/casal-de-mont-rodon_tona-080531_504.jpg-nggid049984-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casal-de-mont-rodon_tona-080531_504\" title=\"casal-de-mont-rodon\" class=\"wp-post-image ngg-image-9984 \" \/>"
+}, {
+    "title": "Casal de Portavella ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casal-de-portavella-les-lloses-ripolles\/",
+    "position": {
+        "lat": "42.136467",
+        "long": "2.137093"
+    },
+    "municipi": "Llosses, Les",
+    "poblacio": " Sant Mart\u00ed de Vinyoles",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casal-de-portavella\/dynamic\/casal-de-portavella-091112_502bis.jpg-nggid045246-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casal-de-portavella-091112_502bis\" title=\"casal-de-portavella\" class=\"wp-post-image ngg-image-5246 \" \/>"
+}, {
+    "title": "Casal de Rosanes ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casal-de-rosanes-la-garriga-valles-oriental\/",
+    "position": {
+        "lat": "41.663063",
+        "long": "2.281562"
+    },
+    "municipi": "Garriga",
+    "poblacio": "Garriga",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casal-de-rosanes-la-garriga\/dynamic\/casal-de-rosanes-la-garriga-080429_526.jpg-nggid0510267-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casal-de-rosanes-la-garriga-080429_526\" title=\"casal-de-rosanes-la-garriga\" class=\"wp-post-image ngg-image-10267 \" \/>"
+}, {
+    "title": "Casal del Puig de la Balma ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casal-del-puig-de-la-balma-mura-bages-2\/",
+    "position": {
+        "lat": "41.694167",
+        "long": "1.961944"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casal-del-puig-de-la-bauma-galeria\/dynamic\/03-casal-del-puig-de-la-balma-130419_013.jpg-nggid0512943-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Casal del Puig de la Balma\" title=\"casal-del-puig-de-la-bauma-galeria\" class=\"wp-post-image ngg-image-12943 \" \/>"
+}, {
+    "title": "Casal del Villar ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/castell-del-villar-sant-feliu-de-codines-valles-occidental\/",
+    "position": {
+        "lat": "41.681576",
+        "long": "2.170028"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/casal-del-villar-galeria\/dynamic\/04-castell-del-villar-080329_504.jpg-nggid0510386-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Casal del Villar\" title=\"casal-del-villar-galeria\" class=\"wp-post-image ngg-image-10386 \" \/>"
+}, {
+    "title": "Casal d\u2019Espinzella ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/casal-despinzella-viladrau-osona\/",
+    "position": {
+        "lat": "41.854733",
+        "long": "2.338403"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/castell-despinzella\/dynamic\/casal-despinzella-080726_704.jpg-nggid049601-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"casal-despinzella-080726_704\" title=\"castell-despinzella\" class=\"wp-post-image ngg-image-9601 \" \/>"
+}, {
+    "title": "Castell de Castellnou de la Plana ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/castell-de-castellnou-de-la-plana-moia-bages\/",
+    "position": {
+        "lat": "41.802586",
+        "long": "2.103294"
+    },
+    "municipi": "Moi\u00e0",
+    "poblacio": "Moi\u00e0",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/castell-de-castellnou-de-la-plana\/dynamic\/castell-de-castellnou-de-la-plana-111020_511.jpg-nggid041614-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"castell-de-castellnou-de-la-plana-111020_511\" title=\"castell-de-castellnou-de-la-plana\" class=\"wp-post-image ngg-image-1614 \" \/>"
+}, {
+    "title": "Castell-palau dels Montpalau ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/castell-palau-dels-montpalau-la-garrotxa\/",
+    "position": {
+        "lat": "42.21376",
+        "long": "2.64182"
+    },
+    "municipi": "Argelaguer",
+    "poblacio": "Argelaguer",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/castell-palau-dels-montpalau\/dynamic\/castell-palau-dels-montpalau-110909_506.jpg-nggid03833-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"castell-palau-dels-montpalau-110909_506\" title=\"castell-palau-dels-montpalau\" class=\"wp-post-image ngg-image-833 \" \/>"
+}, {
+    "title": "Castellet de Guanta ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/castell-de-guanta-sentmenat-valles-occidental\/",
+    "position": {
+        "lat": "41.640259",
+        "long": "2.114042"
+    },
+    "municipi": "Sentmenat",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/castell-de-guanta\/dynamic\/paratge-de-guanta-110616_506bisblog_1.jpg-nggid046646-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"paratge-de-guanta-110616_506bisblog_1\" title=\"castell-de-guanta\" class=\"wp-post-image ngg-image-6646 \" \/>"
+}, {
+    "title": "Cooperativa ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/cooperativa-malgrat-de-mar-maresme\/",
+    "position": {
+        "lat": "41.646164",
+        "long": "2.741392"
+    },
+    "municipi": "Malgrat de Mar",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/cooperativa-malgrat-de-mar\/dynamic\/edifici-de-la-cooperativa-malgrat-de-mar-071208_501.jpg-nggid048185-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"edifici-de-la-cooperativa-malgrat-de-mar-071208_501\" title=\"cooperativa-malgrat-de-mar\" class=\"wp-post-image ngg-image-8185 \" \/>"
+}, {
+    "title": "El Casalot ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/el-casalot-sant-mateu-de-bages-bages\/",
+    "position": {
+        "lat": "41.797573",
+        "long": "1.634313"
+    },
+    "municipi": "Sant Mateu de Bages",
+    "poblacio": "Castelltallat",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/el-casalot-sant-mateu-de-bages\/dynamic\/casalot-st-mateu-bages-111018_007.jpg-nggid041583-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"OLYMPUS DIGITAL CAMERA\" title=\"el-casalot-sant-mateu-de-bages\" class=\"wp-post-image ngg-image-1583 \" \/>"
+}, {
+    "title": "El Castellot de Marcovau ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/el-castellot-de-marcovau-la-foradada-noguera\/",
+    "position": {
+        "lat": "41.868127",
+        "long": "1.033297"
+    },
+    "municipi": "Foradada",
+    "poblacio": "Marcovau",
+    "provincia": "Lleida",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-El-Castellot-de-Marcovau-101016_507-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-El-Castellot-de-Marcovau-101016_507-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-El-Castellot-de-Marcovau-101016_507-144x144.jpg 144w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "El Farell ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/el-farell-mura-bages\/",
+    "position": {
+        "lat": "41.680556",
+        "long": "1.918667"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/el-farell-galeria\/dynamic\/25-mas-farell-140315_502.jpg-nggid0517130-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"El Farell \u2013 Mura\" title=\"el-farell-galeria\" class=\"wp-post-image ngg-image-17130 \" \/>"
+}, {
+    "title": "El Saiol Comtal ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/el-saiol-comtal-bages\/",
+    "position": {
+        "lat": "41.806889",
+        "long": "2.096216"
+    },
+    "municipi": "Moi\u00e0",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/el-saiol-comtal\/dynamic\/el-saiol-comtal-111020_025bis.jpg-nggid041640-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"OLYMPUS DIGITAL CAMERA\" title=\"el-saiol-comtal\" class=\"wp-post-image ngg-image-1640 \" \/>"
+}, {
+    "title": "Els Castellots ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/els-castellots-la-llacuna-anoia\/",
+    "position": {
+        "lat": "41.483849",
+        "long": "1.559879"
+    },
+    "municipi": "Llacuna",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/els-castellots\/dynamic\/els-castellots-110113_507.jpg-nggid046054-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"els-castellots-110113_507\" title=\"els-castellots\" class=\"wp-post-image ngg-image-6054 \" \/>"
+}, {
+    "title": "La Casa Murada ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/la-casa-murada-banyeres-del-penedes-baix-penedes\/",
+    "position": {
+        "lat": "41.273705",
+        "long": "1.528242"
+    },
+    "municipi": "Banyeres del Pened\u00e8s",
+    "poblacio": "Papiolet",
+    "provincia": "Tarragona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/la-casa-murada\/dynamic\/la-casa-murada-070421_04.jpg-nggid047236-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"OLYMPUS DIGITAL CAMERA\" title=\"la-casa-murada\" class=\"wp-post-image ngg-image-7236 \" \/>"
+}, {
+    "title": "La Cortada dels Llucs ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/la-cortada-dels-llucs-santa-maria-de-merles-bergueda\/",
+    "position": {
+        "lat": "42.008037",
+        "long": "1.979072"
+    },
+    "municipi": "Santa Maria de Merl\u00e8s",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-La-Cortada-141115_2007-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" \/>"
+}, {
+    "title": "La Guaita de Pregones ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/la-guaita-de-pregones-santa-maria-de-merles-bergueda\/",
+    "position": {
+        "lat": "41.970546",
+        "long": "1.946183"
+    },
+    "municipi": "Santa Maria de Merl\u00e8s",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-La-Guaita-de-Pregones-151114_2002-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-La-Guaita-de-Pregones-151114_2002-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-La-Guaita-de-Pregones-151114_2002-144x144.jpg 144w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "La Marineta ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/la-marineta-parets-del-valles-valles-oriental\/",
+    "position": {
+        "lat": "41.580292",
+        "long": "2.246660"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/la-marineta-galeria\/dynamic\/la-marineta-parets-del-valles-02-080412_501bisblog.jpg-nggid0510400-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"La Marineta \/ Parets del Vall\u00e8s\" title=\"la-marineta-galeria\" class=\"wp-post-image ngg-image-10400 \" \/>"
+}, {
+    "title": "La Sala ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/la-sala-sant-mateu-de-bages-bages\/",
+    "position": {
+        "lat": "41.818272",
+        "long": "1.72922"
+    },
+    "municipi": "Sant Mateu de Bages",
+    "poblacio": "Sant Mateu de Bages",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/la-sala-sant-mateu-de-bages\/dynamic\/la-sala-bages-111101_501.jpg-nggid041898-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"la-sala-bages-111101_501\" title=\"la-sala-sant-mateu-de-bages\" class=\"wp-post-image ngg-image-1898 \" \/>"
+}, {
+    "title": "La Sala ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/la-sala-vilallonga-de-ter-ripolles\/",
+    "position": {
+        "lat": "42.338482",
+        "long": "2.30184"
+    },
+    "municipi": "Vilallonga de Ter",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/la-sala-vilallonga-de-ter\/dynamic\/la-sala-vilallonga-de-ter-091006_534.jpg-nggid045419-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"la-sala-vilallonga-de-ter-091006_534\" title=\"la-sala-vilallonga-de-ter\" class=\"wp-post-image ngg-image-5419 \" \/>"
+}, {
+    "title": "La Torre ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/la-torre-bescano-girones\/",
+    "position": {
+        "lat": "41.959911",
+        "long": "2.738425"
+    },
+    "municipi": "Bescan\u00f3",
+    "poblacio": "Bescan\u00f3",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/la-torre-bescano\/dynamic\/la-torre-bescano-100123_502.jpg-nggid047985-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"la-torre-bescano-100123_502\" title=\"la-torre-bescano\" class=\"wp-post-image ngg-image-7985 \" \/>"
+}, {
+    "title": "La Torreta ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/la-torreta-olius-solsones\/",
+    "position": {
+        "lat": "42.010083",
+        "long": "1.565306"
+    },
+    "municipi": "Olius",
+    "poblacio": "",
+    "provincia": "Lleida",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-La-Torreta-Olius-170701_2008-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-La-Torreta-Olius-170701_2008-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-La-Torreta-Olius-170701_2008-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-La-Torreta-Olius-170701_2008-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Les Romagueres ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/les-romagueres-osor-selva\/",
+    "position": {
+        "lat": "41.95773",
+        "long": "2.56171"
+    },
+    "municipi": "Osor",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Les-Romagueres-Osor-170310_2001BISBLOG-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Les-Romagueres-Osor-170310_2001BISBLOG-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Les-Romagueres-Osor-170310_2001BISBLOG-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Les-Romagueres-Osor-170310_2001BISBLOG-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Mas Alr\u00e0 ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-alra-vilobi-donyar-la-selva\/",
+    "position": {
+        "lat": "41.878853",
+        "long": "2.755068"
+    },
+    "municipi": "Vilob\u00ed d'Onyar",
+    "poblacio": "Ve\u00efnat de Santa Margarida",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Mas-Alra-Vilobi-dOnyar-170210_2002BISBLOG-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Mas-Alra-Vilobi-dOnyar-170210_2002BISBLOG-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Mas-Alra-Vilobi-dOnyar-170210_2002BISBLOG-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Mas-Alra-Vilobi-dOnyar-170210_2002BISBLOG-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Mas Bellver ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-bellver-viladasens-girones\/",
+    "position": {
+        "lat": "42.08733",
+        "long": "2.91727"
+    },
+    "municipi": "Viladasens",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/2014\/07\/Icona-SENSE-IMATGES-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" \/>"
+}, {
+    "title": "Mas Bru ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-bru-girona-girones\/",
+    "position": {
+        "lat": "41.988276",
+        "long": "2.798918"
+    },
+    "municipi": "Girona",
+    "poblacio": "Domeny",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/05-Mas-Bru-Girona-160604_2019-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/05-Mas-Bru-Girona-160604_2019-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/05-Mas-Bru-Girona-160604_2019-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/05-Mas-Bru-Girona-160604_2019-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Mas Calb\u00f3  ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-calbo-reus-baix-camp\/",
+    "position": {
+        "lat": "41.109526",
+        "long": "1.124553"
+    },
+    "municipi": "Reus",
+    "poblacio": "",
+    "provincia": "Tarragona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/2014\/07\/Icona-SENSE-IMATGES-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" \/>"
+}, {
+    "title": "Mas de la Closa ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-de-la-closa-suria-bages\/",
+    "position": {
+        "lat": "41.825908",
+        "long": "1.785804"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/mas-de-la-closa\/dynamic\/02-masia-de-la-closa-131123_008bisblog.jpg-nggid0515634-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"OLYMPUS DIGITAL CAMERA\" title=\"mas-de-la-closa\" class=\"wp-post-image ngg-image-15634 \" \/>"
+}, {
+    "title": "Mas de la Muga ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-de-la-muga-bellvei-baix-penedes\/",
+    "position": {
+        "lat": "41.223885",
+        "long": "1.565898"
+    },
+    "municipi": "Bellvei",
+    "poblacio": "",
+    "provincia": "Tarragona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/mas-de-la-muga\/dynamic\/mas-de-la-muga-070421_34bisblog.jpg-nggid047245-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"OLYMPUS DIGITAL CAMERA\" title=\"mas-de-la-muga\" class=\"wp-post-image ngg-image-7245 \" \/>"
+}, {
+    "title": "Mas de la Torre d\u2019en Ros\u00e9s ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-de-la-torre-den-roses-girona-girones\/",
+    "position": {
+        "lat": "41.984662",
+        "long": "2.845154"
+    },
+    "municipi": "Girona",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Mas-Torre-den-Roses-160707_2003-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Mas-Torre-den-Roses-160707_2003-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Mas-Torre-den-Roses-160707_2003-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Mas-Torre-den-Roses-160707_2003-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Mas de Nuix ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-de-nuix-ribera-dondara-segarra\/",
+    "position": {
+        "lat": "41.623671",
+        "long": "1.285767"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/mas-de-nuix-galeria\/dynamic\/02-mas-de-nuix-131018_002.jpg-nggid0515391-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Mas de Nuix \u2013 Ribera d\u2019Ondara\" title=\"mas-de-nuix-galeria\" class=\"wp-post-image ngg-image-15391 \" \/>"
+}, {
+    "title": "Mas de Palaud\u00e0ries ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-de-palaudaries-llica-damunt-valles-oriental\/",
+    "position": {
+        "lat": "41.607941",
+        "long": "2.200055"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/mas-de-palaudaries-galeria\/dynamic\/02-palau-de-palaudaries-080502_514.jpg-nggid0510402-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Mas de Palaud\u00e0ries\" title=\"mas-de-palaudaries-galeria\" class=\"wp-post-image ngg-image-10402 \" \/>"
+}, {
+    "title": "Mas els Felius ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-els-felius-gurb-osona\/",
+    "position": {
+        "lat": "41.980353",
+        "long": "2.240835"
+    },
+    "municipi": "Gurb",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-Mas-Els-Felius-Gurb-160924_2005-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-Mas-Els-Felius-Gurb-160924_2005-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-Mas-Els-Felius-Gurb-160924_2005-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-Mas-Els-Felius-Gurb-160924_2005-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Mas Reixach ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-reixach-santa-cristina-daro-baix-emporda\/",
+    "position": {
+        "lat": "41.828333",
+        "long": "2.985833"
+    },
+    "municipi": "Santa Cristina d'Aro",
+    "poblacio": "Solius",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/Sense-imatges-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/Sense-imatges-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/Sense-imatges-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/Sense-imatges-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Mas Serra de Degotalls ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-serra-de-degotalls-bergueda\/",
+    "position": {
+        "lat": "41.989483",
+        "long": "1.988893"
+    },
+    "municipi": "Santa Maria de Merl\u00e8s",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/mas-serra-de-degotalls\/dynamic\/mas-serra-de-degotalls-sta-maria-de-merles-110809_002bis.jpg-nggid03286-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"OLYMPUS DIGITAL CAMERA\" title=\"mas-serra-de-degotalls\" class=\"wp-post-image ngg-image-286 \" \/>"
+}, {
+    "title": "Mas Soler ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-soler-la-pobla-de-montornes-tarragones\/",
+    "position": {
+        "lat": "41.18802",
+        "long": "1.407317"
+    },
+    "municipi": "Pobla de Montorn\u00e8s",
+    "poblacio": "Pobla de Montorn\u00e8s",
+    "provincia": "Tarragona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Mas-Soler-La-Pobla-Mont.-151219_2010-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Mas-Soler-La-Pobla-Mont.-151219_2010-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Mas-Soler-La-Pobla-Mont.-151219_2010-144x144.jpg 144w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Mas Torretes ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/mas-torretes-calonge-baix-emporda\/",
+    "position": {
+        "lat": "41.831194",
+        "long": "3.0835"
+    },
+    "municipi": "Calonge",
+    "poblacio": "C\u00e0mping Cala Gog\u00f3",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/Sense-imatges-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/Sense-imatges-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/Sense-imatges-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/Sense-imatges-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Masia Casanova ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/masia-casanova-castellar-de-la-ribera-solsones\/",
+    "position": {
+        "lat": "42.002641",
+        "long": "1.457106"
+    },
+    "municipi": "Castellar de la Ribera",
+    "poblacio": "Clar\u00e0",
+    "provincia": "Lleida",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Masia-Casanova-170512_2020-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Masia-Casanova-170512_2020-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Masia-Casanova-170512_2020-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/04-Masia-Casanova-170512_2020-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Masia de Cal Cisteller ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/masia-de-cal-cisteller-vilanova-de-meia-noguera\/",
+    "position": {
+        "lat": "41.959419",
+        "long": "1.042800"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/masia-de-cal-cisteller\/dynamic\/masia-de-cal-cisteller-081120_502.jpg-nggid048725-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"masia-de-cal-cisteller-081120_502\" title=\"masia-de-cal-cisteller\" class=\"wp-post-image ngg-image-8725 \" \/>"
+}, {
+    "title": "Masia de les Feixes de Coaner ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/masia-de-les-feixes-de-coaner-sant-mateu-de-bages-bages\/",
+    "position": {
+        "lat": "41.841664",
+        "long": "1.688214"
+    },
+    "municipi": "Sant Mateu de Bages",
+    "poblacio": "Salo",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/masia-de-les-feixes-de-coaner-sant-mateu-de-bages-galeria\/dynamic\/02-masia-de-les-feixes-de-coaner-140502_2010.jpg-nggid0517761-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Masia de les Feixes de Coaner \u2013 Sant Mateu de Bages\" title=\"masia-de-les-feixes-de-coaner-sant-mateu-de-bages-galeria\" class=\"wp-post-image ngg-image-17761 \" \/>"
+}, {
+    "title": "Masia de Mas Moles ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/masia-de-mas-moles-premia-de-dalt-maresme\/",
+    "position": {
+        "lat": "41.505657",
+        "long": "2.343073"
+    },
+    "municipi": "Premi\u00e0 de Dalt",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/masia-de-mas-moles\/dynamic\/masia-de-mas-moles-premia-de-dalt-080216_701bis2.jpg-nggid048187-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"masia-de-mas-moles-premia-de-dalt-080216_701bis2\" title=\"masia-de-mas-moles\" class=\"wp-post-image ngg-image-8187 \" \/>"
+}, {
+    "title": "Masia fortificada de Can Biel ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/masia-fortificada-de-can-biel-angles-selva\/",
+    "position": {
+        "lat": "41.960417",
+        "long": "2.654083"
+    },
+    "municipi": "Angl\u00e8s",
+    "poblacio": "Rodalies d'Angl\u00e8s",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Can-Biel-Angles-170310_2002-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Can-Biel-Angles-170310_2002-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Can-Biel-Angles-170310_2002-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Can-Biel-Angles-170310_2002-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Masia fortificada de Can Planes ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/masia-fortificada-de-can-planes-angles-selva\/",
+    "position": {
+        "lat": "41.952694",
+        "long": "2.651667"
+    },
+    "municipi": "Angl\u00e8s",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Can-Planes-Angles-170310_2018BISBLOG-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Can-Planes-Angles-170310_2018BISBLOG-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Can-Planes-Angles-170310_2018BISBLOG-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Can-Planes-Angles-170310_2018BISBLOG-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Masia Les Torres ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/masia-les-torres-artes-bages\/",
+    "position": {
+        "lat": "41.792167",
+        "long": "1.927917"
+    },
+    "municipi": "",
+    "poblacio": "",
+    "provincia": "",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/masia-les-torres-artes\/dynamic\/08-masia-les-torres-140301_007bisblog.jpg-nggid0516976-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Masia Les Torres \u2013 Art\u00e9s\" title=\"masia-les-torres-artes\" class=\"wp-post-image ngg-image-16976 \" \/>"
+}, {
+    "title": "Masmunter ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/masmunter-vilanova-descornalbou-baix-camp\/",
+    "position": {
+        "lat": "41.107903",
+        "long": "0.953069"
+    },
+    "municipi": "Vilanova d'Escornalbou",
+    "poblacio": "",
+    "provincia": "Tarragona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/masmunter\/dynamic\/masmunter-101113_506.jpg-nggid046224-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"masmunter-101113_506\" title=\"masmunter\" class=\"wp-post-image ngg-image-6224 \" \/>"
+}, {
+    "title": "Nucli de Mas de Bondia ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/nucli-de-mas-de-bondia-montornes-de-segarra-segarra\/",
+    "position": {
+        "lat": "41.605299",
+        "long": "1.191984"
+    },
+    "municipi": "Montorn\u00e8s de Segarra",
+    "poblacio": "",
+    "provincia": "Lleida",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/nucli-de-mas-de-bondia\/dynamic\/02-nucli-de-mas-de-bondia-131101_503.jpg-nggid0515728-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Nucli de Mas de Bondia \u2013 Montorn\u00e8s de Segarra\" title=\"nucli-de-mas-de-bondia\" class=\"wp-post-image ngg-image-15728 \" \/>"
+}, {
+    "title": "Pres\u00f3 o Casa de la Castellania ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/preso-o-casa-de-la-castellania-gandesa-terra-alta\/",
+    "position": {
+        "lat": "41.052953",
+        "long": "0.436608"
+    },
+    "municipi": "Gandesa",
+    "poblacio": "",
+    "provincia": "Tarragona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/preso-o-casa-de-la-castellaniagandesa-galeria\/dynamic\/03-preso-o-casa-de-la-castellania-130503_502.jpg-nggid0513251-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"Pres\u00f3 o Casa de la castellania - Gandesa\" title=\"preso-o-casa-de-la-castellaniagandesa-galeria\" class=\"wp-post-image ngg-image-13251 \" \/>"
+}, {
+    "title": "Torre de Foix ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torre-de-foix-guardiola-bergueda\/",
+    "position": {
+        "lat": "42.209507",
+        "long": "1.858666"
+    },
+    "municipi": "Guardiola de Bergued\u00e0",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/torre-de-foix-guardiola-de-bergueda\/dynamic\/torre-de-foix-guardiola-b-110722_508.jpg-nggid03498-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"torre-de-foix-guardiola-b-110722_508\" title=\"torre-de-foix-guardiola-de-bergueda\" class=\"wp-post-image ngg-image-498 \" \/>"
+}, {
+    "title": "Torre de la Llebre ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torre-de-la-llebre-rubi-valles-occidental-segle-xiii\/",
+    "position": {
+        "lat": "41.47609",
+        "long": "2.034594"
+    },
+    "municipi": "Rub\u00ed",
+    "poblacio": "Rub\u00ed",
+    "provincia": "Barcelona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/03-Torre-de-la-Llebre-150301_2007-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" \/>"
+}, {
+    "title": "Torre de Taial\u00e0 ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torre-de-taiala-girona-girones\/",
+    "position": {
+        "lat": "41.996811",
+        "long": "2.808488"
+    },
+    "municipi": "Girona",
+    "poblacio": "Al sector anomenat dels Germans Sabat",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Torre-de-Taiala-160604_2003-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Torre-de-Taiala-160604_2003-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Torre-de-Taiala-160604_2003-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Torre-de-Taiala-160604_2003-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Torre del Pla ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torre-del-pla-llica-damunt-valles-oriental\/",
+    "position": {
+        "lat": "41.62165",
+        "long": "2.23936"
+    },
+    "municipi": "Lli\u00e7\u00e0 d'Amunt",
+    "poblacio": "Lli\u00e7\u00e0 d'Amunt ",
+    "provincia": "Barcelona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Torre-del-Pla-Llica-dAmunt-160515_2003BISBLOG-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" srcset=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Torre-del-Pla-Llica-dAmunt-160515_2003BISBLOG-150x150.jpg 150w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Torre-del-Pla-Llica-dAmunt-160515_2003BISBLOG-144x144.jpg 144w, https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/01-Torre-del-Pla-Llica-dAmunt-160515_2003BISBLOG-45x45.jpg 45w\" sizes=\"(max-width: 110px) 100vw, 110px\" \/>"
+}, {
+    "title": "Torre Ferrana ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torre-ferrana-bescano-girones\/",
+    "position": {
+        "lat": "41.96455",
+        "long": "2.761531"
+    },
+    "municipi": "Bescan\u00f3",
+    "poblacio": "Montfull\u00e0",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/torre-ferrana_1\/dynamic\/torre-ferrana-100123_506.jpg-nggid048012-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"torre-ferrana-100123_506\" title=\"torre-ferrana-2\" class=\"wp-post-image ngg-image-8012 \" \/>"
+}, {
+    "title": "Torre Llupiana ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torre-llupiana-campllong-girones\/",
+    "position": {
+        "lat": "41.891552",
+        "long": "2.83002"
+    },
+    "municipi": "Campllong",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/torre-llupiana\/dynamic\/torre-llupiana-090815_509.jpg-nggid048017-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"torre-llupiana-090815_509\" title=\"torre-llupiana\" class=\"wp-post-image ngg-image-8017 \" \/>"
+}, {
+    "title": "Torre Negra ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torre-negra-sant-cugat-del-valles-valles-occidental\/",
+    "position": {
+        "lat": "41.465164",
+        "long": "2.100737"
+    },
+    "municipi": "Sant Cugat del Vall\u00e8s",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/torre-negra-sant-cugat-del-valles\/dynamic\/torre-negra-sant-cugat-110503_501.jpg-nggid046608-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"torre-negra-sant-cugat-110503_501\" title=\"torre-negra-sant-cugat-del-valles\" class=\"wp-post-image ngg-image-6608 \" \/>"
+}, {
+    "title": "Torre Sampsona ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torre-sampsona-girona-girones\/",
+    "position": {
+        "lat": "41.952788",
+        "long": "2.804503"
+    },
+    "municipi": "Girona",
+    "poblacio": "",
+    "provincia": "Girona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/2014\/07\/Icona-SENSE-IMATGES-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" \/>"
+}, {
+    "title": "Torres Altes de Foix ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torres-altes-de-foix-torrelles-de-foix-alt-penedes\/",
+    "position": {
+        "lat": "41.411015",
+        "long": "1.543643"
+    },
+    "municipi": "Torrelles de Foix",
+    "poblacio": "",
+    "provincia": "Barcelona",
+    "thumbs": "<img src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/gallery\/torres-altes-de-foix\/dynamic\/torres-altes-de-foix-070909_703.jpg-nggid043572-ngg0dyn-150x110-00f0w010c010r110f110r010t010.jpg\" alt=\"torres-altes-de-foix-070909_703\" title=\"torres-altes-de-foix\" class=\"wp-post-image ngg-image-3572 \" \/>"
+}, {
+    "title": "Torreta de Vallflor ",
+    "link": "https:\/\/work.catalunyamedieval.dev\/torreta-de-vallflor-el-montmell-baix-penedes\/",
+    "position": {
+        "lat": "41.342234",
+        "long": "1.486323"
+    },
+    "municipi": "Montmell",
+    "poblacio": "Montmell",
+    "provincia": "Tarragona",
+    "thumbs": "<img width=\"110\" height=\"110\" src=\"https:\/\/work.catalunyamedieval.dev\/wp-content\/uploads\/ngg_featured\/02-Torreta-de-Vallflor-141212_2002-150x150.jpg\" class=\"attachment-150x110 size-150x110 wp-post-image\" alt=\"\" \/>"
+}];
 var aPalau = [{
     "title": "Ajuntament de Vilafranca ",
     "link": "https:\/\/work.catalunyamedieval.dev\/ajuntament-de-vilafranca-vilafranca-del-penedes-alt-penedes\/",

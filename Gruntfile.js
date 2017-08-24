@@ -72,15 +72,7 @@ module.exports = function(grunt) {
         files: [{
             src: ['src/js/<%= grunt.config.get("configuration") %>'],
             dest: 'assets/js/catalunya-gmap/catalunya-gmap-options.js'
-          },
-          {
-            src: ['src/js/catalunya-gmap-path.js'],
-            dest: 'assets/js/catalunya-gmap/catalunya-gmap-path.js'
-          },
-          {
-            src: ['src/js/jquery-3.1.1.min.js'],
-            dest: 'assets/js/catalunya-gmap/jquery-3.1.1.min.js'
-          },
+          }
         ],
       },
     },
