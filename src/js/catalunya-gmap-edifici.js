@@ -209,7 +209,7 @@
 
                 if (arrayName.length > 0) {
                     for (var x = 0; x < arrayName.length; x++) {
-                        opt = this._extract(arrayName[x], category, categoryName, x, type);
+                        var opt = this._extract(arrayName[x], category, categoryName, x, type);
                         this.gMap.addMarker(opt);
                     }
                     var icon = this._getIcon1(type, category);
