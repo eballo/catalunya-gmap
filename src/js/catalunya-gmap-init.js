@@ -5,12 +5,12 @@
     var map = gmap.create('gMap', gmap.MAP_OPTIONS, gmap.CONFIG_OPTIONS);
 
     //Load the configuration of the map
-    var edifici = edifici.create(map, gmap.CONFIG_OPTIONS);
+    var monument = edifici.create(map, gmap.CONFIG_OPTIONS);
 
-    edifici.addMilitars();
-    edifici.addCivils();
-    edifici.addReligioses();
-    edifici.addAltres();
+    monument.addMilitars();
+    monument.addCivils();
+    monument.addReligioses();
+    monument.addAltres();
 
     //To fit bounds
     map._resize(true);
