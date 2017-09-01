@@ -2,7 +2,7 @@
 
 
     //Create the map
-    map = gmap.create('gMap', gmap.MAP_OPTIONS, gmap.CONFIG_OPTIONS);
+    var map = gmap.create('gMap', gmap.MAP_OPTIONS, gmap.CONFIG_OPTIONS);
 
     //Load the configuration of the map
     var edifici = edifici.create(map, gmap.CONFIG_OPTIONS);
