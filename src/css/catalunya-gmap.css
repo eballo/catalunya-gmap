@@ -1,7 +1,7 @@
 #container {
-	height: 800px;
-	width: 100%;
-	margin-bottom: 20px;
+  height: 800px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 #mapContainer {
@@ -126,7 +126,6 @@ h3:hover {
   margin-top: 10px;
   border: 1px solid grey;
   vertical-align: middle;
-
 }
 
 
@@ -232,9 +231,11 @@ input#search-llista {
   /* Add some space below the input */
   width: 100%;
   width: -webkit-fill-available;
-  width: -moz-available;  /* Firefox/Gecko */
+  width: -moz-available;
+  /* Firefox/Gecko */
   /* Full-width */
 }
+
 
 /** table - legend */
 

@@ -1,36 +1,39 @@
 /* ------ genaral css file --------*/
-html{
-	height: 100%;
+
+html {
+  height: 100%;
 }
 
 body {
-	background: #fff;
-	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	text-align: center;
-	color: #5554;
+  background: #fff;
+  font-family: Helvetica, Arial, sans-serif;
+  text-align: center;
 }
+
 h1 {
-	font-size: 25px;
-	padding: 30px 0 10px;
+  font-size: 25px;
+  padding: 30px 0 10px;
 }
+
 p {
-	padding-bottom: 30px;
+  padding-bottom: 30px;
 }
 
 a {
-	color: #66bbdd;
-	text-decoration: none;
+  color: #66bbdd;
+  text-decoration: none;
 }
+
 a:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 .description {
-	margin-left: auto;
-	margin-right: auto;
-	width: 99%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 99%;
 }
 
 .description strong {
-	padding: 10px;
+  padding: 10px;
 }
