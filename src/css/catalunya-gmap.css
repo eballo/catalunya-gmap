@@ -1,0 +1,245 @@
+#container {
+  height: 800px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#mapContainer {
+  position: relative;
+  /** width: 100%; */
+  height: 800px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#mapContainer.fullscreen {
+  width: 100%;
+  height: 100%;
+}
+
+#gMap {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(50, 50, 50, 0.1);
+}
+
+#gMap.fullscreen {
+  width: 100%;
+  height: 100%;
+}
+
+
+/** sobrescriure styles google */
+
+.gm-style-iw {
+  text-align: center;
+  top: 15px !important;
+  left: 15px !important;
+  height: auto !important;
+  background-color: #fff6eb;
+  border-radius: 10px 10px 10px 10px;
+  padding-bottom: 15px !important;
+}
+
+
+/** end sobrescriure */
+
+.infoWindowz {
+  padding: 0;
+  margin: 0;
+  float: left;
+  width: 152px;
+  height: auto;
+}
+
+.infoWindowz a {
+  text-decoration: none;
+}
+
+.infowindow_text {
+  clear: both;
+  float: center;
+  color: black;
+  text-align: center;
+  font-family: 'Droid Serif', serif;
+  font-size: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.edifici_tile-header-titles h2 {
+  float: left;
+  text-align: left;
+  font-family: 'Droid Serif', serif;
+  font-size: 12px;
+  font-weight: 100%;
+  padding: 2px;
+  background-color: white;
+  color: black;
+  margin: 2px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.edifici_tile-header-titles h3 {
+  font-family: 'Droid Serif', serif;
+  font-size: 12px;
+  font-weight: 100%;
+  padding: 10px;
+  color: white;
+  margin: 0px;
+  margin-top: 0.8px;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid #e7c9a3;
+}
+
+h3:hover {
+  color: #031b33;
+}
+
+
+/** Background for each type of building */
+
+.militar {
+  background-color: #c14444;
+}
+
+.civil {
+  background-color: #66c547;
+}
+
+.religios {
+  background-color: #0f35f7;
+}
+
+.altres {
+  background-color: #af00bf;
+}
+
+
+/** image border */
+
+.infoWindowz img {
+  margin-top: 10px;
+  border: 1px solid grey;
+  vertical-align: middle;
+}
+
+
+/** list **/
+
+.primaryDiv {
+  position: relative;
+  float: left;
+  height: 100%;
+  /* Firefox */
+  width: -moz-calc(100% - 310px) !important;
+  /* WebKit */
+  width: -webkit-calc(100% - 310px) !important;
+  /* Opera */
+  width: -o-calc(100% - 310px) !important;
+  /* Standard */
+  width: calc(100% - 310px) !important;
+}
+
+.primaryDiv_big {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 100%;
+}
+
+#secondaryDiv {
+  display: none;
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 300px;
+  margin: 0px;
+  /*padding-right: 15px;*/
+}
+
+#llista {
+  height: 740px;
+  overflow: auto;
+  width: 300px;
+  /* Size and position */
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+#mapLlist {
+  text-align: left;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#mapLlist li {
+  border: 1px solid #ddd;
+  /* Add a border to all links */
+  margin-top: -1px;
+  /* Prevent double borders */
+  background-color: #f6f6f6;
+  /* Grey background color */
+  padding: 12px;
+  /* Add some padding */
+  text-decoration: none;
+  /* Remove default text underline */
+  font-size: 12px;
+  /* Increase the font-size */
+  color: black;
+  /* Add a black text color */
+  display: block;
+  /* Make it into a block element to fill the whole list */
+}
+
+#mapLlist li.header {
+  background-color: #e2e2e2;
+  /* Add a darker background color for headers */
+  cursor: default;
+  /* Change cursor style */
+  font-weight: bold;
+}
+
+#mapLlist li:hover:not(.header) {
+  background-color: #eee;
+  /* Add a hover effect to all links, except for headers */
+}
+
+
+/** Search */
+
+input#search-llista {
+  background-image: url('../../images/catalunya-gmap/search.png');
+  /* Add a search icon to input */
+  background-position: 10px 12px;
+  /* Position the search icon */
+  background-repeat: no-repeat;
+  /* Full-width */
+  font-size: 14px;
+  /* Increase font-size */
+  padding: 12px 20px 12px 40px;
+  /* Add some padding */
+  border: 1px solid #ddd;
+  /* Add a grey border */
+  margin-bottom: 12px;
+  /* Add some space below the input */
+  width: 100%;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  /* Firefox/Gecko */
+  /* Full-width */
+}
+
+
+/** table - legend */
+
+table td img {
+  padding: 5px;
+  width: 30px;
+}
