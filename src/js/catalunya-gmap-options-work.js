@@ -100,7 +100,6 @@ MarkerClusterer.IMAGE_PATH = 'https://work.catalunyamedieval.dev/wp-content/them
         zoom: 8,
         maxZoom: 20,
         minZoom: 4,
-        streetViewControl: false,
         disableDefaultUI: false,
         scrollwheel: true,
         draggable: true,

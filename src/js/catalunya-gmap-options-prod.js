@@ -24,7 +24,6 @@ MarkerClusterer.IMAGE_PATH = 'https://www.catalunyamedieval.es/wp-content/themes
         zoom: 8,
         maxZoom: 20,
         minZoom: 4,
-        streetViewControl: false,
         disableDefaultUI: false,
         scrollwheel: true,
         draggable: true,

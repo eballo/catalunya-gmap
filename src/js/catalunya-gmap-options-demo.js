@@ -100,7 +100,6 @@ MarkerClusterer.IMAGE_PATH = 'http://demo.catalunyamedieval.es/gmap4/assets/imag
         zoom: 8,
         maxZoom: 20,
         minZoom: 4,
-        streetViewControl: false,
         disableDefaultUI: false,
         scrollwheel: true,
         draggable: true,
