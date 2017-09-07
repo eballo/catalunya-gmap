@@ -56,7 +56,6 @@ module.exports = function(grunt) {
           'assets/js/catalunya-gmap/catalunya-gmap-catgmap.min.js': ['src/js/catalunya-gmap-catgmap.js'],
           'assets/js/catalunya-gmap/catalunya-gmap-icons.min.js': ['src/js/catalunya-gmap-icons.js'],
           'assets/js/catalunya-gmap/markerclusterer.min.js': ['src/js/markerclusterer.js'],
-          'assets/js/catalunya-gmap/catalunya-gmap-path.min.js': ['src/js/catalunya-gmap-path.js'],
           'assets/js/catalunya-gmap/jquery-3.2.1.min.js': ['src/js/jquery-3.2.1.js'],
           'assets/js/catalunya-gmap/catalunya-gmap-init.min.js': ['src/js/catalunya-gmap-init.js'],
           'assets/js/catalunya-gmap/catalunya-gmap-extra.min.js': ['src/js/catalunya-gmap-extra.js'],
@@ -72,7 +71,11 @@ module.exports = function(grunt) {
         files: [{
             src: ['src/js/<%= grunt.config.get("configuration") %>'],
             dest: 'assets/js/catalunya-gmap/catalunya-gmap-options.js'
-          }
+          },
+          {
+            src: ['src/js/catalunya-gmap-path.js'],
+            dest: 'assets/js/catalunya-gmap/catalunya-gmap-path.js'
+          },
         ],
       },
     },
@@ -92,8 +95,12 @@ module.exports = function(grunt) {
         options: {
           archive: 'dist/gmap-<%= grunt.config.get("environment") %>.zip'
         },
-        files: [
-          {expand: true, cwd: 'assets/', src: ['**'], dest: 'gmap/assets'} // makes all src relative to cwd
+        files: [{
+            expand: true,
+            cwd: 'assets/',
+            src: ['**'],
+            dest: 'gmap/assets'
+          } // makes all src relative to cwd
         ]
       }
     }
@@ -114,11 +121,11 @@ module.exports = function(grunt) {
   grunt.registerTask('work', ['config:work', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
   grunt.registerTask('prod', ['config:prod', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
 
-  grunt.registerTask('demo-compress',['demo','compress']);
-  grunt.registerTask('work-compress',['work','compress']);
-  grunt.registerTask('prod-compress',['prod','compress']);
+  grunt.registerTask('demo-compress', ['demo', 'compress']);
+  grunt.registerTask('work-compress', ['work', 'compress']);
+  grunt.registerTask('prod-compress', ['prod', 'compress']);
 
-  grunt.registerTask('release', ['demo-compress','work-compress','prod-compress','default']);
+  grunt.registerTask('release', ['demo-compress', 'work-compress', 'prod-compress', 'default']);
 
   grunt.registerTask('default', ['gmap']);
 };
