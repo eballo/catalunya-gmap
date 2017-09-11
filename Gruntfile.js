@@ -38,6 +38,15 @@ module.exports = function(grunt) {
             'style': 'src/css/*.css'
           }
         }
+      },
+      int: {
+        options: {
+          variables: {
+            'environment': 'int',
+            'configuration': 'catalunya-gmap-options-int.js',
+            'style': 'src/css/*.css'
+          }
+        }
       }
     },
     "jsbeautifier": {
@@ -120,12 +129,14 @@ module.exports = function(grunt) {
   grunt.registerTask('demo', ['config:demo', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
   grunt.registerTask('work', ['config:work', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
   grunt.registerTask('prod', ['config:prod', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
+  grunt.registerTask('int',  ['config:int', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
 
   grunt.registerTask('demo-compress', ['demo', 'compress']);
   grunt.registerTask('work-compress', ['work', 'compress']);
   grunt.registerTask('prod-compress', ['prod', 'compress']);
+  grunt.registerTask('int-compress',  ['int', 'compress']);
 
-  grunt.registerTask('release', ['demo-compress', 'work-compress', 'prod-compress', 'default']);
+  grunt.registerTask('release', ['demo-compress', 'work-compress', 'prod-compress','int-compress', 'default']);
 
   grunt.registerTask('default', ['gmap']);
 };
