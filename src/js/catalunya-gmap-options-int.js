@@ -93,7 +93,7 @@ MarkerClusterer.IMAGE_PATH = 'https://int.catalunyamedieval.es/wp-content/themes
             "saturation": -97
         }]
     }];
-    
+
     //maps options
     gmap.MAP_OPTIONS = {
         center: catalunya,
