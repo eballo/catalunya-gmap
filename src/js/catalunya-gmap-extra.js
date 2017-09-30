@@ -12,10 +12,15 @@ function searchLlista() {
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < li.length; i++) {
         value = li[i].innerHTML
-        if (value.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
+
+        if (value != '') {
+            if (value.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
         } else {
-            li[i].style.display = "none";
+            li[i].style.display = "";
         }
     }
 }

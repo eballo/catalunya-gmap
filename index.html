@@ -114,7 +114,7 @@
     <div id="secondaryDiv">
       <div id="error">
         <h2>No hi ha cap edificaci&oacute; disponible per aquesta comcarca</h2></div>
-      <input type="text" id="search-llista" onkeyup="searchLlista()" placeholder="cercar..">
+      <input type="search" id="search-llista" onsearch="searchLlista()" onkeypress="searchLlista()" onkeyup="searchLlista()" onchange="searchLlista()" onblur="searchLlista()" onclick="searchLlista()" placeholder="cercar..">
       <div id="llista">
         <ul id="mapLlist"></ul>
       </div>
