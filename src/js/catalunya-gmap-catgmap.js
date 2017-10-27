@@ -4,6 +4,7 @@
         function Gmap(element, opts, config) {
 
             this.debug = config.debug;
+            this.findUser = config.findUser;
             this.serverHost = config.serverHost;
             this.gMap = new google.maps.Map(element, opts);
             this.markers = List.create();
@@ -13,6 +14,7 @@
             };
             this.markerClusterer = new MarkerClusterer(this.gMap, [], mcOptions);
             this.infowindow = new google.maps.InfoWindow();
+            this.infowindowUser = new google.maps.InfoWindow();
             this.fullScreen = true;
             this.useMarkerCluster = config.useMarkerCluster;
 
@@ -28,6 +30,40 @@
 
         }
         Gmap.prototype = {
+            /**
+             * find user
+             */
+            _findUser: function() {
+                // Try HTML5 geolocation.
+                self = this;
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        console.log(pos);
+                        self.infowindowUser.setPosition(pos);
+                        self.infowindowUser.setContent('Location found.');
+                        self.infowindowUser.open(self.gMap);
+                        self.gMap.setCenter(pos);
+                    }, function() {
+                        _handleLocationError(true, self.gMap.getCenter());
+                    });
+                } else {
+                    // Browser doesn't support Geolocation
+                    _handleLocationError(false, self.gMap.getCenter());
+                }
+            },
+
+            _handleLocationError: function(browserHasGeolocation, pos) {
+                this.infowindowUser.setPosition(pos);
+                this.infowindowUser.setContent(browserHasGeolocation ?
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\'t support geolocation.');
+                this.infowindowUser.open(this.gMap);
+            },
+
             /**
              * Add Remove Icons Icon
              */
@@ -150,7 +186,13 @@
                         console.log("markerClusterer : it is not empty!");
                         console.log("Recenter markers!");
                     }
+
+                    if (this.findUser) {
+                        this._findUser();
+                    }
+
                     this._refreshMap();
+
                     if (fitOption) {
                         this.markerClusterer.fitMapToMarkers();
                         this.markerClusterer.repaint();

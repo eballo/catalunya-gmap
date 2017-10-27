@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Interactive Map of Catalunya using GoogleMaps API - Demo V4.0</title>
+  <title>Interactive Map of Catalunya using GoogleMaps API - Demo V4.1</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="description" content="GoogleMaps gMap Catalunya Map">
   <meta name="author" content="Enric Ballo">
@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <h1 id="title-h1">Interactive Map of Catalunya using GoogleMaps API - Demo V4.0</h1>
+  <h1 id="title-h1">Interactive Map of Catalunya using GoogleMaps API - Demo V4.1</h1>
   <h4 id="title-h4"> :: Catalunya Medieval Project - <a href="https://www.catalunyamedieval.es/" target="_blank" title="Catalunya Medieval">www.catalunyamedieval.es</a> ::</h4>
 
   <div class="alert alert-info alert-dismissable">
@@ -114,7 +114,7 @@
     <div id="secondaryDiv">
       <div id="error">
         <h2>No hi ha cap edificaci&oacute; disponible per aquesta comcarca</h2></div>
-      <input type="text" id="search-llista" onkeyup="searchLlista()" placeholder="cercar..">
+      <input type="search" id="search-llista" onsearch="searchLlista()" onkeypress="searchLlista()" onkeyup="searchLlista()" onchange="searchLlista()" onblur="searchLlista()" onclick="searchLlista()" placeholder="cercar..">
       <div id="llista">
         <ul id="mapLlist"></ul>
       </div>
@@ -151,7 +151,7 @@
   <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCEHyRrPrjtOb-gleixt6yvCAhJRgPOb4w"></script>
   <script type="text/javascript" src="assets/js/catalunya-gmap/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="assets/js/catalunya-gmap/bootstrap.min.js"></script>
-  <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-path.min.js"></script>
+  <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-path.js"></script>
   <script type="text/javascript" src="assets/js/catalunya-gmap/markerclusterer.min.js"></script>
   <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-list.min.js"></script>
   <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-icons.min.js"></script>
