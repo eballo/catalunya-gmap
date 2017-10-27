@@ -96,3 +96,4 @@ V4.0
 V4.1
 - Update screen-shot
 - FindUser (enable/disable)
+- Add remove accents
