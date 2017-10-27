@@ -1,19 +1,18 @@
-
 function removeAccents(p) {
-  value = p.replace("(","");
-  value = value.replace(")","");
+    value = p.replace("(", "");
+    value = value.replace(")", "");
 
-  c = 'áàãâäéèêëíìîïóòõôöúùûüçÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÖÔÚÙÛÜÇ';
-  s = 'aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC';
-  n = '';
-  for (i = 0; i < value.length; i++) {
-    if (c.search(value.substr(i, 1)) >= 0) {
-      n += s.substr(c.search(value.substr(i, 1)), 1);
-    } else {
-      n += value.substr(i, 1);
+    c = 'áàãâäéèêëíìîïóòõôöúùûüçÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÖÔÚÙÛÜÇ';
+    s = 'aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC';
+    n = '';
+    for (i = 0; i < value.length; i++) {
+        if (c.search(value.substr(i, 1)) >= 0) {
+            n += s.substr(c.search(value.substr(i, 1)), 1);
+        } else {
+            n += value.substr(i, 1);
+        }
     }
-  }
-  return n;
+    return n;
 }
 
 /**
@@ -31,14 +30,14 @@ function searchLlista() {
     for (i = 0; i < li.length; i++) {
         value = removeAccents(li[i].innerHTML);
 
-        if(value!=''){
-          if (value.toUpperCase().indexOf(filter) > -1) {
-              li[i].style.display = "";
-          } else {
-              li[i].style.display = "none";
-          }
-        }else{
-          li[i].style.display = "";
+        if (value != '') {
+            if (value.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        } else {
+            li[i].style.display = "";
         }
     }
 }
