@@ -10,6 +10,7 @@ MarkerClusterer.IMAGE_PATH = 'https://work.catalunyamedieval.dev/wp-content/them
         styleType1: 7,
         styleType2: 8,
         debug: false,
+        findUser: false,
         useMarkerCluster: true
     }
 

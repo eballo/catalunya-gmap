@@ -4,6 +4,7 @@
         function Gmap(element, opts, config) {
 
             this.debug = config.debug;
+            this.findUser = config.findUser;
             this.serverHost = config.serverHost;
             this.gMap = new google.maps.Map(element, opts);
             this.markers = List.create();
@@ -186,7 +187,10 @@
                         console.log("Recenter markers!");
                     }
 
-                    this._findUser();
+                    if (this.findUser) {
+                        this._findUser();
+                    }
+
                     this._refreshMap();
 
                     if (fitOption) {

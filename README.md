@@ -1,7 +1,7 @@
 # Interactive Map of Catalunya using GoogleMaps - Demo
 Interactive vectorial map of Catalunya using GoogleMaps library.
 
-<img src="https://github.com/eballo/catalunya-gmap/blob/develop/screenshot/screenshot-v2.png" alt="screen-shot" align="center" />
+<img src="https://github.com/eballo/catalunya-gmap/blob/develop/screenshot/screenshot-v4.png" alt="screen-shot" align="center" />
 
 ## Demo
 
@@ -92,3 +92,7 @@ V4.0
 - Remove llistat button when full screen
 - Don't add a building if the array is empty
 - BUG: problem disable all icons double click
+
+V4.1
+- Update screen-shot
+- FindUser (enable/disable)

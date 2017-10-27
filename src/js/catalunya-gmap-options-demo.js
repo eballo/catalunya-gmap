@@ -10,6 +10,7 @@ MarkerClusterer.IMAGE_PATH = 'http://demo.catalunyamedieval.es/gmap4/assets/imag
         styleType1: 7,
         styleType2: 6,
         debug: false,
+        findUser: false,
         useMarkerCluster: true
     }
 
