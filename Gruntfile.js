@@ -151,7 +151,7 @@ module.exports = function(grunt) {
   //Work Compress
   grunt.registerTask('work-compress',['work','compress']);
 
-  grunt.registerTask('release', ['clean','work-compress', 'demo-config', 'prod-config', 'int-config', 'work-config']);
+  grunt.registerTask('release', ['clean','work-compress', 'demo-config', 'prod-config', 'int-config', 'work-config', 'gmap']);
 
   grunt.registerTask('default', ['gmap']);
 };
