@@ -68,7 +68,8 @@ module.exports = function(grunt) {
           'assets/js/catalunya-gmap/jquery-3.2.1.min.js': ['src/js/jquery-3.2.1.js'],
           'assets/js/catalunya-gmap/catalunya-gmap-init.min.js': ['src/js/catalunya-gmap-init.js'],
           'assets/js/catalunya-gmap/catalunya-gmap-extra.min.js': ['src/js/catalunya-gmap-extra.js'],
-          'assets/js/catalunya-gmap/bootstrap.min.js': ['src/js/bootstrap.js']
+          'assets/js/catalunya-gmap/bootstrap.min.js': ['src/js/bootstrap.js'],
+          'assets/js/catalunya-gmap/removeAccents.js': ['src/js/removeAccents.js']
         }
       }
     },
