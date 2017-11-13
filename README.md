@@ -9,6 +9,7 @@ Interactive vectorial map of Catalunya using GoogleMaps library.
 - [Demo v2.0](http://demo.catalunyamedieval.es/gmap2)
 - [Demo v3.0](http://demo.catalunyamedieval.es/gmap3)
 - [Demo v4.0](http://demo.catalunyamedieval.es/gmap4)
+- [Demo v4.1](http://demo.catalunyamedieval.es/gmap41)
 
 # Marker cluster Info
 http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries
