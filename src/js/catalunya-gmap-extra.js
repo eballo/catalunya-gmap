@@ -1,20 +1,3 @@
-function removeAccents(p) {
-    value = p.replace("(", "");
-    value = value.replace(")", "");
-
-    c = 'áàãâäéèêëíìîïóòõôöúùûüçÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÖÔÚÙÛÜÇ';
-    s = 'aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC';
-    n = '';
-    for (i = 0; i < value.length; i++) {
-        if (c.search(value.substr(i, 1)) >= 0) {
-            n += s.substr(c.search(value.substr(i, 1)), 1);
-        } else {
-            n += value.substr(i, 1);
-        }
-    }
-    return n;
-}
-
 /**
  * Search function
  */

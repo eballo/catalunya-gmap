@@ -87,6 +87,16 @@ module.exports = function(grunt) {
           },
         ],
       },
+      configurationFiles:
+        {
+          files:
+            [
+              {
+                src: ['src/js/<%= grunt.config.get("configuration") %>'],
+                dest: 'dist/<%= grunt.config.get("environment") %>/catalunya-gmap-options.js'
+              }
+            ],
+        },
     },
     clean: ['assets/js/', 'assets/css/'],
     cssmin: {
@@ -131,12 +141,16 @@ module.exports = function(grunt) {
   grunt.registerTask('prod', ['config:prod', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
   grunt.registerTask('int',  ['config:int', 'clean', 'jsbeautifier', 'uglify', 'copy', 'cssmin']);
 
-  grunt.registerTask('demo-compress', ['demo', 'compress']);
-  grunt.registerTask('work-compress', ['work', 'compress']);
-  grunt.registerTask('prod-compress', ['prod', 'compress']);
-  grunt.registerTask('int-compress',  ['int', 'compress']);
+  //Configuration Files folder
+  grunt.registerTask('demo-config',['demo','copy:configurationFiles']);
+  grunt.registerTask('prod-config',['prod','copy:configurationFiles']);
+  grunt.registerTask('int-config', ['int', 'copy:configurationFiles']);
+  grunt.registerTask('work-config',['work','copy:configurationFiles']);
 
-  grunt.registerTask('release', ['demo-compress', 'work-compress', 'prod-compress','int-compress', 'default']);
+  //Work Compress
+  grunt.registerTask('work-compress',['work','compress']);
+
+  grunt.registerTask('release', ['clean','work-compress', 'demo-config', 'prod-config', 'int-config', 'work-config']);
 
   grunt.registerTask('default', ['gmap']);
 };
