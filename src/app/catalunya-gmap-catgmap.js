@@ -1,7 +1,7 @@
-(function(window, google, List, Icons) {
 
-    var Gmap = (function() {
-        function Gmap(element, opts, config) {
+
+class Gmap {
+        construct (element, opts, config) {
 
             this.debug = config.debug;
             this.findUser = config.findUser;
@@ -29,11 +29,10 @@
             this._setRemoveAllIcons();
 
         }
-        Gmap.prototype = {
             /**
              * find user
              */
-            _findUser: function() {
+            _findUser() {
                 // Try HTML5 geolocation.
                 self = this;
                 if (navigator.geolocation) {
@@ -54,20 +53,20 @@
                     // Browser doesn't support Geolocation
                     _handleLocationError(false, self.gMap.getCenter());
                 }
-            },
+            }
 
-            _handleLocationError: function(browserHasGeolocation, pos) {
+            _handleLocationError(browserHasGeolocation, pos) {
                 this.infowindowUser.setPosition(pos);
                 this.infowindowUser.setContent(browserHasGeolocation ?
                     'Error: The Geolocation service failed.' :
                     'Error: Your browser doesn\'t support geolocation.');
                 this.infowindowUser.open(this.gMap);
-            },
+            }
 
             /**
              * Add Remove Icons Icon
              */
-            _setRemoveAllIcons: function(map) {
+            _setRemoveAllIcons(map) {
                 var self = this;
 
                 var removeAllIconsControlDiv = document.createElement('div');
@@ -83,7 +82,7 @@
                 // Set CSS for the control interior.
                 var controlText = document.createElement('div');
                 controlText.id = "visibleBuildings";
-                controlText.innerHTML = '<img src="' + this.serverHost + '/assets/images/catalunya-gmap/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
+                controlText.innerHTML = '<img src=' + this.serverHost + '"/web/images/catalunya-gmap/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
                 controlUI.appendChild(controlText);
 
                 this.gMap.controls[google.maps.ControlPosition.RIGHT_TOP].push(removeAllIconsControlDiv);
@@ -92,32 +91,32 @@
                 google.maps.event.addDomListener(controlUI, 'click', function() {
                     if (visibleBuildings) {
                         visibleBuildings = false;
-                        $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/05.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+                        $("#visibleBuildings").html('<img src=' + self.serverHost + '"/web/images/catalunya-gmap/gmap/05.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
                     } else {
                         visibleBuildings = true;
-                        $("#visibleBuildings").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+                        $("#visibleBuildings").html('<img src=' + self.serverHost + '"/web/images/catalunya-gmap/gmap/06.png" with="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
                     }
                     self._cangeVisibility(visibleBuildings);
                     self.markerClusterer.resetViewport_();
                     self.markerClusterer.redraw_();
                 });
-            },
+            }
             /**
              * change the visibility of the icons
              */
-            _cangeVisibility: function(visibility) {
+            _cangeVisibility(visibility) {
                 var arrayIcons = this.icons.getItems();
                 var self = this;
                 arrayIcons.forEach(function(edifici) {
                     edifici.visible = visibility;
                     self._setVisible(edifici.category, visibility);
                 });
-            },
+            }
 
             /**
              * Set the Logo for Catalunya Medieval in the BOTTOM_LEFT corner
              */
-            _setLogoCatalunyaMedieval: function() {
+            _setLogoCatalunyaMedieval() {
 
                 var logoControlDiv = document.createElement('div');
 
@@ -132,10 +131,10 @@
                 logoControlDiv.appendChild(logo);
 
                 this.gMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(logoControlDiv);
-            },
+            }
 
             // Set Icon for Llistat
-            _setIconFullScreen: function(map) {
+            _setIconFullScreen(map) {
                 var self = this;
 
                 var fullScreenControlDiv = document.createElement('div');
@@ -155,7 +154,7 @@
                 // Set CSS for the control interior.
                 var controlText = document.createElement('div');
                 controlText.id = "llistat";
-                controlText.innerHTML = '<img src="' + this.serverHost + '/assets/images/catalunya-gmap/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >';
+                controlText.innerHTML = '<img src=' + this.serverHost + '"/web/images/catalunya-gmap/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >';
                 controlUI.appendChild(controlText);
 
                 this.gMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(fullScreenControlDiv);
@@ -169,17 +168,17 @@
 
                     if (self.fullScreen) {
                         self.fullScreen = false;
-                        $("#llistat").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/04.png" with="42" height="42" alt="Ocultar llistat" >');
+                        $("#llistat").html('<img src=' + self.serverHost + '"/web/images/catalunya-gmap/gmap/04.png" with="42" height="42" alt="Ocultar llistat" >');
                     } else {
                         self.fullScreen = true;
-                        $("#llistat").html('<img src="' + self.serverHost + '/assets/images/catalunya-gmap/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >');
+                        $("#llistat").html('<img src=' + self.serverHost + '"/web/images/catalunya-gmap/gmap/03.png" with="42" height="42" alt="Mostrar llistat" >');
                     }
 
                 });
 
-            },
+            }
 
-            _resize: function(fitOption) {
+            _resize(fitOption) {
 
                 if (this.markerClusterer.getMarkers().length > 0) {
                     if (this.debug) {
@@ -211,30 +210,30 @@
                     this.gMap.setCenter(catalunya);
                 }
 
-            },
+            }
 
             /**
              * refresh Map triggering resize function
              */
-            _refreshMap: function() {
+            _refreshMap() {
                 google.maps.event.trigger(this.gMap, 'resize');
-            },
+            }
 
             // Private function to create an event to the given object
-            _on: function(opts) {
+            _on(opts) {
                 var self = this;
                 google.maps.event.addListener(opts.obj, opts.event, function(e) {
                     return opts.callback.call(self, e);
                 });
-            },
+            }
 
             // Private function thaat create the marker with the given options
-            _createMarker: function(opts) {
+            _createMarker(opts) {
                 opts.map = this.gMap;
                 return new google.maps.Marker(opts);
-            },
+            }
 
-            _createIcon: function(edifici) {
+            _createIcon(edifici) {
 
                 var controlDiv = document.createElement('div');
                 controlDiv.style.padding = '2px';
@@ -268,9 +267,9 @@
                 });
 
                 return controlDiv;
-            },
+            }
 
-            _setVisible: function(category, visible) {
+            _setVisible(category, visible) {
 
                 if (visible) {
                     this.enableBy(function(marker) {
@@ -280,27 +279,28 @@
                     $("#img-" + category).css("opacity", '1');
                 } else {
                     this.disableBy(function(marker) {
+                        console.log(marker.category === category, marker)
                         return marker.category === category;
                     })
                     this._disableText(category);
                     $("#img-" + category).css("opacity", '0.5');
                 }
-            },
+            }
 
-            addIcon: function(edifici) {
+            addIcon(edifici) {
 
                 this._createIcon(edifici);
                 //Add tot the list
                 this.icons.add(edifici);
 
-            },
+            }
 
-            removeIcon: function(edifici) {
+            removeIcon(edifici) {
 
-            },
+            }
 
             // Public function to add a marker in the map with the given options
-            addMarker: function(opts) {
+            addMarker(opts) {
                 var marker;
 
                 opts.position = {
@@ -384,12 +384,12 @@
 
                 });
 
-            },
+            }
 
             /**
              *  create Marker Button link text
              */
-            _createMarkerButton: function(marker, opts) {
+            _createMarkerButton(marker, opts) {
 
                 //Creates a sidebar text link
                 var ul = document.getElementById("mapLlist");
@@ -431,15 +431,15 @@
                     marker.setIcon(opts.icon);
                 });
 
-            },
+            }
 
             // Public function to findBy given a callback function
-            findBy: function(callback) {
+            findBy(callback) {
                 return this.markers.find(callback);
-            },
+            }
 
             // Public function to removeBy given a callback function
-            removeBy: function(callback) {
+            removeBy(callback) {
                 var self = this;
                 self.markers.find(callback, function(markers) {
                     markers.forEach(function(marker) {
@@ -450,27 +450,30 @@
                         }
                     });
                 });
-            },
+            }
+
             /**
              * Enable Text list
              */
-            _enableText: function(category) {
+            _enableText(category) {
                 var category = "." + category;
                 $(category).each(function() {
                     $(this).show();
                 });
-            },
+            }
+
             /**
              * Disable Text list
              */
-            _disableText: function(category) {
+            _disableText(category) {
                 var category = "." + category;
                 $(category).each(function() {
                     $(this).hide();
                 });
-            },
+            }
+
             // Public function to removeBy given a callback function
-            enableBy: function(callback) {
+            enableBy(callback) {
                 var self = this;
                 self.markers.find(callback, function(markers) {
                     markers.forEach(function(marker) {
@@ -479,10 +482,10 @@
                     });
                 });
                 this._resize(true);
-            },
+            }
 
             // Public function to removeBy given a callback function
-            disableBy: function(callback) {
+            disableBy(callback) {
                 var self = this;
                 self.markers.find(callback, function(markers) {
                     markers.forEach(function(marker) {
@@ -491,14 +494,14 @@
                     });
                 });
                 this._resize(true);
-            },
+            }
 
-            _getMarkers: function() {
+            _getMarkers() {
                 return this.markers;
-            },
+            }
 
             // Public funtion to set up the zoom
-            zoom: function(level) {
+            zoom(level) {
                 if (level) {
                     this.gMap.setZoom(level);
                 } else {
@@ -506,16 +509,9 @@
                 }
             }
 
-        };
 
-        return Gmap;
-    }());
+};
 
-    Gmap.create = function(element, opts, config) {
-        var element = document.getElementById(element);
-        return new Gmap(element, opts, config);
-    };
+export default Gmap;
 
-    window.Gmap = Gmap;
 
-}(window, google, List, Icons));
