@@ -29,14 +29,13 @@ V5.0
 - Improve code
 - Improve InfoBox
 - Use google js-api-loader
-- Use dotenv
+- Use dotenv, and use env for (local and prod)
+- clean package.json dependencies not in use
+- reformat code
+- Extras inside catalunya-gmap.min.js
 
 - TODO: 
   - migrate to latest version clusterer
   - change colors clusterer
-  - clean package.json dependencies not in use
-  - extract logic (debug, etc..)
-  - reformat code
-  - clean configurations
   - clean old code when all is working
   - document code

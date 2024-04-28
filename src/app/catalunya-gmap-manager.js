@@ -6,7 +6,7 @@ export default class MapManager {
 
         this.debug = process.env.DEBUG;
 
-        this.loader =  new Loader({
+        this.loader = new Loader({
             apiKey: process.env.GOOGLE_MAPS_API_KEY,
             version: "weekly",
             libraries: ["core", "maps", "marker"]
@@ -54,7 +54,7 @@ export default class MapManager {
 
             const element = document.getElementById(this.mapId)
             this.map = new this.google.Map(element, {
-                center: { lat: 41.440908754848165, lng: 1.81713925781257 },
+                center: {lat: 41.440908754848165, lng: 1.81713925781257},
                 zoom: 8,
                 maxZoom: 20,
                 minZoom: 4,
@@ -119,7 +119,7 @@ export default class MapManager {
     addContentToMarker(location, marker) {
         if (location.content) {
 
-            if(this.infowindow === null) {
+            if (this.infowindow === null) {
                 this.infowindow = new this.google.InfoWindow({
                     content: location.content,
                     position: marker.getPosition()
@@ -127,12 +127,12 @@ export default class MapManager {
             }
 
             const self = this
-            marker.addListener('click', function() {
+            marker.addListener('click', function () {
                 self.infowindow.setContent(location.content);
                 self.infowindow.setPosition(marker.getPosition())
                 self.infowindow.open({
                     anchor: marker,
-                    shouldFocus:false
+                    shouldFocus: false
                 });
             });
 
@@ -141,9 +141,9 @@ export default class MapManager {
              * the creation of the infowindow HTML structure 'domready'
              * and before the opening of the infowindow we defined the new event close for the custom style
              */
-            google.maps.event.addListener(this.infowindow, 'domready', function() {
+            google.maps.event.addListener(this.infowindow, 'domready', function () {
                 let closeBtn = $('.catmed-google-maps-marker-close');
-                google.maps.event.addDomListener(closeBtn[0], 'click', function() {
+                google.maps.event.addDomListener(closeBtn[0], 'click', function () {
                     self.infowindow.close();
                 });
 
@@ -212,19 +212,19 @@ export default class MapManager {
 
         const self = this;
         //Trigger a click event to marker when the button is clicked.
-        google.maps.event.addDomListener(li, "click", function() {
+        google.maps.event.addDomListener(li, "click", function () {
             self.map.setZoom(15);
             self.map.setCenter(marker.getPosition());
             self.map.setTilt(1);
             google.maps.event.trigger(marker, "click");
         });
 
-        google.maps.event.addDomListener(li, "mouseover", function() {
+        google.maps.event.addDomListener(li, "mouseover", function () {
             marker.setZIndex(2000);
             marker.setIcon(opts.icon2);
         });
 
-        google.maps.event.addDomListener(li, "mouseout", function() {
+        google.maps.event.addDomListener(li, "mouseout", function () {
             marker.setZIndex(1);
             marker.setIcon(opts.icon);
         });
@@ -256,12 +256,12 @@ export default class MapManager {
         this.map.controls[this.core.ControlPosition.RIGHT_TOP].push(removeAllIconsControlDiv);
 
         // Setup the click event listeners: simply set the map to Chicago.
-        google.maps.event.addDomListener(controlUI, 'click', function() {
+        google.maps.event.addDomListener(controlUI, 'click', function () {
             let number = "05" // visible
             if (!self.visibleBuildings) {
                 number = "06"
             }
-            $("#visibleBuildings").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number +'.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+            $("#visibleBuildings").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number + '.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
 
             self.visibleBuildings = !self.visibleBuildings
             self._changeVisibility(self.visibleBuildings);
@@ -296,7 +296,7 @@ export default class MapManager {
 
         const self = this;
         // Set up the click event listeners
-        google.maps.event.addDomListener(controlUI, 'click', function() {
+        google.maps.event.addDomListener(controlUI, 'click', function () {
             edifici.visible = !edifici.visible;
             self._setVisible(edifici.category, edifici.visible);
             self.clusterer.resetViewport_();
@@ -311,7 +311,7 @@ export default class MapManager {
      */
     _changeVisibility(visibility) {
         const self = this;
-        this.icons.forEach(function(edifici) {
+        this.icons.forEach(function (edifici) {
             edifici.visible = visibility;
             self._setVisible(edifici.category, visibility);
         });
@@ -366,7 +366,7 @@ export default class MapManager {
         this.map.controls[this.core.ControlPosition.TOP_RIGHT].push(fullScreenControlDiv);
 
         // Set up the click event listeners:
-        google.maps.event.addDomListener(controlUI, 'click', function() {
+        google.maps.event.addDomListener(controlUI, 'click', function () {
             //Toggle divs + resize map
             $('#primaryDiv').toggleClass('primaryDiv');
             self._resize(true);
@@ -382,6 +382,7 @@ export default class MapManager {
         });
 
     }
+
     _setVisible(category, visible) {
         if (visible) {
             this.enableMarkersByCategory(category)
@@ -400,7 +401,7 @@ export default class MapManager {
      */
     _enableText(category) {
         var category = "." + category;
-        $(category).each(function() {
+        $(category).each(function () {
             $(this).show();
         });
     }
@@ -410,7 +411,7 @@ export default class MapManager {
      */
     _disableText(category) {
         var category = "." + category;
-        $(category).each(function() {
+        $(category).each(function () {
             $(this).hide();
         });
     }
@@ -418,8 +419,8 @@ export default class MapManager {
     // Public function to removeBy given a callback function
     enableMarkersByCategory(category) {
         const self = this;
-        self.markers.forEach(function(marker) {
-            if(marker.category === category) {
+        self.markers.forEach(function (marker) {
+            if (marker.category === category) {
                 marker.setVisible(true);
                 self.clusterer.addMarker(marker, true);
             }
@@ -431,8 +432,8 @@ export default class MapManager {
      */
     disableMarkersByCategory(category) {
         const self = this;
-        self.markers.forEach(function(marker) {
-            if(marker.category === category) {
+        self.markers.forEach(function (marker) {
+            if (marker.category === category) {
                 marker.setVisible(false);
                 self.clusterer.removeMarker(marker, true);
             }
@@ -477,7 +478,7 @@ export default class MapManager {
     // Private function to create an event to the given object
     _on(opts) {
         const self = this;
-        google.maps.event.addListener(opts.obj, opts.event, function(e) {
+        google.maps.event.addListener(opts.obj, opts.event, function (e) {
             return opts.callback.call(self, e);
         });
     }
