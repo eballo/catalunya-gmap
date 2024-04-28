@@ -167,7 +167,7 @@ class MonumentBuilder {
     }
 
     _createContent(title, link, thumbs, municipi, poblacio, provincia, type, category, categoryName) {
-        let icon = this._getIcon(type, category, this.styleType1)
+        //let icon = this._getIcon(type, category, this.styleType1)
         let address = ""
         if (municipi || poblacio || provincia) {
             if (municipi) {
@@ -283,7 +283,7 @@ class MonumentBuilder {
             });
         }
     }
-    
+
 }
 
 export default MonumentBuilder;
