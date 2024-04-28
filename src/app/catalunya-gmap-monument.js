@@ -58,102 +58,102 @@ class MonumentBuilder {
     }
 
     addEpocaCarlina() {
-        var type = 'militar';
-        var category = 'epoca-carlina';
-        var categoryName = 'Època Carlina';
+        const type = 'militar';
+        const category = 'epoca-carlina';
+        const categoryName = 'Època Carlina';
         this._addEdifici(2, aEpocaCarlina, category, categoryName, type);
     }
 
     addMuralles() {
-        var type = 'militar';
-        var category = 'muralles';
-        var categoryName = 'Muralles';
+        const type = 'militar';
+        const category = 'muralles';
+        const categoryName = 'Muralles';
         this._addEdifici(3, aMuralles, category, categoryName, type);
     }
 
     addTorres() {
-        var type = 'militar';
-        var category = 'torre';
-        var categoryName = 'Torres';
+        const type = 'militar';
+        const category = 'torre';
+        const categoryName = 'Torres';
         this._addEdifici(4, aTorres, category, categoryName, type);
     }
 
     /** Civils */
     addCasaForta() {
-        var type = 'civil';
-        var category = 'casa-forta';
-        var categoryName = 'Cases Fortes';
+        const type = 'civil';
+        const category = 'casa-forta';
+        const categoryName = 'Cases Fortes';
         this._addEdifici(5, aCasaForta, category, categoryName, type);
     }
 
     addPalau() {
-        var type = 'civil';
-        var category = 'palau';
-        var categoryName = 'Palaus';
+        const type = 'civil';
+        const category = 'palau';
+        const categoryName = 'Palaus';
         this._addEdifici(6, aPalau, category, categoryName, type);
     }
 
     addPont() {
-        var type = 'civil';
-        var category = 'pont';
-        var categoryName = 'Ponts';
+        const type = 'civil';
+        const category = 'pont';
+        const categoryName = 'Ponts';
         this._addEdifici(7, aPont, category, categoryName, type);
     }
 
     addTorreColomer() {
-        var type = 'civil';
-        var category = 'torre-colomer'
-        var categoryName = 'Torres Colomer';
+        const type = 'civil';
+        const category = 'torre-colomer';
+        const categoryName = 'Torres Colomer';
         this._addEdifici(8, aTorreColomer, category, categoryName, type);
     }
 
     /** Religios */
     addBasilica() {
-        var type = 'religios';
-        var category = 'basilica';
-        var categoryName = 'Basíliques';
+        const type = 'religios';
+        const category = 'basilica';
+        const categoryName = 'Basíliques';
         this._addEdifici(9, aBasilica, category, categoryName, type);
     }
 
     addCatedral() {
-        var type = 'religios';
-        var category = 'catedral';
-        var categoryName = 'Catedrals'
+        const type = 'religios';
+        const category = 'catedral';
+        const categoryName = 'Catedrals';
         this._addEdifici(10, aCatedral, category, categoryName, type);
     }
 
     addErmita() {
-        var type = 'religios';
-        var category = 'ermita';
-        var categoryName = 'Ermites';
+        const type = 'religios';
+        const category = 'ermita';
+        const categoryName = 'Ermites';
         this._addEdifici(11, aErmita, category, categoryName, type);
     }
 
     addEsglesia() {
-        var type = 'religios';
-        var category = 'esglesia';
-        var categoryName = 'Esglésies';
+        const type = 'religios';
+        const category = 'esglesia';
+        const categoryName = 'Esglésies';
         this._addEdifici(12, aEsglesia, category, categoryName, type);
     }
 
     addEsglesiaFortificada() {
-        var type = 'religios';
-        var category = 'esglesia-fortificada';
-        var categoryName = 'Esglésies fortificades'
+        const type = 'religios';
+        const category = 'esglesia-fortificada';
+        const categoryName = 'Esglésies fortificades';
         this._addEdifici(13, aEsglesiaFortificada, category, categoryName, type);
     }
 
     addMonestir() {
-        var type = 'religios';
-        var category = 'monestir';
-        var categoryName = "Monestirs";
+        const type = 'religios';
+        const category = 'monestir';
+        const categoryName = "Monestirs";
         this._addEdifici(14, aMonestir, category, categoryName, type);
     }
 
     addAltresLlocsInteres() {
-        var type = 'altres';
-        var category = 'altres-llocs-dinteres';
-        var categoryName = 'Altres llocs d\'Interés'
+        const type = 'altres';
+        const category = 'altres-llocs-dinteres';
+        const categoryName = 'Altres llocs d\'Interés';
         this._addEdifici(15, aAltres, category, categoryName, type);
     }
 
@@ -167,7 +167,6 @@ class MonumentBuilder {
     }
 
     _createContent(title, link, thumbs, municipi, poblacio, provincia, type, category, categoryName) {
-
         let icon = this._getIcon(type, category, this.styleType1)
         let address = ""
         if (municipi || poblacio || provincia) {
@@ -245,11 +244,9 @@ class MonumentBuilder {
         content += "</div>"
 
         return content;
-
     }
 
     _extract(edifici, category, categoryName, x, type) {
-
         return {
             id: category + x,
             title: edifici.title,
@@ -267,7 +264,6 @@ class MonumentBuilder {
     }
 
     _addEdifici(id, arrayName, category, categoryName, type) {
-
         if (arrayName.length > 0) {
 
             //Add Marker to the Map
@@ -286,9 +282,8 @@ class MonumentBuilder {
                 icon: icon
             });
         }
-
     }
-
+    
 }
 
 export default MonumentBuilder;
