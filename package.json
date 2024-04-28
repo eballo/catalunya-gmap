@@ -4,15 +4,20 @@
   "description": "Interactive map of Catalunya using GoogleMaps API.",
   "main": "index.js",
   "devDependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
     "@googlemaps/js-api-loader": "^1.16.6",
+    "@jest/globals": "^29.7.0",
+    "babel-jest": "^29.7.0",
     "dotenv": "^16.4.5",
     "dotenv-webpack": "^8.1.0",
+    "jest": "^29.7.0",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "buildProd": "webpack --mode production",
     "buildLocal": "webpack --mode development",
     "buildWatch": "webpack --watch --mode development",

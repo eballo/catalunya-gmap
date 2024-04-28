@@ -33,9 +33,12 @@ V5.0
 - clean package.json dependencies not in use
 - reformat code
 - Extras inside catalunya-gmap.min.js
+- Add jest tests for MonumentBuilder class
 
-- TODO: 
+- TODO:
+  - add Tests 
   - migrate to latest version clusterer
   - change colors clusterer
   - clean old code when all is working
   - document code
+  - Fix when infowindows open and try to close list

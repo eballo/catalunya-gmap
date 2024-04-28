@@ -161,7 +161,7 @@ class MonumentBuilder {
         return this.serverHost + 'assets/images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + styleType + '.png';
     }
 
-    capitalize(word) {
+    _capitalize(word) {
         const loweredCase = word.toLowerCase();
         return word[0].toUpperCase() + loweredCase.slice(1);
     }
@@ -230,7 +230,7 @@ class MonumentBuilder {
         content += "    <div class='catmed-google-maps-marker-content'>"
         content += "        <div class='catmed-google-maps-marker-info'>"
         content += "            <div class='catmed-google-maps-marker-info-item-building-icon catmed-google-maps-marker-info-item'>"
-        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + categoryName + " - " + this.capitalize(type) + "</span>"
+        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + categoryName + " - " + this._capitalize(type) + "</span>"
         content += "            </div>"
         content += "            <div class='catmed-google-maps-marker-info-item-address catmed-google-maps-marker-info-item'>"
         content += "                <div class='catmed-google-maps-marker-info-item-icon-wrapper'>"
