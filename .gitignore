@@ -7,3 +7,6 @@ node_modules/
 dist/
 .DS_Store
 .idea/
+
+# exclude generated file (will always change)
+web/js/catalunya-gmap.min.js
