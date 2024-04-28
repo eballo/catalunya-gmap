@@ -171,7 +171,14 @@ export default class MonumentBuilder {
         return this.serverHost + '/images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + this.styleType2 + '.png';
     }
 
-    _createContent(title, link, thumbs, municipi, poblacio, provincia, type) {
+    capitalize(word) {
+        const loweredCase = word.toLowerCase();
+        return word[0].toUpperCase() + loweredCase.slice(1);
+    }
+
+    _createContent(title, link, thumbs, municipi, poblacio, provincia, type, category, categoryName) {
+
+        let icon = this._getIcon1(type, category)
         let address = ""
         if (municipi || poblacio || provincia) {
             if (municipi) {
@@ -209,7 +216,8 @@ export default class MonumentBuilder {
         content += "            <div class='catmed-google-maps-marker-image'>" + thumbs + "</div>"
         content += "    </div>"
         content += "    <div class='catmed-google-maps-marker-title-wrapper "+type+"'>"
-        content += "            <a class='catmed-google-maps-marker-link-image' href='"+ link +"' >"
+        content += "            <a class='catmed-google-maps-marker-link-image' href='"+ link +"' > "
+        //content += "                <span class='catmed-google-maps-building-icon'><img class='catmed-google-maps-building-icon-img' src='" + icon+ "' alt='"+category + "-" + type + "'></span>"
         content += "                <span class='catmed-google-maps-marker-title'>" + title + "</span>"
         content += "            </a>"
         content += "        <div class='catmed-google-maps-marker-directions'>"
@@ -231,6 +239,9 @@ export default class MonumentBuilder {
         content += "    </div>"
         content += "    <div class='catmed-google-maps-marker-content'>"
         content += "        <div class='catmed-google-maps-marker-info'>"
+        content += "            <div class='catmed-google-maps-marker-info-item-building-icon catmed-google-maps-marker-info-item'>"
+        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + categoryName +" - " + this.capitalize(type) + "</span>"
+        content += "            </div>"
         content += "            <div class='catmed-google-maps-marker-info-item-address catmed-google-maps-marker-info-item'>"
         content += "                <div class='catmed-google-maps-marker-info-item-icon-wrapper'>"
         content += "                    <svg class='catmed-google-maps-marker-info-item-icon' width='12px' height='12px' viewBox='0 0 510 510'>"
@@ -257,7 +268,7 @@ export default class MonumentBuilder {
             lat: parseFloat(edifici.position.lat),
             lng: parseFloat(edifici.position.long),
             visible: true,
-            content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia, type),
+            content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia, type, category, categoryName),
             icon: this._getIcon1(type, category),
             icon2: this._getIcon2(type, category),
             category: category, // (building type Slug-Name)

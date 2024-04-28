@@ -96,6 +96,16 @@
   justify-content: space-between;
 }
 
+.catmed-google-maps-building-icon{
+  position: relative;
+}
+
+.catmed-google-maps-building-icon-img {
+  position: absolute;
+  left: 5px;
+  bottom: -38px;
+}
+
 .catmed-google-maps-marker-title{
   color: #fff;
   font-size: 14px;
