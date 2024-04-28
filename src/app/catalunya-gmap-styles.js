@@ -74,12 +74,3 @@ export const STYLES = [{
         "saturation": -97
     }]
 }];
-
-export const CONFIG_OPTIONS = {
-    serverHost: 'http://http://localhost:9000/',
-    styleType1: 7,
-    styleType2: 6,
-    debug: false,
-    findUser: false,
-    useMarkerCluster: true
-};

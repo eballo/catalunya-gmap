@@ -19,8 +19,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "buildWatch": "webpack --watch",
+    "buildProd": "webpack --mode production",
+    "buildLocal": "webpack --mode development",
+    "buildWatch": "webpack --watch --mode development",
     "start": "webpack server --mode development --config ./webpack.config.js --hot"
   },
   "author": "eballo",

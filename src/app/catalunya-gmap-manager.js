@@ -1,16 +1,10 @@
 import {Loader} from "@googlemaps/js-api-loader";
-import {STYLES} from "./config/catalunya-gmap-options-gmap";
+import {STYLES} from "./catalunya-gmap-styles";
 
 export default class MapManager {
     constructor(mapId) {
 
-        this.debug = true;
-        this.debug = true;
-        this.fullScreen = false;
-        this.visibleBuildings = true;
-        this.useMarkerCluster = true;
-
-        this.infowindow = null;
+        this.debug = process.env.DEBUG;
 
         this.loader =  new Loader({
             apiKey: process.env.GOOGLE_MAPS_API_KEY,
@@ -18,19 +12,26 @@ export default class MapManager {
             libraries: ["core", "maps", "marker"]
         });
 
+        // libraries that we are loading
         this.google = null;
         this.marker = null;
         this.core = null;
 
-        this.arrayCategoriesText = [];
-        this.icons = [];         // List of icons
+        // to keep track with initial values
+        this.fullScreen = false;
+        this.visibleBuildings = true;
+        this.useMarkerCluster = process.env.USE_MARKER_CLUSTER;
+        this.infowindow = null;
 
-        this.mapId = mapId;     // The mapId
-        this.map = null;        // The created map
-        this.markers = [];      // All the markers
-        this.clusterer = null;
+        this.arrayCategoriesText = [];  // List categories text that we use to display in the side
+        this.icons = [];                // List of icons
 
-        this.serverHost = "http://localhost:9000"; //TODO: make it configurable!
+        this.mapId = mapId;             // The mapId
+        this.map = null;                // The created map
+        this.markers = [];              // All the markers
+        this.clusterer = null;          // custer elements
+
+        this.serverHost = process.env.SERVER_HOST;
 
     }
 
@@ -249,7 +250,7 @@ export default class MapManager {
         // Set CSS for the control interior.
         const controlText = document.createElement('div');
         controlText.id = "visibleBuildings";
-        controlText.innerHTML = '<img src="' + this.serverHost + '/images/catalunya-gmap/gmap/06.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
+        controlText.innerHTML = '<img src="' + this.serverHost + 'assets/images/catalunya-gmap/gmap/06.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
         controlUI.appendChild(controlText);
 
         this.map.controls[this.core.ControlPosition.RIGHT_TOP].push(removeAllIconsControlDiv);
@@ -260,7 +261,7 @@ export default class MapManager {
             if (!self.visibleBuildings) {
                 number = "06"
             }
-            $("#visibleBuildings").html('<img src="' + self.serverHost + '/images/catalunya-gmap/gmap/' + number +'.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+            $("#visibleBuildings").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number +'.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
 
             self.visibleBuildings = !self.visibleBuildings
             self._changeVisibility(self.visibleBuildings);
@@ -329,7 +330,7 @@ export default class MapManager {
 
         //Set CSS for the control border
         const logo = document.createElement('img');
-        logo.src = this.serverHost + '/images/catalunya-gmap/logo/logoCM-red-mini.png';
+        logo.src = this.serverHost + 'assets/images/catalunya-gmap/logo/logoCM-red-mini.png';
         logo.style.cursor = 'pointer';
         logoControlDiv.appendChild(logo);
 
@@ -359,7 +360,7 @@ export default class MapManager {
         // Set CSS for the control interior.
         const controlText = document.createElement('div');
         controlText.id = "llistat";
-        controlText.innerHTML = '<img src="' + this.serverHost + '/images/catalunya-gmap/gmap/03.png" width="42" height="42" alt="Mostrar llistat" >';
+        controlText.innerHTML = '<img src="' + this.serverHost + 'assets/images/catalunya-gmap/gmap/03.png" width="42" height="42" alt="Mostrar llistat" >';
         controlUI.appendChild(controlText);
 
         this.map.controls[this.core.ControlPosition.TOP_RIGHT].push(fullScreenControlDiv);
@@ -377,7 +378,7 @@ export default class MapManager {
             }
             self.fullScreen = !self.fullScreen
 
-            $("#llistat").html('<img src="' + self.serverHost + '/images/catalunya-gmap/gmap/' + number + '.png" with="42" height="42" alt="Ocultar llistat" >');
+            $("#llistat").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number + '.png" with="42" height="42" alt="Ocultar llistat" >');
         });
 
     }

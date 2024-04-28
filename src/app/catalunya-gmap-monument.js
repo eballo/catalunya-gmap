@@ -1,6 +1,6 @@
 import MapManager from "./catalunya-gmap-manager";
 
-export default class MonumentBuilder {
+class MonumentBuilder {
 
     constructor(mapId) {
         this.mapManager = new MapManager(mapId);
@@ -8,7 +8,7 @@ export default class MonumentBuilder {
 
         this.styleType1 = 7;
         this.styleType2 = 6;
-        this.serverHost = "http://localhost:9000"
+        this.serverHost = process.env.SERVER_HOST;
     }
 
     async create() {
@@ -157,18 +157,8 @@ export default class MonumentBuilder {
         this._addEdifici(15, aAltres, category, categoryName, type);
     }
 
-    /**
-     * Icona 1
-     */
-    _getIcon1(type, category) {
-        return this.serverHost + '/images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + this.styleType1 + '.png';
-    }
-
-    /**
-     * Icona 2
-     */
-    _getIcon2(type, category) {
-        return this.serverHost + '/images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + this.styleType2 + '.png';
+    _getIcon(type, category, styleType) {
+        return this.serverHost + 'assets/images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + styleType + '.png';
     }
 
     capitalize(word) {
@@ -178,7 +168,7 @@ export default class MonumentBuilder {
 
     _createContent(title, link, thumbs, municipi, poblacio, provincia, type, category, categoryName) {
 
-        let icon = this._getIcon1(type, category)
+        let icon = this._getIcon(type, category, this.styleType1)
         let address = ""
         if (municipi || poblacio || provincia) {
             if (municipi) {
@@ -189,7 +179,7 @@ export default class MonumentBuilder {
             }
 
             // Override in the case that we have Barcelona, Barcelona to only Barcelona
-            if (municipi === poblacio){
+            if (municipi === poblacio) {
                 address = municipi + ", ";
             }
 
@@ -198,7 +188,7 @@ export default class MonumentBuilder {
             }
 
             // Override in the case that we have Barcelona, Barcelona, Barcelona to only Barcelona
-            if (municipi === poblacio && poblacio === provincia){
+            if (municipi === poblacio && poblacio === provincia) {
                 address = municipi;
             }
         }
@@ -215,8 +205,8 @@ export default class MonumentBuilder {
         content += "    <div class='catmed-google-maps-marker-header'>"
         content += "            <div class='catmed-google-maps-marker-image'>" + thumbs + "</div>"
         content += "    </div>"
-        content += "    <div class='catmed-google-maps-marker-title-wrapper "+type+"'>"
-        content += "            <a class='catmed-google-maps-marker-link-image' href='"+ link +"' > "
+        content += "    <div class='catmed-google-maps-marker-title-wrapper " + type + "'>"
+        content += "            <a class='catmed-google-maps-marker-link-image' href='" + link + "' > "
         //content += "                <span class='catmed-google-maps-building-icon'><img class='catmed-google-maps-building-icon-img' src='" + icon+ "' alt='"+category + "-" + type + "'></span>"
         content += "                <span class='catmed-google-maps-marker-title'>" + title + "</span>"
         content += "            </a>"
@@ -240,7 +230,7 @@ export default class MonumentBuilder {
         content += "    <div class='catmed-google-maps-marker-content'>"
         content += "        <div class='catmed-google-maps-marker-info'>"
         content += "            <div class='catmed-google-maps-marker-info-item-building-icon catmed-google-maps-marker-info-item'>"
-        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + categoryName +" - " + this.capitalize(type) + "</span>"
+        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + categoryName + " - " + this.capitalize(type) + "</span>"
         content += "            </div>"
         content += "            <div class='catmed-google-maps-marker-info-item-address catmed-google-maps-marker-info-item'>"
         content += "                <div class='catmed-google-maps-marker-info-item-icon-wrapper'>"
@@ -248,7 +238,7 @@ export default class MonumentBuilder {
         content += "                        <path d='M255,0C155.55,0,76.5,79.05,76.5,178.5C76.5,311.1,255,510,255,510s178.5-198.9,178.5-331.5C433.5,79.05,354.45,0,255,0zM255,242.25c-35.7,0-63.75-28.05-63.75-63.75s28.05-63.75,63.75-63.75s63.75,28.05,63.75,63.75S290.7,242.25,255,242.25z'></path>"
         content += "                    </svg>"
         content += "                </div>"
-        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + address +"</span>"
+        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + address + "</span>"
         content += "            </div>"
         content += "        </div>"
         content += "    </div>"
@@ -269,22 +259,25 @@ export default class MonumentBuilder {
             lng: parseFloat(edifici.position.long),
             visible: true,
             content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia, type, category, categoryName),
-            icon: this._getIcon1(type, category),
-            icon2: this._getIcon2(type, category),
+            icon: this._getIcon(type, category, this.styleType1),
+            icon2: this._getIcon(type, category, this.styleType2),
             category: category, // (building type Slug-Name)
             categoryName: categoryName
         };
     }
 
     _addEdifici(id, arrayName, category, categoryName, type) {
-        //console.log(arrayName.length)
+
         if (arrayName.length > 0) {
-            arrayName.forEach((building, index)=>{
+
+            //Add Marker to the Map
+            arrayName.forEach((building, index) => {
                 const opt = this._extract(building, category, categoryName, index, type);
                 this.mapManager.addMarker(opt);
             })
 
-            const icon = this._getIcon1(type, category);
+            //Add Icon related to the map to the map menu
+            const icon = this._getIcon(type, category, this.styleType1);
             this.mapManager.addIcon({
                 id: id,
                 visible: true,
@@ -296,4 +289,6 @@ export default class MonumentBuilder {
 
     }
 
-};
+}
+
+export default MonumentBuilder;

@@ -80,9 +80,14 @@ Since version 5.0 uses [webpack](https://webpack.js.org/).
 #### Configuration
 
 add a .env file and setup your google api key
+.env (local)
+.env.production (production)
 
 ```
 GOOGLE_MAPS_API_KEY=xxxxxxx
+SERVER_HOST='http://localhost:9000/'
+DEBUG=true
+USE_MARKER_CLUSTER=true
 ```
 
 Building the theme requires [node.js](http://nodejs.org/download/). We recommend you update to the latest version of npm: `npm install -g npm@latest`.
@@ -90,14 +95,16 @@ Building the theme requires [node.js](http://nodejs.org/download/). We recommend
 From the command line:
 
 1. Navigate to the theme directory, then run `npm install`
-3. Build `npm run build`
+3. Build `npm run buildLocal`
 4. Start `npm run start`
+5. (optional) buildWatch `npm run buildWatch` 
 
 Open your browser [localhost:9000](http://localhost:9000/)
 
 ### Available node commands
 
-* `build`      — Compile and optimize the files in your web directory
-* `buildWatch` — Compile and optimize the files in your web directory and watch for changes to update the files
-* `start`      — Starts a web server
+* `buildLocal` — Compile (local) and optimize the files in your web directory
+* `buildProd`  — Compile (production) and optimize the files in your web directory
+* `buildWatch` — Compile (local) and optimize the files in your web directory and watch for changes to update the files
+* `start`      — Starts  a web server
 
