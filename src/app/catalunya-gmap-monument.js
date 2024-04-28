@@ -174,16 +174,27 @@ export default class MonumentBuilder {
     _createContent(title, link, thumbs, municipi, poblacio, provincia, type) {
         let address = ""
         if (municipi || poblacio || provincia) {
-                if (municipi) {
-                    address += municipi + ", ";
-                }
-                if (poblacio) {
-                    address += poblacio + ", ";
-                }
-                if (provincia) {
-                    address += provincia;
-                }
+            if (municipi) {
+                address += municipi + ", ";
             }
+            if (poblacio) {
+                address += poblacio + ", ";
+            }
+
+            // Override in the case that we have Barcelona, Barcelona to only Barcelona
+            if (municipi === poblacio){
+                address = municipi + ", ";
+            }
+
+            if (provincia) {
+                address += provincia;
+            }
+
+            // Override in the case that we have Barcelona, Barcelona, Barcelona to only Barcelona
+            if (municipi === poblacio && poblacio === provincia){
+                address = municipi;
+            }
+        }
 
         thumbs = "<img alt='The Museum of Modern Art' src='https://files.elfsightcdn.com/86d592a4-fc00-4d16-9b84-0566a28d5645/423cf9be-c155-4209-8f60-75ae45d9bcec/moma_renovation_and_expansion--1-.jpg'>"
 
