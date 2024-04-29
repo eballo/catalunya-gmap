@@ -147,7 +147,7 @@ export default class MapManager {
              */
             google.maps.event.addListener(this.infowindow, 'domready', function () {
                 let closeBtn = $('.catmed-google-maps-marker-close');
-                google.maps.event.addDomListener(closeBtn[0], 'click', function () {
+                closeBtn[0].addEventListener('click', function () {
                     self.infowindow.close();
                 });
 
@@ -263,20 +263,19 @@ export default class MapManager {
         ul.appendChild(li);
 
         const self = this;
-        //Trigger a click event to marker when the button is clicked.
-        google.maps.event.addDomListener(li, "click", function () {
+        li.addEventListener("click", function () {
             self.map.setZoom(15);
             self.map.setCenter(marker.position);
             self.map.setTilt(1);
             google.maps.event.trigger(marker, "click");
         });
 
-        google.maps.event.addDomListener(li, "mouseover", function () {
+        li.addEventListener("mouseover", function () {
             marker.setZIndex(2000);
             marker.setIcon(opts.icon2);
         });
 
-        google.maps.event.addDomListener(li, "mouseout", function () {
+        li.addEventListener("mouseout", function () {
             marker.setZIndex(1);
             marker.setIcon(opts.icon);
         });
@@ -307,8 +306,7 @@ export default class MapManager {
 
         this.map.controls[this.core.ControlPosition.RIGHT_TOP].push(removeAllIconsControlDiv);
 
-        // Setup the click event listeners: simply set the map to Chicago.
-        google.maps.event.addDomListener(controlUI, 'click', function () {
+        controlUI.addEventListener('click', function () {
             let number = "05" // visible
             if (!self.visibleBuildings) {
                 number = "06"
@@ -340,8 +338,7 @@ export default class MapManager {
         this.map.controls[this.core.ControlPosition.RIGHT_TOP].push(controlDiv);
 
         const self = this;
-        // Set up the click event listeners
-        google.maps.event.addDomListener(controlUI, 'click', function () {
+        controlUI.addEventListener( 'click', function () {
             edifici.visible = !edifici.visible;
             self._setVisible(edifici.category, edifici.visible);
         });
@@ -409,7 +406,7 @@ export default class MapManager {
         this.map.controls[this.core.ControlPosition.TOP_RIGHT].push(showTextList);
 
         // Set up the click event listeners:
-        google.maps.event.addDomListener(controlUI, 'click', function () {
+        controlUI.addEventListener( 'click', function () {
             //Toggle divs + resize map
             $('#primaryDiv').toggleClass('primaryDiv');
             self.resize(true);
