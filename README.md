@@ -36,18 +36,10 @@ https://www.w3schools.com/howto/howto_js_filter_lists.asp
 				</div>
         ...
         <footer>
-            <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=YOUR_API_KEY"></script>
             <script type="text/javascript" src="assets/js/catalunya-gmap/jquery-3.2.1.min.js"></script>
             <script type="text/javascript" src="assets/js/catalunya-gmap/bootstrap.min.js"></script>
             <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-path.min.js"></script>
-            <script type="text/javascript" src="assets/js/catalunya-gmap/markerclusterer.min.js"></script>
-            <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-list.min.js"></script>
-            <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-icons.min.js"></script>
             <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-catgmap.min.js"></script>
-            <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-extra.min.js"></script>
-            <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-options.js"></script>
-            <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-edifici.min.js"></script>
-            <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-init.min.js"></script>
         </footer>
 ```
 2. Edit the content of catalunya-gmap-init.js to add, remove the markers that you want to print.
@@ -87,7 +79,6 @@ add a .env file and setup your google api key
 GOOGLE_MAPS_API_KEY=xxxxxxx
 SERVER_HOST='http://localhost:9000/'
 DEBUG=true
-USE_MARKER_CLUSTER=true
 ```
 
 Building the theme requires [node.js](http://nodejs.org/download/). We recommend you update to the latest version of npm: `npm install -g npm@latest`.
