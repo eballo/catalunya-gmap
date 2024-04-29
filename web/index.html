@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Interactive Map of Catalunya using GoogleMaps API - Demo V5.0</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="GoogleMaps gMap Catalunya Map" name="description">
+    <meta content="Enric Ballo" name="author">
+    <link href="favicon.png" rel="shortcut icon"/>
+
+    <!-- facebook tags -->
+    <meta content="assets/images/CM.png" property="og:image"/>
+    <meta content="auto" property="og:image:width"/>
+    <meta content="Interactive map of Catalonia based GoogleMaps library." property="og:description"/>
+    <meta content="https://demo.catalunyamedieval.es/gmap50/" property="og:url"/>
+    <meta content="Interactive Map of Catalunya using GoogleMaps API" property="og:title"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet">
+    <link href="assets/css/catalunya-gmap.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1 id="title-h1">Interactive Map of Catalunya using GoogleMaps API - Demo V5.0</h1>
+<h4 id="title-h4"> :: Catalunya Medieval Project - <a href="https://www.catalunyamedieval.es/" target="_blank"
+                                                      title="Catalunya Medieval">www.catalunyamedieval.es</a> ::</h4>
+<div id="container">
+
+    <div class="primaryDiv_big" id="primaryDiv">
+        <div id="mapContainer">
+            <div id="gMap"></div>
+        </div>
+    </div>
+
+    <div id="secondaryDiv">
+        <div id="error">
+            <h2>No hi ha cap edificaci&oacute; disponible per aquesta comcarca</h2></div>
+            <label for="search-llista"></label>
+            <input id="search-llista" placeholder="cercar.." type="search">
+        <div id="llista">
+            <ul id="mapLlist"></ul>
+        </div>
+    </div>
+
+</div>
+</body>
+
+<footer>
+    <script src="assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/js/catalunya-gmap-path.js" type="text/javascript"></script>
+    <script src="assets/js/catalunya-gmap.min.js" type="text/javascript"></script>
+</footer>
+
+</html>

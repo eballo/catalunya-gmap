@@ -1,31 +1,29 @@
 {
   "name": "catalunya-gmap",
-  "version": "4.0.0",
-  "description": "Interactive vectorial map of Catalunya using GoogleMaps library.",
+  "version": "5.0.0",
+  "description": "Interactive map of Catalunya using GoogleMaps API.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eballo/catalunya-gmap.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/eballo/catalunya-gmap/issues"
-  },
-  "homepage": "https://github.com/eballo/catalunya-gmap#readme",
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-config": "^1.0.0",
-    "grunt-contrib-clean": "^1.1.0",
-    "grunt-contrib-compress": "^1.4.3",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^2.2.1",
-    "grunt-contrib-uglify": "^3.0.1",
-    "grunt-jsbeautifier": "^0.2.13"
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "@googlemaps/js-api-loader": "^1.16.6",
+    "@googlemaps/markerclusterer": "^2.5.3",
+    "@jest/globals": "^29.7.0",
+    "babel-jest": "^29.7.0",
+    "dotenv": "^16.4.5",
+    "dotenv-webpack": "^8.1.0",
+    "jest": "^29.7.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   },
-  "dependencies": {}
+  "scripts": {
+    "test": "jest",
+    "buildProd": "webpack --mode production",
+    "buildLocal": "webpack --mode development",
+    "buildWatch": "webpack --watch --mode development",
+    "start": "webpack server --mode development --config ./webpack.config.js --hot"
+  },
+  "author": "eballo",
+  "license": "ISC"
 }

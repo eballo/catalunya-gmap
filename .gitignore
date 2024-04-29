@@ -1,7 +1,12 @@
-.buildpath
-.qicon
+# exclude env configurations
+.env
+.env.production
+
 .project
-.settings/
 node_modules/
 dist/
 .DS_Store
+.idea/
+
+# exclude generated file (will always change)
+web/assets/js/catalunya-gmap.min.js
