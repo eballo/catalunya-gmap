@@ -18,7 +18,7 @@ export default class MapManager {
         this.core = null;
 
         // to keep track with initial values
-        this.fullScreen = false;
+        this.ListTextEnabled = false;
         this.visibleBuildings = true;
         this.useMarkerCluster = process.env.USE_MARKER_CLUSTER;
         this.infowindow = null;
@@ -90,7 +90,7 @@ export default class MapManager {
 
             // Initialize map
             this._setLogoCatalunyaMedieval();
-            this._setIconFullScreen();
+            this._setIconTextList();
             this._setRemoveAllIcons();
 
             return this.map;
@@ -114,6 +114,10 @@ export default class MapManager {
 
         // Create right buttons on the map
         this._createMarkerButton(marker, location)
+    }
+
+    getMarkers() {
+        return this.markers;
     }
 
     addContentToMarker(location, marker) {
@@ -175,6 +179,45 @@ export default class MapManager {
             visible: location.visible,
             category: location.category, // (building type Slug-Name)
         });
+    }
+
+    addIcon(edifici) {
+        this._createIcon(edifici);
+        this.icons.push(edifici); //Add Icon to the icons list
+    }
+
+    resize(fitOption) {
+        if (this.clusterer.getMarkers().length > 0) {
+            if (this.debug) {
+                console.log("markerClusterer : it is not empty!", this.clusterer.getMarkers().length);
+                console.log("Recenter markers!");
+            }
+
+            //TODO: check this
+            // if (this.findUser) {
+            //     this._findUser();
+            // }
+
+            this._refreshMap();
+
+            if (fitOption) {
+                this.clusterer.fitMapToMarkers();
+                this.clusterer.repaint();
+            }
+
+        } else {
+            if (this.debug) {
+                console.log("Marker Clusterer : it is empty!");
+                console.log("Recenter the map to Catalunya Area");
+            }
+
+            //TODO: take it from options
+            const latitud = 41.440908754848165;
+            const longitude = 1.81713925781257;
+            const catalunya = new google.maps.LatLng(latitud, longitude);
+            this.map.setZoom(8);
+        }
+
     }
 
     _exist(item) {
@@ -270,11 +313,6 @@ export default class MapManager {
         });
     }
 
-    addIcon(edifici) {
-        this._createIcon(edifici);
-        this.icons.push(edifici); //Add Icon to the icons list
-    }
-
     _createIcon(edifici) {
 
         const controlDiv = document.createElement('div');
@@ -340,14 +378,14 @@ export default class MapManager {
     /**
      * Set Icon for icons list
      */
-    _setIconFullScreen() {
+    _setIconTextList() {
         const self = this;
 
-        const fullScreenControlDiv = document.createElement('div');
+        const showTextList = document.createElement('div');
         // Set CSS styles for the DIV containing the control
         // Setting padding to 5 px will offset the control
         // from the edge of the map.
-        fullScreenControlDiv.style.padding = '2px';
+        showTextList.style.padding = '2px';
 
         // Set CSS for the control border.
         const controlUI = document.createElement('div');
@@ -355,7 +393,7 @@ export default class MapManager {
         controlUI.style.textAlign = 'center';
         controlUI.title = 'Click per mostrar o ocultar el llistat';
         controlUI.style.visibility = "visible";
-        fullScreenControlDiv.appendChild(controlUI);
+        showTextList.appendChild(controlUI);
 
         // Set CSS for the control interior.
         const controlText = document.createElement('div');
@@ -363,37 +401,39 @@ export default class MapManager {
         controlText.innerHTML = '<img src="' + this.serverHost + 'assets/images/catalunya-gmap/gmap/03.png" width="42" height="42" alt="Mostrar llistat" >';
         controlUI.appendChild(controlText);
 
-        this.map.controls[this.core.ControlPosition.TOP_RIGHT].push(fullScreenControlDiv);
+        this.map.controls[this.core.ControlPosition.TOP_RIGHT].push(showTextList);
 
         // Set up the click event listeners:
         google.maps.event.addDomListener(controlUI, 'click', function () {
             //Toggle divs + resize map
             $('#primaryDiv').toggleClass('primaryDiv');
-            self._resize(true);
+            self.resize(true);
             $("#secondaryDiv").toggle();
 
             let number = "04"
-            if (!self.fullScreen) {
+            if (!self.ListTextEnabled) {
                 number = "03"
             }
-            self.fullScreen = !self.fullScreen
+            self.ListTextEnabled = !self.ListTextEnabled
+            self.infowindow.close()
 
             $("#llistat").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number + '.png" with="42" height="42" alt="Ocultar llistat" >');
-        });
 
+            self.resize(false)
+        });
     }
 
     _setVisible(category, visible) {
         if (visible) {
-            this.enableMarkersByCategory(category)
+            this._enableMarkersByCategory(category)
             this._enableText(category);
             $("#img-" + category).css("opacity", '1');
         } else {
-            this.disableMarkersByCategory(category)
+            this._disableMarkersByCategory(category)
             this._disableText(category);
             $("#img-" + category).css("opacity", '0.5');
         }
-        this._resize(false);
+        this.resize(false);
     }
 
     /**
@@ -416,8 +456,7 @@ export default class MapManager {
         });
     }
 
-    // Public function to removeBy given a callback function
-    enableMarkersByCategory(category) {
+    _enableMarkersByCategory(category) {
         const self = this;
         self.markers.forEach(function (marker) {
             if (marker.category === category) {
@@ -430,7 +469,7 @@ export default class MapManager {
     /**
      * Public function to removeBy given a callback function
      */
-    disableMarkersByCategory(category) {
+    _disableMarkersByCategory(category) {
         const self = this;
         self.markers.forEach(function (marker) {
             if (marker.category === category) {
@@ -441,56 +480,10 @@ export default class MapManager {
 
     }
 
-    _resize(fitOption) {
-        if (this.clusterer.getMarkers().length > 0) {
-            if (this.debug) {
-                console.log("markerClusterer : it is not empty!", this.clusterer.getMarkers().length);
-                console.log("Recenter markers!");
-            }
-
-            //TODO: check this
-            // if (this.findUser) {
-            //     this._findUser();
-            // }
-
-            this._refreshMap();
-
-            if (fitOption) {
-                this.clusterer.fitMapToMarkers();
-                this.clusterer.repaint();
-            }
-
-        } else {
-            if (this.debug) {
-                console.log("Marker Clusterer : it is empty!");
-                console.log("Recenter the map to Catalunya Area");
-            }
-
-            //TODO: take it from options
-            const latitud = 41.440908754848165;
-            const longitude = 1.81713925781257;
-            const catalunya = new google.maps.LatLng(latitud, longitude);
-            this.map.setZoom(8);
-        }
-
-    }
-
-    // Private function to create an event to the given object
-    _on(opts) {
-        const self = this;
-        google.maps.event.addListener(opts.obj, opts.event, function (e) {
-            return opts.callback.call(self, e);
-        });
-    }
-
     /**
      * refresh Map triggering resize function
      */
     _refreshMap() {
         google.maps.event.trigger(this.map, 'resize');
-    }
-
-    _getMarkers() {
-        return this.markers;
     }
 }

@@ -5,14 +5,14 @@ import handleSearchTextList from'./catalunya-gmap-extra'
 async function initMapApplication() {
     try {
         const monument = new MonumentBuilder('gMap');
-        const map = await monument.create()
+        const mapManager = await monument.create()
 
-        if (map._getMarkers().length > 0) {
+        if (mapManager.getMarkers().length > 0) {
             $("#error").hide();
         }
 
         $(window).resize(function () {
-            map._resize();
+            mapManager.resize();
         })
 
         /**
@@ -42,3 +42,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     input.addEventListener('blur', handleSearchTextList);
     input.addEventListener('input', handleSearchTextList);
 });
+
+export default initMapApplication;

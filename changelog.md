@@ -25,13 +25,13 @@ V4.1
 - Add remove accents
 
 V5.0
-- migration to webpack
+- Migration to webpack
 - Improve code
 - Improve InfoBox
 - Use google js-api-loader
 - Use dotenv, and use env for (local and prod)
-- clean package.json dependencies not in use
-- reformat code
+- Clean package.json dependencies not in use
+- Reformat code
 - Extras inside catalunya-gmap.min.js
 - Add jest tests for MonumentBuilder class
 
@@ -41,4 +41,6 @@ V5.0
   - change colors clusterer
   - clean old code when all is working
   - document code
-  - Fix when infowindows open and try to close list
+  - Fix when infowindow open and try to close list
+  - review readme
+  - github actions + pipeline

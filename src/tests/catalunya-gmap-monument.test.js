@@ -1,5 +1,4 @@
-// At the top of your test file
-import {describe, expect, jest} from "@jest/globals";
+import {describe, expect, it, jest} from "@jest/globals";
 import MonumentBuilder from "../app/catalunya-gmap-monument";
 import MockData from './mockBuildingData';
 
@@ -9,7 +8,7 @@ jest.mock("../app/catalunya-gmap-manager", () => {
             initMap: jest.fn().mockResolvedValue('Mock Map'),
             addMarker: jest.fn(),
             addIcon: jest.fn(),
-            _resize: jest.fn()
+            resize: jest.fn()
         };
     });
 });
@@ -62,7 +61,7 @@ describe("MonumentBuilder - Basic Tests", () => {
             expect(mapBuilder.addReligioses).toHaveBeenCalled();
             expect(mapBuilder.addCivils).toHaveBeenCalled();
             expect(mapBuilder.addAltresLlocsInteres).toHaveBeenCalled();
-            expect(mapBuilder.mapManager._resize).toHaveBeenCalled();
+            expect(mapBuilder.mapManager.resize).toHaveBeenCalled();
             expect(mapManager).toEqual(mapBuilder.mapManager);
         });
     });

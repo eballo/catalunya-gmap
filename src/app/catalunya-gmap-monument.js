@@ -18,7 +18,7 @@ class MonumentBuilder {
         this.addCivils();
         this.addAltresLlocsInteres();
 
-        this.mapManager._resize();
+        this.mapManager.resize();
         return this.mapManager;
     }
 
