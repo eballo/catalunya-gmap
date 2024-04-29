@@ -1,3 +1,5 @@
+![example workflow](https://github.com/eballo/catalunya-gmap/actions/workflows/node.js.yml/badge.svg)
+
 # Interactive Map of Catalunya using GoogleMaps - Demo
 Interactive map of Catalunya using GoogleMaps library.
 
