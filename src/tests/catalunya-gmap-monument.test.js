@@ -8,7 +8,7 @@ jest.mock("../app/catalunya-gmap-manager", () => {
             initMap: jest.fn().mockResolvedValue('Mock Map'),
             addMarker: jest.fn(),
             addIcon: jest.fn(),
-            resize: jest.fn()
+            addAllMarkersToCluster: jest.fn()
         };
     });
 });
@@ -61,7 +61,7 @@ describe("MonumentBuilder - Basic Tests", () => {
             expect(mapBuilder.addReligioses).toHaveBeenCalled();
             expect(mapBuilder.addCivils).toHaveBeenCalled();
             expect(mapBuilder.addAltresLlocsInteres).toHaveBeenCalled();
-            expect(mapBuilder.mapManager.resize).toHaveBeenCalled();
+            expect(mapBuilder.mapManager.addAllMarkersToCluster).toHaveBeenCalled();
             expect(mapManager).toEqual(mapBuilder.mapManager);
         });
     });
