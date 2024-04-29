@@ -29,7 +29,7 @@ https://www.w3schools.com/howto/howto_js_filter_lists.asp
 				<div id="secondaryDiv">
 					<div id="error">
 						<h2>No hi ha cap edificaci&oacute; disponible per aquesta comcarca</h2></div>
-					<input type="text" id="search-llista" onkeyup="searchLlista()" placeholder="cercar..">
+					<input type="text" id="search-llista" placeholder="cercar..">
 					<div id="llista">
 						<ul id="mapLlist"></ul>
 					</div>
@@ -39,24 +39,14 @@ https://www.w3schools.com/howto/howto_js_filter_lists.asp
             <script type="text/javascript" src="assets/js/catalunya-gmap/jquery-3.2.1.min.js"></script>
             <script type="text/javascript" src="assets/js/catalunya-gmap/bootstrap.min.js"></script>
             <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-path.min.js"></script>
-            <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-catgmap.min.js"></script>
+            <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap.min.js"></script>
         </footer>
 ```
-2. Edit the content of catalunya-gmap-init.js to add, remove the markers that you want to print.
 
-example:
+Inside the catalunya-gmap-main we san find :
 ```
-	//create the map
-	map = gmap.create('gMap', gmap.MAP_OPTIONS, gmap.CONFIG_OPTIONS);
-
-	map.addMarker({
-		lat: 42.307682,
-		lng: 3.011110,
-		drabagle: false,
-		visible: true,
-		id:1,
-		content: 'Castell de la Montanya'
-	});
+    const monument = new MonumentBuilder('gMap');
+    const mapManager = await monument.create()
 ```
 
 ## Versions
