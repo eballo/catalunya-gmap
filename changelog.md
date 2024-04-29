@@ -34,13 +34,12 @@ V5.0
 - Reformat code
 - Extras inside catalunya-gmap.min.js
 - Add jest tests for MonumentBuilder class
+- Add dependency for @googlemaps/markerclusterer": "^2.5.3
+- Fix when infowindow open and try to close list
 
 - TODO:
-  - add Tests 
-  - migrate to latest version clusterer
-  - change colors clusterer
+  - add Tests
   - clean old code when all is working
-  - document code
-  - Fix when infowindow open and try to close list
+  - document code 
   - review readme
   - github actions + pipeline

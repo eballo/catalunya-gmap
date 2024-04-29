@@ -13,12 +13,16 @@ class MonumentBuilder {
 
     async create() {
         this.map = await this.mapManager.initMap(); // fetchData() must return a promise
+
+        // Add all buildings
         this.addMilitars();
         this.addReligioses();
         this.addCivils();
         this.addAltresLlocsInteres();
 
-        this.mapManager.resize();
+        // Add cluster for the markers
+        this.mapManager.addAllMarkersToCluster()
+
         return this.mapManager;
     }
 

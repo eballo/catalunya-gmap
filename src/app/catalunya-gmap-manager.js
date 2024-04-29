@@ -1,5 +1,7 @@
 import {Loader} from "@googlemaps/js-api-loader";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import {STYLES} from "./catalunya-gmap-styles";
+
 
 export default class MapManager {
     constructor(mapId) {
@@ -54,6 +56,7 @@ export default class MapManager {
 
             const element = document.getElementById(this.mapId)
             this.map = new this.google.Map(element, {
+                //mapId: "DEMO_MAP_ID", // needed for AdvancedMarkerElement
                 center: {lat: 41.440908754848165, lng: 1.81713925781257},
                 zoom: 8,
                 maxZoom: 20,
@@ -106,9 +109,6 @@ export default class MapManager {
         // add marker to the markers array
         this.markers.push(marker);
 
-        // Add marker to the marker cluster
-        this.addMarkerToCluster(marker);
-
         // if we have the content object set up
         this.addContentToMarker(location, marker);
 
@@ -126,14 +126,14 @@ export default class MapManager {
             if (this.infowindow === null) {
                 this.infowindow = new this.google.InfoWindow({
                     content: location.content,
-                    position: marker.getPosition()
+                    position: marker.position
                 });
             }
 
             const self = this
             marker.addListener('click', function () {
                 self.infowindow.setContent(location.content);
-                self.infowindow.setPosition(marker.getPosition())
+                self.infowindow.setPosition(marker.position)
                 self.infowindow.open({
                     anchor: marker,
                     shouldFocus: false
@@ -155,20 +155,29 @@ export default class MapManager {
         }
     }
 
-    addMarkerToCluster(marker) {
-        if (this.useMarkerCluster) {
-            if (this.clusterer == null) {
-                this.clusterer = new MarkerClusterer(this.map, [], {
-                    imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-                    minimumClusterSize: 15
-                });
-            }
-            this.clusterer.addMarker(marker);
-        }
+    addAllMarkersToCluster(marker) {
+        this.clusterer = new MarkerClusterer({ map: this.map, markers:this.markers});
     }
 
+    // createAdvancedMarkerElement(location) {
+    //     const icon = document.createElement("img");
+    //     icon.src = location.icon
+    //     let marker = new this.marker.AdvancedMarkerElement({
+    //         position: {
+    //             lat: location.lat,
+    //             lng: location.lng
+    //         },
+    //         map: this.map,
+    //         title: location.title,
+    //         content: icon,
+    //     });
+    //     marker.visible = location.visible;
+    //     marker.category = location.category;
+    //     return marker;
+    // }
+
     createMarker(location) {
-        return new this.marker.Marker({
+        let marker = new this.marker.Marker({
             position: {
                 lat: location.lat,
                 lng: location.lng
@@ -176,9 +185,10 @@ export default class MapManager {
             map: this.map,
             title: location.title,
             icon: location.icon,
-            visible: location.visible,
-            category: location.category, // (building type Slug-Name)
         });
+        marker.visible = location.visible;
+        marker.category = location.category;
+        return marker;
     }
 
     addIcon(edifici) {
@@ -187,9 +197,9 @@ export default class MapManager {
     }
 
     resize(fitOption) {
-        if (this.clusterer.getMarkers().length > 0) {
+        if (this.clusterer.markers.length > 0) {
             if (this.debug) {
-                console.log("markerClusterer : it is not empty!", this.clusterer.getMarkers().length);
+                console.log("markerClusterer : it is not empty!", this.clusterer.markers.length);
                 console.log("Recenter markers!");
             }
 
@@ -200,10 +210,9 @@ export default class MapManager {
 
             this._refreshMap();
 
-            if (fitOption) {
-                this.clusterer.fitMapToMarkers();
-                this.clusterer.repaint();
-            }
+            // Render the clusterer to update the numbers
+            this.clusterer.render()
+
 
         } else {
             if (this.debug) {
@@ -257,7 +266,7 @@ export default class MapManager {
         //Trigger a click event to marker when the button is clicked.
         google.maps.event.addDomListener(li, "click", function () {
             self.map.setZoom(15);
-            self.map.setCenter(marker.getPosition());
+            self.map.setCenter(marker.position);
             self.map.setTilt(1);
             google.maps.event.trigger(marker, "click");
         });
@@ -308,8 +317,6 @@ export default class MapManager {
 
             self.visibleBuildings = !self.visibleBuildings
             self._changeVisibility(self.visibleBuildings);
-            self.clusterer.resetViewport_();
-            self.clusterer.redraw_();
         });
     }
 
@@ -337,8 +344,6 @@ export default class MapManager {
         google.maps.event.addDomListener(controlUI, 'click', function () {
             edifici.visible = !edifici.visible;
             self._setVisible(edifici.category, edifici.visible);
-            self.clusterer.resetViewport_();
-            self.clusterer.redraw_();
         });
 
         return controlDiv;
@@ -460,8 +465,9 @@ export default class MapManager {
         const self = this;
         self.markers.forEach(function (marker) {
             if (marker.category === category) {
-                marker.setVisible(true);
-                self.clusterer.addMarker(marker, true);
+                marker.visible = true;
+                marker.map = self.map                    // Add marker to the map
+                self.clusterer.addMarker(marker, true);  // Add marker to the clusterer
             }
         });
     }
@@ -473,11 +479,11 @@ export default class MapManager {
         const self = this;
         self.markers.forEach(function (marker) {
             if (marker.category === category) {
-                marker.setVisible(false);
-                self.clusterer.removeMarker(marker, true);
+                marker.visible = false;
+                marker.map = null;                          // Remove the marker from the map
+                self.clusterer.removeMarker(marker, true);  // Remove the marker from the clusterer
             }
         });
-
     }
 
     /**
