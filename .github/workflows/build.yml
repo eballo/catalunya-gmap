@@ -10,15 +10,24 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
-
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  build:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [21.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
