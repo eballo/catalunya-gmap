@@ -1,6 +1,6 @@
 ![example workflow](https://github.com/eballo/catalunya-gmap/actions/workflows/build.yml/badge.svg)
 
-# Interactive Map of Catalunya using GoogleMaps - Demo
+# Interactive Map of Catalunya using GoogleMaps
 Interactive map of Catalunya using GoogleMaps library.
 
 <img src="https://github.com/eballo/catalunya-gmap/blob/main/screenshot/screenshot-v5.png" alt="screen-shot" align="center" />
@@ -14,6 +14,7 @@ http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries
 
 # Inspiration links
 https://www.w3schools.com/howto/howto_js_filter_lists.asp
+https://elfsight.com/google-maps-widget/#demo
 
 # How to use this library
 
@@ -45,7 +46,7 @@ https://www.w3schools.com/howto/howto_js_filter_lists.asp
         </footer>
 ```
 
-Inside the catalunya-gmap-main we san find :
+Inside the catalunya-gmap-main we can find the important code :
 ```
     const monument = new MonumentBuilder('gMap');
     const mapManager = await monument.create()
