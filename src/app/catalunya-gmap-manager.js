@@ -7,7 +7,7 @@ import {stringToBoolean} from "./catalunya-gmap-extra";
 export default class MapManager {
     constructor(mapId) {
 
-        this.debug = process.env.DEBUG;
+        this.debug = stringToBoolean(process.env.DEBUG);
 
         this.loader = new Loader({
             apiKey: process.env.GOOGLE_MAPS_API_KEY,
