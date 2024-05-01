@@ -835,6 +835,25 @@ describe("Private Methods - Helper functions", () => {
         });
     });
 
+    describe("_addRuta - user position disabled - no ruta ", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const ruta = mapBuilder._add_ruta();
+            expect(ruta).toContain("");
+            expect(ruta).not.toContain("Ruta");
+        });
+    });
+
+    describe("_addRuta - user position enabled", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            mapBuilder.userPosition = true
+            const ruta = mapBuilder._add_ruta();
+            expect(ruta).toContain("Ruta");
+        });
+    });
+
+
     describe("_addEdifici", () => {
         it("should process each building in the provided array and add it as a marker", () => {
             const mapBuilder = new MonumentBuilder("testMapId");
@@ -883,6 +902,19 @@ describe("Private Methods - Helper functions", () => {
                 category: "category",
                 categoryName: "Category Name"
             });
+        });
+
+        it("Empty array of buildings - nothing should be called", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const buildings = [];
+
+            jest.spyOn(mapBuilder, '_extract');
+            jest.spyOn(mapBuilder.mapManager, 'addMarker');
+
+            mapBuilder._addEdifici(1, buildings, "category", "Category Name", "civil");
+
+            expect(mapBuilder._extract).not.toHaveBeenCalled();
+            expect(mapBuilder.mapManager.addMarker).not.toHaveBeenCalled();
         });
     });
 
