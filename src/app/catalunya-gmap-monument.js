@@ -184,17 +184,15 @@ class MonumentBuilder {
             }
 
             // Override in the case that we have Barcelona, Barcelona to only Barcelona
-            if (municipi === poblacio) {
+            if (municipi && poblacio && municipi === poblacio) {
                 address = municipi + ", ";
             }
 
-            if (provincia) {
-                address += provincia;
-            }
-
             // Override in the case that we have Barcelona, Barcelona, Barcelona to only Barcelona
-            if (municipi === poblacio && poblacio === provincia) {
+            if ((municipi && poblacio && provincia) && (municipi === poblacio) && (poblacio === provincia)) {
                 address = municipi;
+            }else{
+                address += provincia
             }
         }
 
