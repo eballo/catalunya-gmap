@@ -13,6 +13,11 @@ jest.mock("../app/catalunya-gmap-manager", () => {
     });
 });
 
+// Mock stringToBoolean
+jest.mock('../app/catalunya-gmap-extra', () => ({
+    stringToBoolean: jest.fn()
+}));
+
 // Setting up environment variable
 process.env.SERVER_HOST = "http://localhost/";
 
