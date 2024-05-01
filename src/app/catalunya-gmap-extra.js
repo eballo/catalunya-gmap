@@ -12,7 +12,6 @@ export default function handleSearchTextList(event) {
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < li.length; i++) {
         value = removeAccents(li[i].innerHTML);
-
         if (value !== '') {
             if (value.toUpperCase().indexOf(filter) > -1) {
                 li[i].style.display = "";
@@ -25,7 +24,7 @@ export default function handleSearchTextList(event) {
     }
 }
 
-function removeAccents(p) {
+export function removeAccents(p) {
     let value = p.replace("(", "");
     value = value.replace(")","");
     value = value.replace("*",""); //Fix capella sense nom
