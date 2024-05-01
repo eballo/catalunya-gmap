@@ -1,6 +1,7 @@
 import {Loader} from "@googlemaps/js-api-loader";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import {STYLES} from "./catalunya-gmap-styles";
+import {stringToBoolean} from "./catalunya-gmap-extra";
 
 
 export default class MapManager {
@@ -34,6 +35,7 @@ export default class MapManager {
         this.clusterer = null;          // custer elements
 
         this.serverHost = process.env.SERVER_HOST;
+        this.userPosition = stringToBoolean(process.env.USER_POSITION);
 
     }
 
@@ -203,10 +205,9 @@ export default class MapManager {
                 console.log("Recenter markers!");
             }
 
-            //TODO: check this
-            // if (this.findUser) {
-            //     this._findUser();
-            // }
+            if (this.userPosition) {
+                this._addUserPosition();
+            }
 
             this._refreshMap();
 
@@ -488,5 +489,38 @@ export default class MapManager {
      */
     _refreshMap() {
         google.maps.event.trigger(this.map, 'resize');
+    }
+
+    /**
+     * find user
+     */
+    _addUserPosition() {
+        // Try HTML5 geolocation.
+        self = this;
+        try {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    let user_marker = new self.marker.Marker({
+                        position: pos,
+                        map: self.map,
+                    });
+                    user_marker.is_user = true;
+
+                    self.markers.push(user_marker)
+
+                }, function () {
+                    console.log("The Geolocation service failed.")
+                });
+            } else {
+                console.log("The Geolocation service failed.")
+            }
+        }catch(error){
+            console.log("The Geolocation service failed.")
+        }
     }
 }

@@ -1,3 +1,8 @@
+
+export function stringToBoolean(string) {
+    return string.toLowerCase() === "false" ? false : Boolean(string);
+}
+
 export default function handleSearchTextList(event) {
     let filter, ul, li, value, i;
     filter = removeAccents(event.target.value).toUpperCase();
