@@ -440,8 +440,8 @@ export default class MapManager {
      * Enable Text list
      */
     _enableText(category) {
-        var category = "." + category;
-        $(category).each(function () {
+        let _category = "." + category;
+        $(_category).each(function () {
             $(this).show();
         });
     }
@@ -450,8 +450,8 @@ export default class MapManager {
      * Disable Text list
      */
     _disableText(category) {
-        var category = "." + category;
-        $(category).each(function () {
+        let _category = "." + category;
+        $(_category).each(function () {
             $(this).hide();
         });
     }
