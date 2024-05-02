@@ -1,4 +1,4 @@
-![example workflow](https://github.com/eballo/catalunya-gmap/actions/workflows/build.yml/badge.svg)
+![example workflow](https://github.com/eballo/catalunya-gmap/actions/workflows/build.yml/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=eballo_catalunya-gmap&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eballo_catalunya-gmap)
 
 # Interactive Map of Catalunya using GoogleMaps
 Interactive map of Catalunya using GoogleMaps library.
