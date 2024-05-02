@@ -76,6 +76,6 @@ export const STYLES = [{
 }];
 
 export const CATALUNYA_POSITION = {
-    lat: 41.440908754848165,
+    lat: 41.44090875484817,
     lng: 1.81713925781257,
 }
