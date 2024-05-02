@@ -115,6 +115,10 @@ describe('MapManager', () => {
             }
         };
 
+        global.navigator.geolocation = {
+            getCurrentPosition: jest.fn()
+        };
+
         // Instance of MapManager
         mapManager = new MapManager('mapId');
         mapManager._createIcon = jest.fn();
@@ -353,6 +357,20 @@ describe('MapManager', () => {
         expect(ul.children.length).toBe(2); // Check if a new list item is added
         expect(ul.innerHTML).toContain("Test Marker"); // Check content
     });
+
+    test('should add a user position marker on successful geolocation', async() => {
+        global.navigator.geolocation.getCurrentPosition.mockImplementation((success, failure) => {
+            success({ coords: { latitude: 34.0522, longitude: -118.2437 } });
+        });
+
+        await mapManager.initMap();
+
+        mapManager._addUserPosition();
+        expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
+        console.log(mapManager.markers)
+        expect(mapManager.markers[0].is_user).toBe(true);
+    });
+
 
 });
 
