@@ -45,10 +45,12 @@ jest.mock('@googlemaps/js-api-loader', () => ({
 
 // Mocking MarkerClusterer separately if it's from another library
 jest.mock("@googlemaps/markerclusterer", () => ({
-    MarkerClusterer: jest.fn().mockImplementation(() => ({
+    MarkerClusterer: jest.fn().mockImplementation((opts) => ({
         addMarker: jest.fn(),
         clearMarkers: jest.fn(),
         removeMarker: jest.fn(),
+        render:jest.fn(),
+        ...opts,
     }))
 }));
 
@@ -88,6 +90,7 @@ describe('MapManager', () => {
             addMarker: jest.fn(),
             clearMarkers: jest.fn(),
             removeMarker: jest.fn(),
+            render:jest.fn(),
         };
 
         // Mock global constructors
@@ -112,6 +115,7 @@ describe('MapManager', () => {
         // Instance of MapManager
         mapManager = new MapManager('mapId');
         mapManager._createMarkerButton = jest.fn();
+        mapManager._createIcon = jest.fn();
     });
 
     test('initialization sets up properties correctly', () => {
@@ -142,6 +146,16 @@ describe('MapManager', () => {
         expect(mapManager.markers.length).toBe(1);
     });
 
+    test('getMarker should return the markers array', async () => {
+        await mapManager.initMap(); // Make sure initMap is awaited
+        const location = { lat: 41.3851, lng: 2.1734, title: "Barcelona", icon: "icon-url" };
+        mapManager.addMarker(location);
+
+        expect(mapManager.markers.length).toBe(1);
+        let markers = mapManager.getMarkers()
+        expect(markers.length).toBe(1)
+    });
+
     test('addContentToMarker should bind content to a marker', async () => {
         await mapManager.initMap(); // Make sure initMap is awaited
         const location = { lat: 41.3851, lng: 2.1734, content: "Hello, World!" };
@@ -157,6 +171,167 @@ describe('MapManager', () => {
         mapManager.addAllMarkersToCluster();
 
         expect(mapManager.clusterer).toBeDefined()
+    });
+
+    test('addIcon should add an icon object to the icons array and call _createIcon', async () => {
+        const edifici = {
+            title: "Cathedral",
+            icon: "cathedral.png",
+            category: "historical"
+        };
+
+        await mapManager.initMap(); // Make sure initMap is awaited
+        mapManager.addIcon(edifici);
+
+        // Check if the icon has been added to the list
+        expect(mapManager.icons.length).toBe(1);
+        expect(mapManager.icons[0]).toBe(edifici);
+
+        // Verify that _createIcon was called correctly
+        expect(mapManager._createIcon).toHaveBeenCalledWith(edifici);
+    });
+
+
+    test('resize should recenter the map if no markers are present', async() => {
+        await mapManager.initMap(); // Make sure initMap is awaited
+        mapManager.markers = [] // no markers
+        mapManager.addAllMarkersToCluster() // Initialize the cluster
+        mapManager.map = mockMap;
+
+        mapManager.resize();
+
+        expect(mockMap.setCenter).toHaveBeenCalledWith({lat: 41.440908754848165, lng: 1.81713925781257});
+        expect(mockMap.setZoom).toHaveBeenCalledWith(8);
+    });
+
+    test('resize should render for the given markers', async() => {
+        await mapManager.initMap(); // Make sure initMap is awaited
+
+        const location = { lat: 41.3851, lng: 2.1734, content: "Hello, World!" };
+        mapManager.createMarker(location);
+        mapManager.clusterer = mockClusterer;
+        mapManager.userPosition = false;
+        mapManager.clusterer.markers = "a value" // just to make the cluster.markers.length > 0
+        mapManager._refreshMap = jest.fn()
+
+        mapManager.resize();
+
+        expect(mockClusterer.render).toHaveBeenCalled();
+    });
+
+    test('should return true when item exists in the array', () => {
+        mapManager.arrayCategoriesText = ['Historical', 'Modern', 'Art']; // Sample data
+        expect(mapManager._exist('Modern')).toBe(true);
+    });
+
+    test('should return false when item does not exist in the array', () => {
+        mapManager.arrayCategoriesText = ['Historical', 'Modern', 'Art']; // Sample data
+        expect(mapManager._exist('Ancient')).toBe(false);
+    });
+
+    test('should return false for an empty string if not present in the array', () => {
+        mapManager.arrayCategoriesText = ['Historical', 'Modern', 'Art']; // Sample data
+        expect(mapManager._exist('')).toBe(false);
+    });
+
+    test('should handle case sensitivity correctly', () => {
+        mapManager.arrayCategoriesText = ['Historical', 'Modern', 'Art']; // Sample data
+        expect(mapManager._exist('modern')).toBe(false); // Assuming case sensitivity
+        mapManager.arrayCategoriesText.push('modern');
+        expect(mapManager._exist('modern')).toBe(true);
+    });
+
+    test('should return false for undefined or null', () => {
+        mapManager.arrayCategoriesText = ['Historical', 'Modern', 'Art']; // Sample data
+        expect(mapManager._exist(undefined)).toBe(false);
+        expect(mapManager._exist(null)).toBe(false);
+    });
+
+    test('should set visibility of all icons to false', () => {
+        mapManager.icons = [
+            { category: 'Historical', visible: true },
+            { category: 'Modern', visible: true }
+        ];
+        // Mock _setVisible to isolate _changeVisibility behavior
+        mapManager._setVisible = jest.fn();
+
+        mapManager._changeVisibility(false);
+
+        expect(mapManager.icons.every(icon => icon.visible === false)).toBe(true);
+        expect(mapManager._setVisible).toHaveBeenCalledTimes(mapManager.icons.length);
+    });
+
+    test('should set visibility of all icons to true', () => {
+        mapManager.icons = [
+            { category: 'Historical', visible: true },
+            { category: 'Modern', visible: true }
+        ];
+        // Mock _setVisible to isolate _changeVisibility behavior
+        mapManager._setVisible = jest.fn();
+
+        // First set all to false
+        mapManager.icons.forEach(icon => icon.visible = false);
+        mapManager._changeVisibility(true);
+        expect(mapManager.icons.every(icon => icon.visible === true)).toBe(true);
+        expect(mapManager._setVisible).toHaveBeenCalledTimes(mapManager.icons.length);
+    });
+
+    test('should call _setVisible with correct parameters', () => {
+        mapManager.icons = [
+            { category: 'Historical', visible: true },
+            { category: 'Modern', visible: true }
+        ];
+        // Mock _setVisible to isolate _changeVisibility behavior
+        mapManager._setVisible = jest.fn();
+
+        mapManager._changeVisibility(false);
+        expect(mapManager._setVisible).toHaveBeenCalledWith('Historical', false);
+        expect(mapManager._setVisible).toHaveBeenCalledWith('Modern', false);
+    });
+
+    test('should enable markers by category', () => {
+        mapManager.clusterer = mockClusterer;
+        mapManager.markers = [
+            { category: 'Historical', visible: false, map: null },
+            { category: 'Modern', visible: false, map: null },
+            { category: 'Historical', visible: false, map: null }
+        ];
+
+        mapManager._enableMarkersByCategory('Historical');
+        const historicalMarkers = mapManager.markers.filter(marker => marker.category === 'Historical');
+
+        // All historical markers should be visible and added back to the map
+        historicalMarkers.forEach(marker => {
+            expect(marker.visible).toBe(true);
+            expect(mockClusterer.addMarker).toHaveBeenCalledWith(marker, true);
+        });
+
+        // Ensure only historical markers are not affected
+        expect(mapManager.markers.find(marker => marker.category === 'Modern').visible).toBe(false);
+        expect(mockClusterer.addMarker).toHaveBeenCalledTimes(2);
+    });
+
+
+    test('should disable markers by category', () => {
+        mapManager.clusterer = mockClusterer;
+        mapManager.markers = [
+            { category: 'Historical', visible: true, map: null },
+            { category: 'Modern', visible: true, map: null },
+            { category: 'Historical', visible: true, map: null }
+        ];
+
+        mapManager._disableMarkersByCategory('Historical');
+        const historicalMarkers = mapManager.markers.filter(marker => marker.category === 'Historical');
+
+        // All historical markers should be visible and added back to the map
+        historicalMarkers.forEach(marker => {
+            expect(marker.visible).toBe(false);
+            expect(mockClusterer.removeMarker).toHaveBeenCalledWith(marker, true);
+        });
+
+        // Ensure only historical markers are not affected
+        expect(mapManager.markers.find(marker => marker.category === 'Modern').visible).toBe(true);
+        expect(mockClusterer.removeMarker).toHaveBeenCalledTimes(2);
     });
 
 });

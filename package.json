@@ -20,6 +20,7 @@
   },
   "scripts": {
     "test": "jest",
+    "testWatch": "jest --watch",
     "clearCache": "jest --clearCache",
     "buildProd": "webpack --mode production",
     "buildLocal": "webpack --mode development",

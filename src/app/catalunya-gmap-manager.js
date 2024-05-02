@@ -157,7 +157,7 @@ export default class MapManager {
         }
     }
 
-    addAllMarkersToCluster(marker) {
+    addAllMarkersToCluster() {
         this.clusterer = new MarkerClusterer({ map: this.map, markers:this.markers});
     }
 
@@ -198,7 +198,7 @@ export default class MapManager {
         this.icons.push(edifici); //Add Icon to the icons list
     }
 
-    resize(fitOption) {
+    resize() {
         if (this.clusterer.markers.length > 0) {
             if (this.debug) {
                 console.log("markerClusterer : it is not empty!", this.clusterer.markers.length);
@@ -214,17 +214,14 @@ export default class MapManager {
             // Render the clusterer to update the numbers
             this.clusterer.render()
 
-
         } else {
             if (this.debug) {
                 console.log("Marker Clusterer : it is empty!");
                 console.log("Recenter the map to Catalunya Area");
             }
 
-            //TODO: take it from options
-            const latitud = 41.440908754848165;
-            const longitude = 1.81713925781257;
-            const catalunya = new google.maps.LatLng(latitud, longitude);
+            const pos = {lat: 41.440908754848165, lng: 1.81713925781257}
+            this.map.setCenter(pos)
             this.map.setZoom(8);
         }
 
@@ -410,7 +407,7 @@ export default class MapManager {
         controlUI.addEventListener( 'click', function () {
             //Toggle divs + resize map
             $('#primaryDiv').toggleClass('primaryDiv');
-            self.resize(true);
+            self.resize();
             $("#secondaryDiv").toggle();
 
             let number = "04"
@@ -422,7 +419,7 @@ export default class MapManager {
 
             $("#llistat").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number + '.png" with="42" height="42" alt="Ocultar llistat" >');
 
-            self.resize(false)
+            self.resize()
         });
     }
 
@@ -436,7 +433,7 @@ export default class MapManager {
             this._disableText(category);
             $("#img-" + category).css("opacity", '0.5');
         }
-        this.resize(false);
+        this.resize();
     }
 
     /**
