@@ -76,6 +76,7 @@ more information, and create the following files:
 GOOGLE_MAPS_API_KEY=xxxxxxx
 SERVER_HOST='http://localhost:9000/'
 DEBUG=true
+USER_POSITION=false
 ```
 
 NOTE: it is important that the server host ends with a '/' like in the sample.

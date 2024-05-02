@@ -1,12 +1,13 @@
 import {Loader} from "@googlemaps/js-api-loader";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import {STYLES} from "./catalunya-gmap-styles";
+import {CATALUNYA_POSITION, STYLES} from "./catalunya-gmap-styles";
+import {stringToBoolean} from "./catalunya-gmap-extra";
 
 
 export default class MapManager {
     constructor(mapId) {
 
-        this.debug = process.env.DEBUG;
+        this.debug = stringToBoolean(process.env.DEBUG);
 
         this.loader = new Loader({
             apiKey: process.env.GOOGLE_MAPS_API_KEY,
@@ -34,6 +35,7 @@ export default class MapManager {
         this.clusterer = null;          // custer elements
 
         this.serverHost = process.env.SERVER_HOST;
+        //this.userPosition = stringToBoolean(process.env.USER_POSITION);
 
     }
 
@@ -57,7 +59,7 @@ export default class MapManager {
             const element = document.getElementById(this.mapId)
             this.map = new this.google.Map(element, {
                 //mapId: "DEMO_MAP_ID", // needed for AdvancedMarkerElement
-                center: {lat: 41.440908754848165, lng: 1.81713925781257},
+                center: CATALUNYA_POSITION,
                 zoom: 8,
                 maxZoom: 20,
                 minZoom: 4,
@@ -155,7 +157,7 @@ export default class MapManager {
         }
     }
 
-    addAllMarkersToCluster(marker) {
+    addAllMarkersToCluster() {
         this.clusterer = new MarkerClusterer({ map: this.map, markers:this.markers});
     }
 
@@ -196,16 +198,15 @@ export default class MapManager {
         this.icons.push(edifici); //Add Icon to the icons list
     }
 
-    resize(fitOption) {
+    resize() {
         if (this.clusterer.markers.length > 0) {
             if (this.debug) {
                 console.log("markerClusterer : it is not empty!", this.clusterer.markers.length);
                 console.log("Recenter markers!");
             }
 
-            //TODO: check this
-            // if (this.findUser) {
-            //     this._findUser();
+            // if (this.userPosition) {
+            //     this._addUserPosition();
             // }
 
             this._refreshMap();
@@ -213,17 +214,13 @@ export default class MapManager {
             // Render the clusterer to update the numbers
             this.clusterer.render()
 
-
         } else {
             if (this.debug) {
                 console.log("Marker Clusterer : it is empty!");
                 console.log("Recenter the map to Catalunya Area");
             }
 
-            //TODO: take it from options
-            const latitud = 41.440908754848165;
-            const longitude = 1.81713925781257;
-            const catalunya = new google.maps.LatLng(latitud, longitude);
+            this.map.setCenter(CATALUNYA_POSITION)
             this.map.setZoom(8);
         }
 
@@ -256,6 +253,7 @@ export default class MapManager {
             liCategory.setAttribute("class", opts.category + " header");
             ul.appendChild(liCategory);
         }
+
         //Add a normal building
         const li = document.createElement("li");
         li.innerHTML = opts.title;
@@ -409,7 +407,7 @@ export default class MapManager {
         controlUI.addEventListener( 'click', function () {
             //Toggle divs + resize map
             $('#primaryDiv').toggleClass('primaryDiv');
-            self.resize(true);
+            self.resize();
             $("#secondaryDiv").toggle();
 
             let number = "04"
@@ -421,7 +419,7 @@ export default class MapManager {
 
             $("#llistat").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number + '.png" with="42" height="42" alt="Ocultar llistat" >');
 
-            self.resize(false)
+            self.resize()
         });
     }
 
@@ -435,15 +433,15 @@ export default class MapManager {
             this._disableText(category);
             $("#img-" + category).css("opacity", '0.5');
         }
-        this.resize(false);
+        this.resize();
     }
 
     /**
      * Enable Text list
      */
     _enableText(category) {
-        var category = "." + category;
-        $(category).each(function () {
+        let _category = "." + category;
+        $(_category).each(function () {
             $(this).show();
         });
     }
@@ -452,8 +450,8 @@ export default class MapManager {
      * Disable Text list
      */
     _disableText(category) {
-        var category = "." + category;
-        $(category).each(function () {
+        let _category = "." + category;
+        $(_category).each(function () {
             $(this).hide();
         });
     }
@@ -489,4 +487,38 @@ export default class MapManager {
     _refreshMap() {
         google.maps.event.trigger(this.map, 'resize');
     }
+
+    // /**
+    //  * find user
+    //  */
+    // _addUserPosition() {
+    //     // Try HTML5 geolocation.
+    //     self = this;
+    //     try {
+    //         if (navigator.geolocation) {
+    //             navigator.geolocation.getCurrentPosition(function (position) {
+    //                 const pos = {
+    //                     lat: position.coords.latitude,
+    //                     lng: position.coords.longitude
+    //                 };
+    //
+    //                 let user_marker = new self.marker.Marker({
+    //                     position: pos,
+    //                     map: self.map,
+    //                 });
+    //                 console.log(user_marker)
+    //                 user_marker.is_user = true;
+    //
+    //                 self.markers.push(user_marker)
+    //
+    //             }, function () {
+    //                 console.log("The Geolocation service failed.")
+    //             });
+    //         } else {
+    //             console.log("The Geolocation service failed.")
+    //         }
+    //     }catch(error){
+    //         console.log("The Geolocation service failed.")
+    //     }
+    // }
 }

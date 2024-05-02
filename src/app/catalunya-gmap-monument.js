@@ -1,4 +1,5 @@
 import MapManager from "./catalunya-gmap-manager";
+import {stringToBoolean} from "./catalunya-gmap-extra";
 
 class MonumentBuilder {
 
@@ -9,6 +10,7 @@ class MonumentBuilder {
         this.styleType1 = 7;
         this.styleType2 = 6;
         this.serverHost = process.env.SERVER_HOST;
+        this.userPosition = stringToBoolean(process.env.USER_POSITION);
     }
 
     async create() {
@@ -182,17 +184,15 @@ class MonumentBuilder {
             }
 
             // Override in the case that we have Barcelona, Barcelona to only Barcelona
-            if (municipi === poblacio) {
+            if (municipi && poblacio && municipi === poblacio) {
                 address = municipi + ", ";
             }
 
-            if (provincia) {
-                address += provincia;
-            }
-
             // Override in the case that we have Barcelona, Barcelona, Barcelona to only Barcelona
-            if (municipi === poblacio && poblacio === provincia) {
+            if ((municipi && poblacio && provincia) && (municipi === poblacio) && (poblacio === provincia)) {
                 address = municipi;
+            }else{
+                address += provincia
             }
         }
 
@@ -213,22 +213,7 @@ class MonumentBuilder {
         //content += "                <span class='catmed-google-maps-building-icon'><img class='catmed-google-maps-building-icon-img' src='" + icon+ "' alt='"+category + "-" + type + "'></span>"
         content += "                <span class='catmed-google-maps-marker-title'>" + title + "</span>"
         content += "            </a>"
-        content += "        <div class='catmed-google-maps-marker-directions'>"
-        content += "            <a class='catmed-google-maps-marker-directions-button' href='https://www.google.com/maps/dir/?api=1&amp;destination=40.7614327, -73.97762159999999' target='_blank' rel='nofollow'>"
-        content += "                <span class='catmed-google-maps-marker-directions-label'>Ruta</span>"
-        content += "                <span class='catmed-google-maps-marker-directions-icon'>"
-        content += "                    <svg width='20px' height='20px' viewBox='0 0 510 510'>"
-        content += "                        <g>"
-        content += "                            <g id='directions'>"
-        content += "                                 <path d='M502.35,237.149l-229.5-229.5l0,0c-10.199-10.2-25.5-10.2-35.7,0l-229.5,229.5c-10.2,10.2-10.2,25.501,0,35.7l229.5,229.5"
-        content += "                                l0,0c10.2,10.2,25.501,10.2,35.7,0l229.5-229.5C512.55,262.65,512.55,247.35,502.35,237.149z M306,318.75V255H204v76.5h-51v-102"
-        content += "                                    c0-15.3,10.2-25.5,25.5-25.5H306v-63.75l89.25,89.25L306,318.75z'></path>"
-        content += "                            </g>"
-        content += "                         </g>"
-        content += "                     </svg>"
-        content += "                 </span>"
-        content += "              </a>"
-        content += "          </div>"
+        content += this._add_ruta();
         content += "    </div>"
         content += "    <div class='catmed-google-maps-marker-content'>"
         content += "        <div class='catmed-google-maps-marker-info'>"
@@ -248,6 +233,29 @@ class MonumentBuilder {
         content += "</div>"
 
         return content;
+    }
+
+    _add_ruta() {
+        let ruta = ""
+        if (this.userPosition) {
+            ruta = "        <div class='catmed-google-maps-marker-directions'>"
+            ruta += "            <a class='catmed-google-maps-marker-directions-button' href='https://www.google.com/maps/dir/?api=1&amp;destination=40.7614327, -73.97762159999999' target='_blank' rel='nofollow'>"
+            ruta += "                <span class='catmed-google-maps-marker-directions-label'>Ruta</span>"
+            ruta += "                <span class='catmed-google-maps-marker-directions-icon'>"
+            ruta += "                    <svg width='20px' height='20px' viewBox='0 0 510 510'>"
+            ruta += "                        <g>"
+            ruta += "                            <g id='directions'>"
+            ruta += "                                 <path d='M502.35,237.149l-229.5-229.5l0,0c-10.199-10.2-25.5-10.2-35.7,0l-229.5,229.5c-10.2,10.2-10.2,25.501,0,35.7l229.5,229.5"
+            ruta += "                                l0,0c10.2,10.2,25.501,10.2,35.7,0l229.5-229.5C512.55,262.65,512.55,247.35,502.35,237.149z M306,318.75V255H204v76.5h-51v-102"
+            ruta += "                                    c0-15.3,10.2-25.5,25.5-25.5H306v-63.75l89.25,89.25L306,318.75z'></path>"
+            ruta += "                            </g>"
+            ruta += "                         </g>"
+            ruta += "                     </svg>"
+            ruta += "                 </span>"
+            ruta += "              </a>"
+            ruta += "          </div>"
+        }
+        return ruta;
     }
 
     _extract(edifici, category, categoryName, x, type) {

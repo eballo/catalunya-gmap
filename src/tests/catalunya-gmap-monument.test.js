@@ -13,6 +13,11 @@ jest.mock("../app/catalunya-gmap-manager", () => {
     });
 });
 
+// Mock stringToBoolean
+jest.mock('../app/catalunya-gmap-extra', () => ({
+    stringToBoolean: jest.fn()
+}));
+
 // Setting up environment variable
 process.env.SERVER_HOST = "http://localhost/";
 
@@ -778,6 +783,77 @@ describe("Private Methods - Helper functions", () => {
         });
     });
 
+    describe("_createContent - poblacio and municipi are the same", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const content = mapBuilder._createContent("Title", "Link", "Image", "Badalona", "Badalona", "Barcelona", "militar", "castell", "Castells");
+            expect(content).toContain("<div class='catmed-google-maps-marker'>");
+            expect(content).toContain("Title");
+            expect(content).toContain("Badalona, Barcelona");
+        });
+    });
+
+
+    describe("_createContent - poblacio, municipi and provincia are the same", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const content = mapBuilder._createContent("Title", "Link", "Image", "Barcelona", "Barcelona", "Barcelona", "militar", "castell", "Castells");
+            expect(content).toContain("<div class='catmed-google-maps-marker'>");
+            expect(content).toContain("Title");
+            expect(content).toContain("Barcelona");
+            expect(content).not.toContain("Barcelona, Barcelona, Barcelona");
+        });
+    });
+
+    describe("_createContent - municipi is null ", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const content = mapBuilder._createContent("Title", "Link", "Image", null, "Barcelona", "Barcelona", "militar", "castell", "Castells");
+            expect(content).toContain("<div class='catmed-google-maps-marker'>");
+            expect(content).toContain("Title");
+            expect(content).toContain("Barcelona, Barcelona");
+        });
+    });
+
+    describe("_createContent - poblacio is null ", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const content = mapBuilder._createContent("Title", "Link", "Image", "Viladecans", null, "Barcelona", "militar", "castell", "Castells");
+            expect(content).toContain("<div class='catmed-google-maps-marker'>");
+            expect(content).toContain("Title");
+            expect(content).toContain("Viladecans, Barcelona");
+        });
+    });
+
+    describe("_createContent - provincia is null ", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const content = mapBuilder._createContent("Title", "Link", "Image", "Castell d'Aro", "Platja d'Aro", null, "militar", "castell", "Castells");
+            expect(content).toContain("<div class='catmed-google-maps-marker'>");
+            expect(content).toContain("Title");
+            expect(content).toContain("Castell d'Aro, Platja d'Aro");
+        });
+    });
+
+    describe("_addRuta - user position disabled - no ruta ", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const ruta = mapBuilder._add_ruta();
+            expect(ruta).toContain("");
+            expect(ruta).not.toContain("Ruta");
+        });
+    });
+
+    describe("_addRuta - user position enabled", () => {
+        it("should create HTML content correctly", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            mapBuilder.userPosition = true
+            const ruta = mapBuilder._add_ruta();
+            expect(ruta).toContain("Ruta");
+        });
+    });
+
+
     describe("_addEdifici", () => {
         it("should process each building in the provided array and add it as a marker", () => {
             const mapBuilder = new MonumentBuilder("testMapId");
@@ -826,6 +902,19 @@ describe("Private Methods - Helper functions", () => {
                 category: "category",
                 categoryName: "Category Name"
             });
+        });
+
+        it("Empty array of buildings - nothing should be called", () => {
+            const mapBuilder = new MonumentBuilder("testMapId");
+            const buildings = [];
+
+            jest.spyOn(mapBuilder, '_extract');
+            jest.spyOn(mapBuilder.mapManager, 'addMarker');
+
+            mapBuilder._addEdifici(1, buildings, "category", "Category Name", "civil");
+
+            expect(mapBuilder._extract).not.toHaveBeenCalled();
+            expect(mapBuilder.mapManager.addMarker).not.toHaveBeenCalled();
         });
     });
 
