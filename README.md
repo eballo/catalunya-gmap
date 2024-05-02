@@ -94,6 +94,8 @@ Open your browser [localhost:9000](http://localhost:9000/)
 
 ### Available node commands
 
+* `test` 	   — run all the tests
+* `testWatch`  — run all the tests while watching the changes of the files
 * `buildLocal` — Compile (local) and optimize the files in your web directory
 * `buildProd`  — Compile (production) and optimize the files in your web directory
 * `buildWatch` — Compile (local) and optimize the files in your web directory and watch for changes to update the files
