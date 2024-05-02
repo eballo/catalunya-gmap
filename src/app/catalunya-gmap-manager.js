@@ -1,6 +1,6 @@
 import {Loader} from "@googlemaps/js-api-loader";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import {STYLES} from "./catalunya-gmap-styles";
+import {CATALUNYA_POSITION, STYLES} from "./catalunya-gmap-styles";
 import {stringToBoolean} from "./catalunya-gmap-extra";
 
 
@@ -59,7 +59,7 @@ export default class MapManager {
             const element = document.getElementById(this.mapId)
             this.map = new this.google.Map(element, {
                 //mapId: "DEMO_MAP_ID", // needed for AdvancedMarkerElement
-                center: {lat: 41.440908754848165, lng: 1.81713925781257},
+                center: CATALUNYA_POSITION,
                 zoom: 8,
                 maxZoom: 20,
                 minZoom: 4,
@@ -220,8 +220,7 @@ export default class MapManager {
                 console.log("Recenter the map to Catalunya Area");
             }
 
-            const pos = {lat: 41.440908754848165, lng: 1.81713925781257}
-            this.map.setCenter(pos)
+            this.map.setCenter(CATALUNYA_POSITION)
             this.map.setZoom(8);
         }
 
@@ -254,6 +253,7 @@ export default class MapManager {
             liCategory.setAttribute("class", opts.category + " header");
             ul.appendChild(liCategory);
         }
+
         //Add a normal building
         const li = document.createElement("li");
         li.innerHTML = opts.title;

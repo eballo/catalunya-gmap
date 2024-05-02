@@ -74,3 +74,8 @@ export const STYLES = [{
         "saturation": -97
     }]
 }];
+
+export const CATALUNYA_POSITION = {
+    lat: 41.440908754848165,
+    lng: 1.81713925781257,
+}

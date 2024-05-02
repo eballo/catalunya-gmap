@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import {beforeEach, describe, expect, it, jest, test} from "@jest/globals"; // Adjust the path as needed
+import {afterEach, beforeEach, describe, expect, it, jest, test} from "@jest/globals"; // Adjust the path as needed
 import MapManager from '../app/catalunya-gmap-manager';
 
 // Mocking the Google Maps JavaScript API
@@ -59,16 +59,19 @@ jest.mock('../app/catalunya-gmap-extra', () => ({
     stringToBoolean: jest.fn()
 }));
 
-// Mocking HTML elements
-document.body.innerHTML = `
-  <div id="mapId"></div>
-`;
+
 
 describe('MapManager', () => {
     let mapManager;
     let mockMap, mockMarker, mockInfoWindow, mockClusterer;
 
     beforeEach(() => {
+        // Mocking HTML elements
+        document.body.innerHTML =
+            `
+            <div id="mapId"></div>
+            <ul id="mapLlist"></ul>`;
+
         mockMap = {
             setZoom: jest.fn(),
             setCenter: jest.fn(),
@@ -114,8 +117,11 @@ describe('MapManager', () => {
 
         // Instance of MapManager
         mapManager = new MapManager('mapId');
-        mapManager._createMarkerButton = jest.fn();
         mapManager._createIcon = jest.fn();
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks(); // Restore original functionality to all mocks
     });
 
     test('initialization sets up properties correctly', () => {
@@ -139,7 +145,10 @@ describe('MapManager', () => {
     });
 
     test('addMarker should add a marker to the map and markers array', async () => {
+
         await mapManager.initMap(); // Make sure initMap is awaited
+        mapManager._createMarkerButton = jest.fn()
+
         const location = { lat: 41.3851, lng: 2.1734, title: "Barcelona", icon: "icon-url" };
         mapManager.addMarker(location);
 
@@ -332,6 +341,17 @@ describe('MapManager', () => {
         // Ensure only historical markers are not affected
         expect(mapManager.markers.find(marker => marker.category === 'Modern').visible).toBe(true);
         expect(mockClusterer.removeMarker).toHaveBeenCalledTimes(2);
+    });
+
+    test('should append a new list item to "mapLlist"', () => {
+        jest.spyOn(document, 'getElementById').mockReturnValue(document.getElementById('mapLlist'));
+
+        const opts = { title: "Test Marker", category: "testCategory" };
+        mapManager._createMarkerButton(mockMarker, opts);
+
+        const ul = document.getElementById("mapLlist");
+        expect(ul.children.length).toBe(2); // Check if a new list item is added
+        expect(ul.innerHTML).toContain("Test Marker"); // Check content
     });
 
 });
