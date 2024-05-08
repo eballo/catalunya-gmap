@@ -368,7 +368,7 @@ export default class MapManager {
 
         //Set CSS for the control border
         const logo = document.createElement('img');
-        logo.src = this.serverHost + 'assets/images/catalunya-gmap/logo/logoCM-red-mini.png';
+        logo.src = this.serverHost + 'images/catalunya-gmap/logo/logoCM-red-mini.png';
         logo.style.cursor = 'pointer';
         logoControlDiv.appendChild(logo);
 
@@ -398,7 +398,7 @@ export default class MapManager {
         // Set CSS for the control interior.
         const controlText = document.createElement('div');
         controlText.id = "llistat";
-        controlText.innerHTML = '<img src="' + this.serverHost + 'assets/images/catalunya-gmap/gmap/03.png" width="42" height="42" alt="Mostrar llistat" >';
+        controlText.innerHTML = '<img src="' + this.serverHost + 'images/catalunya-gmap/gmap/03.png" width="42" height="42" alt="Mostrar llistat" >';
         controlUI.appendChild(controlText);
 
         this.map.controls[this.core.ControlPosition.TOP_RIGHT].push(showTextList);
@@ -417,7 +417,7 @@ export default class MapManager {
             self.ListTextEnabled = !self.ListTextEnabled
             self.infowindow.close()
 
-            $("#llistat").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number + '.png" with="42" height="42" alt="Ocultar llistat" >');
+            $("#llistat").html('<img src="' + self.serverHost + 'images/catalunya-gmap/gmap/' + number + '.png" with="42" height="42" alt="Ocultar llistat" >');
 
             self.resize()
         });

@@ -9,4 +9,4 @@ dist/
 .idea/
 
 # exclude generated file (will always change)
-web/assets/js/catalunya-gmap.min.js
+web/js/catalunya-gmap.min.js

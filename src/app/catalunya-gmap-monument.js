@@ -196,7 +196,7 @@ class MonumentBuilder {
             }
         }
 
-        thumbs = "<img alt='The Museum of Modern Art' src='https://files.elfsightcdn.com/86d592a4-fc00-4d16-9b84-0566a28d5645/423cf9be-c155-4209-8f60-75ae45d9bcec/moma_renovation_and_expansion--1-.jpg'>"
+        //thumbs = "<img alt='The Museum of Modern Art' src='https://files.elfsightcdn.com/86d592a4-fc00-4d16-9b84-0566a28d5645/423cf9be-c155-4209-8f60-75ae45d9bcec/moma_renovation_and_expansion--1-.jpg'>"
 
         let content = "";
         content += "<div class='catmed-google-maps-marker'>"
