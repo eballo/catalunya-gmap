@@ -164,7 +164,7 @@ class MonumentBuilder {
     }
 
     _getIcon(type, category, styleType) {
-        return this.serverHost + 'assets/images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + styleType + '.png';
+        return this.serverHost + 'images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + styleType + '.png';
     }
 
     _capitalize(word) {

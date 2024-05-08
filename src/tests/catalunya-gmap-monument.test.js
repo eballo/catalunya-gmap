@@ -176,8 +176,8 @@ describe("Military Buildings", () => {
                 lng: 2.156,
                 visible: true,
                 content: expect.any(String), // Will be validated in a different test
-                icon: "http://localhost/assets/images/catalunya-gmap/gmap/militar/castell/castell7.png",
-                icon2: "http://localhost/assets/images/catalunya-gmap/gmap/militar/castell/castell6.png",
+                icon: "http://localhost/images/catalunya-gmap/gmap/militar/castell/castell7.png",
+                icon2: "http://localhost/images/catalunya-gmap/gmap/militar/castell/castell6.png",
                 category: "castell",
                 categoryName: "Castells"
             });
@@ -722,7 +722,7 @@ describe("Private Methods - Helper functions", () => {
         it("should construct the icon URL correctly", () => {
             const mapBuilder = new MonumentBuilder("testMapId");
             const url = mapBuilder._getIcon("militar", "castell", 1);
-            expect(url).toBe("http://localhost/assets/images/catalunya-gmap/gmap/militar/castell/castell1.png");
+            expect(url).toBe("http://localhost/images/catalunya-gmap/gmap/militar/castell/castell1.png");
         });
     });
 

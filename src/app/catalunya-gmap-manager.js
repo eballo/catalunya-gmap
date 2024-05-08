@@ -299,7 +299,7 @@ export default class MapManager {
         // Set CSS for the control interior.
         const controlText = document.createElement('div');
         controlText.id = "visibleBuildings";
-        controlText.innerHTML = '<img src="' + this.serverHost + 'assets/images/catalunya-gmap/gmap/06.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
+        controlText.innerHTML = '<img src="' + this.serverHost + 'images/catalunya-gmap/gmap/06.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
         controlUI.appendChild(controlText);
 
         this.map.controls[this.core.ControlPosition.RIGHT_TOP].push(removeAllIconsControlDiv);
@@ -309,7 +309,7 @@ export default class MapManager {
             if (!self.visibleBuildings) {
                 number = "06"
             }
-            $("#visibleBuildings").html('<img src="' + self.serverHost + 'assets/images/catalunya-gmap/gmap/' + number + '.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+            $("#visibleBuildings").html('<img src="' + self.serverHost + 'images/catalunya-gmap/gmap/' + number + '.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
 
             self.visibleBuildings = !self.visibleBuildings
             self._changeVisibility(self.visibleBuildings);
