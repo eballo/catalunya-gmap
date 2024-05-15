@@ -191,7 +191,7 @@ class MonumentBuilder {
             // Override in the case that we have Barcelona, Barcelona, Barcelona to only Barcelona
             if ((municipi && poblacio && provincia) && (municipi === poblacio) && (poblacio === provincia)) {
                 address = municipi;
-            }else{
+            } else {
                 address += provincia
             }
         }
@@ -271,17 +271,34 @@ class MonumentBuilder {
             icon: this._getIcon(type, category, this.styleType1),
             icon2: this._getIcon(type, category, this.styleType2),
             category: category, // (building type Slug-Name)
-            categoryName: categoryName
+            categoryName: categoryName,
+            comarca: edifici.comarca
         };
     }
 
-    _addEdifici(id, arrayName, category, categoryName, type) {
-        if (arrayName.length > 0) {
+    _addEdifici(id, arrayName, category, categoryName, type, comarca) {
+        let add_building = true;
+
+
+        // Check type building
+        if (typeof gmap_type_filter !== 'undefined' && gmap_type_filter.length > 0 && !(gmap_type_filter.includes(category))) {
+            add_building = false;
+        }
+
+        if (arrayName.length > 0 && add_building) {
 
             //Add Marker to the Map
             arrayName.forEach((building, index) => {
+                let allowed_comarca = true;
                 const opt = this._extract(building, category, categoryName, index, type);
-                this.mapManager.addMarker(opt);
+
+                // check Comarca
+                if (typeof gmap_comarca_filter !== 'undefined' && gmap_comarca_filter.length > 0 && !(gmap_comarca_filter.includes(opt.comarca))) {
+                    allowed_comarca = false;
+                }
+                if (allowed_comarca) {
+                    this.mapManager.addMarker(opt);
+                }
             })
 
             //Add Icon related to the map to the map menu
