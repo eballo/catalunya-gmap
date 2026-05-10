@@ -5,7 +5,8 @@ import handleSearchTextList from'./catalunya-gmap-extra'
 async function initMapApplication() {
     try {
         const monument = new MonumentBuilder('gMap');
-        const mapManager = await monument.create()
+        const mapManager = await monument.create();
+        window.cmGmapManager = mapManager;
 
         if (mapManager.getMarkers().length > 0) {
             $("#error").hide();
@@ -39,8 +40,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- Search List -----
     const input = document.querySelector('#search-llista');
-    input.addEventListener('blur', handleSearchTextList);
-    input.addEventListener('input', handleSearchTextList);
+    if (input) {
+        input.addEventListener('blur', handleSearchTextList);
+        input.addEventListener('input', handleSearchTextList);
+    }
 });
 
 export default initMapApplication;

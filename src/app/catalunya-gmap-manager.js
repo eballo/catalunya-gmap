@@ -7,10 +7,11 @@ import {stringToBoolean} from "./catalunya-gmap-extra";
 export default class MapManager {
     constructor(mapId) {
 
-        this.debug = stringToBoolean(process.env.DEBUG);
+        const _cfg = (typeof catalunyaGmapConfig !== 'undefined') ? catalunyaGmapConfig : {};
+        this.debug = stringToBoolean(_cfg.debug || process.env.DEBUG);
 
         this.loader = new Loader({
-            apiKey: process.env.GOOGLE_MAPS_API_KEY,
+            apiKey: _cfg.apiKey || process.env.GOOGLE_MAPS_API_KEY,
             version: "weekly",
             libraries: ["core", "maps", "marker"]
         });
@@ -20,10 +21,10 @@ export default class MapManager {
         this.marker = null;
         this.core = null;
 
-        // to keep track with initial values
-        this.ListTextEnabled = false;
+        // to keep track with initial values — can be pre-set via config
+        this.ListTextEnabled = _cfg.listEnabled !== undefined ? Boolean(_cfg.listEnabled) : false;
         this.visibleBuildings = true;
-        this.useMarkerCluster = process.env.USE_MARKER_CLUSTER;
+        this.useMarkerCluster = _cfg.useMarkerCluster || process.env.USE_MARKER_CLUSTER;
         this.infowindow = null;
 
         this.arrayCategoriesText = [];  // List categories text that we use to display in the side
@@ -34,7 +35,9 @@ export default class MapManager {
         this.markers = [];              // All the markers
         this.clusterer = null;          // custer elements
 
-        this.serverHost = process.env.SERVER_HOST;
+        this.serverHost = _cfg.serverHost || process.env.SERVER_HOST;
+        this.secondaryDivId = _cfg.secondaryDivId || 'secondaryDiv';
+        this.listId = _cfg.listId || 'mapLlist';
         //this.userPosition = stringToBoolean(process.env.USER_POSITION);
 
     }
@@ -226,6 +229,11 @@ export default class MapManager {
 
     }
 
+    resetView() {
+        this.map.setCenter(CATALUNYA_POSITION);
+        this.map.setZoom(8);
+    }
+
     _exist(item) {
         let toReturn = false;
         const indexOf = this.arrayCategoriesText.indexOf(item);
@@ -241,7 +249,7 @@ export default class MapManager {
     _createMarkerButton(marker, opts) {
 
         //Creates a sidebar text link
-        const ul = document.getElementById("mapLlist");
+        const ul = document.getElementById(this.listId);
 
         //Add Title Category if needed
         if (!this._exist(opts.category)) {
@@ -299,7 +307,7 @@ export default class MapManager {
         // Set CSS for the control interior.
         const controlText = document.createElement('div');
         controlText.id = "visibleBuildings";
-        controlText.innerHTML = '<img src="' + this.serverHost + 'images/catalunya-gmap/gmap/06.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
+        controlText.innerHTML = '<img src="' + this.serverHost + 'images/controls/06.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >';
         controlUI.appendChild(controlText);
 
         this.map.controls[this.core.ControlPosition.RIGHT_TOP].push(removeAllIconsControlDiv);
@@ -309,7 +317,7 @@ export default class MapManager {
             if (!self.visibleBuildings) {
                 number = "06"
             }
-            $("#visibleBuildings").html('<img src="' + self.serverHost + 'images/catalunya-gmap/gmap/' + number + '.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
+            $("#visibleBuildings").html('<img src="' + self.serverHost + 'images/controls/' + number + '.png" width="32" height="32" alt="Click per mostrar o ocultar totes les edificacions" >');
 
             self.visibleBuildings = !self.visibleBuildings
             self._changeVisibility(self.visibleBuildings);
@@ -368,7 +376,7 @@ export default class MapManager {
 
         //Set CSS for the control border
         const logo = document.createElement('img');
-        logo.src = this.serverHost + 'images/catalunya-gmap/logo/logoCM-red-mini.png';
+        logo.src = this.serverHost + 'images/logo/logoCM-red-mini.png';
         logo.style.cursor = 'pointer';
         logoControlDiv.appendChild(logo);
 
@@ -398,28 +406,21 @@ export default class MapManager {
         // Set CSS for the control interior.
         const controlText = document.createElement('div');
         controlText.id = "llistat";
-        controlText.innerHTML = '<img src="' + this.serverHost + 'images/catalunya-gmap/gmap/03.png" width="42" height="42" alt="Mostrar llistat" >';
+        const initialIcon = this.ListTextEnabled ? "04" : "03";
+        controlText.innerHTML = '<img src="' + this.serverHost + 'images/controls/' + initialIcon + '.png" width="42" height="42" alt="Llistat" >';
         controlUI.appendChild(controlText);
 
         this.map.controls[this.core.ControlPosition.TOP_RIGHT].push(showTextList);
 
         // Set up the click event listeners:
         controlUI.addEventListener( 'click', function () {
-            //Toggle divs + resize map
+            self.ListTextEnabled = !self.ListTextEnabled;
+            const number = self.ListTextEnabled ? "04" : "03";
             $('#primaryDiv').toggleClass('primaryDiv');
+            $('#' + self.secondaryDivId).toggle();
+            if (self.infowindow) self.infowindow.close();
+            $("#llistat").html('<img src="' + self.serverHost + 'images/controls/' + number + '.png" width="42" height="42" alt="Llistat" >');
             self.resize();
-            $("#secondaryDiv").toggle();
-
-            let number = "04"
-            if (!self.ListTextEnabled) {
-                number = "03"
-            }
-            self.ListTextEnabled = !self.ListTextEnabled
-            self.infowindow.close()
-
-            $("#llistat").html('<img src="' + self.serverHost + 'images/catalunya-gmap/gmap/' + number + '.png" with="42" height="42" alt="Ocultar llistat" >');
-
-            self.resize()
         });
     }
 

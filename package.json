@@ -1,6 +1,6 @@
 {
   "name": "catalunya-gmap",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Interactive map of Catalunya using GoogleMaps API.",
   "main": "index.js",
   "devDependencies": {
@@ -13,7 +13,7 @@
     "dotenv": "^16.4.5",
     "dotenv-webpack": "^8.1.0",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
+    "jest-environment-jsdom": "^30.4.1",
     "webpack": "^5.105.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.2.2"
@@ -23,6 +23,7 @@
     "testWatch": "jest --watch",
     "clearCache": "jest --clearCache",
     "buildProd": "webpack --mode production",
+    "buildPlugin": "webpack --mode production --env plugin && node scripts/copy-to-plugin.js",
     "buildLocal": "webpack --mode development",
     "buildWatch": "webpack --watch --mode development",
     "start": "webpack server --mode development --config ./webpack.config.js --hot"
