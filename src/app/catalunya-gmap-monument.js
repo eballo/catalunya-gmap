@@ -9,8 +9,9 @@ class MonumentBuilder {
 
         this.styleType1 = 7;
         this.styleType2 = 6;
-        this.serverHost = process.env.SERVER_HOST;
-        this.userPosition = stringToBoolean(process.env.USER_POSITION);
+        const _cfg = (typeof catalunyaGmapConfig !== 'undefined') ? catalunyaGmapConfig : {};
+        this.serverHost = _cfg.serverHost || process.env.SERVER_HOST;
+        this.userPosition = stringToBoolean(_cfg.userPosition || process.env.USER_POSITION);
     }
 
     async create() {
@@ -164,7 +165,7 @@ class MonumentBuilder {
     }
 
     _getIcon(type, category, styleType) {
-        return this.serverHost + 'images/catalunya-gmap/gmap/' + type + '/' + category + '/' + category + styleType + '.png';
+        return this.serverHost + 'images/' + type + '/' + category + '/' + category + styleType + '.png';
     }
 
     _capitalize(word) {

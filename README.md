@@ -77,6 +77,7 @@ GOOGLE_MAPS_API_KEY=xxxxxxx
 SERVER_HOST='http://localhost:9000/'
 DEBUG=true
 USER_POSITION=false
+PLUGIN_PATH=/path/to/your/plugin   # only needed for buildPlugin
 ```
 
 NOTE: it is important that the server host ends with a '/' like in the sample.
@@ -94,10 +95,11 @@ Open your browser [localhost:9000](http://localhost:9000/)
 
 ### Available node commands
 
-* `test` 	   — run all the tests
-* `testWatch`  — run all the tests while watching the changes of the files
-* `buildLocal` — Compile (local) and optimize the files in your web directory
-* `buildProd`  — Compile (production) and optimize the files in your web directory
-* `buildWatch` — Compile (local) and optimize the files in your web directory and watch for changes to update the files
-* `start`      — Starts  a web server
+* `test`        — run all the tests
+* `testWatch`   — run all the tests while watching the changes of the files
+* `buildLocal`  — compile (local) and optimize the files in your web directory
+* `buildProd`   — compile (production) and optimize the files in your web directory
+* `buildPlugin` — compile (production) and copy the output directly to the WordPress plugin directory (requires `PLUGIN_PATH`)
+* `buildWatch`  — compile (local) and watch for changes to update the files
+* `start`       — start the webpack dev server at [localhost:9000](http://localhost:9000/)
 
