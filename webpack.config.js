@@ -1,6 +1,9 @@
-const path = require('path');
-const fs   = require('fs');
-const Dotenv = require('dotenv-webpack');
+const path         = require('path');
+const fs           = require('fs');
+const webpack      = require('webpack');
+const Dotenv       = require('dotenv-webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const pkg          = require('./package.json');
 
 function readPluginPath() {
     const envFile = path.join(__dirname, '.env.production');
@@ -13,7 +16,9 @@ function readPluginPath() {
 }
 
 module.exports = (env, argv) => {
-    const envPath = argv.mode === 'development' ? '.env' : `.env.${argv.mode}`;
+    const envPath = env && env.demo
+        ? '.env.demo'
+        : argv.mode === 'development' ? '.env' : `.env.${argv.mode}`;
 
     const entries = {
         dist: { import: './src/app/catalunya-gmap-main', filename: `./dist/${argv.mode}/catalunya-gmap.min.js` },
@@ -35,13 +40,19 @@ module.exports = (env, argv) => {
             filename: '[name].js',
             path: path.resolve(__dirname, './'),
         },
+        optimization: {
+            minimizer: [
+                new TerserPlugin({ extractComments: false }),
+            ],
+        },
         plugins: [
-            new Dotenv({ path: envPath })
+            new Dotenv({ path: envPath }),
+            new webpack.BannerPlugin({ banner: `/*! catalunya-gmap v${pkg.version} */`, raw: true }),
         ],
         devServer: {
             static: { directory: path.join(__dirname, './web') },
             compress: true,
-            port: 9000,
+            port: 9090,
         },
         externals: {
             jquery: 'jQuery',

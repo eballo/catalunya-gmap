@@ -9,5 +9,8 @@ dist/
 .idea/
 .claude
 
+coverage/
+
 # exclude generated file (will always change)
 web/js/catalunya-gmap.min.js
+web/js/catalunya-gmap.min.js.LICENSE.txt

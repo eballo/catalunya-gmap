@@ -1,6 +1,25 @@
 import MapManager from "./catalunya-gmap-manager";
 import {stringToBoolean} from "./catalunya-gmap-extra";
 
+// One entry per building type — replaces the 15 hardcoded addXxx() methods.
+const BUILDING_TYPES = [
+    { category: 'castell',               categoryName: 'Castells',               type: 'militar'  },
+    { category: 'epoca-carlina',         categoryName: "Època Carlina",          type: 'militar'  },
+    { category: 'muralles',              categoryName: 'Muralles',               type: 'militar'  },
+    { category: 'torre',                 categoryName: 'Torres',                 type: 'militar'  },
+    { category: 'casa-forta',            categoryName: 'Cases Fortes',           type: 'civil'    },
+    { category: 'palau',                 categoryName: 'Palaus',                 type: 'civil'    },
+    { category: 'pont',                  categoryName: 'Ponts',                  type: 'civil'    },
+    { category: 'torre-colomer',         categoryName: 'Torres Colomer',         type: 'civil'    },
+    { category: 'basilica',              categoryName: 'Basíliques',             type: 'religios' },
+    { category: 'catedral',              categoryName: 'Catedrals',              type: 'religios' },
+    { category: 'ermita',                categoryName: 'Ermites',                type: 'religios' },
+    { category: 'esglesia',              categoryName: 'Esglésies',              type: 'religios' },
+    { category: 'esglesia-fortificada',  categoryName: 'Esglésies fortificades', type: 'religios' },
+    { category: 'monestir',              categoryName: 'Monestirs',              type: 'religios' },
+    { category: 'altres-llocs-dinteres', categoryName: "Altres llocs d'Interés", type: 'altres'  },
+];
+
 class MonumentBuilder {
 
     constructor(mapId) {
@@ -10,158 +29,57 @@ class MonumentBuilder {
         this.styleType1 = 7;
         this.styleType2 = 6;
         const _cfg = (typeof catalunyaGmapConfig !== 'undefined') ? catalunyaGmapConfig : {};
-        this.serverHost = _cfg.serverHost || process.env.SERVER_HOST;
-        this.userPosition = stringToBoolean(_cfg.userPosition || process.env.USER_POSITION);
+        this.serverHost     = _cfg.serverHost     || process.env.SERVER_HOST;
+        this.markersJsonUrl = _cfg.markersJsonUrl || '';
+        this.userPosition   = stringToBoolean(_cfg.userPosition || process.env.USER_POSITION);
     }
 
     async create() {
-        this.map = await this.mapManager.initMap(); // fetchData() must return a promise
+        this.map = await this.mapManager.initMap();
 
-        // Add all buildings
-        this.addMilitars();
-        this.addReligioses();
-        this.addCivils();
-        this.addAltresLlocsInteres();
+        const markers = await this._loadMarkers();
 
-        // Add cluster for the markers
-        this.mapManager.addAllMarkersToCluster()
+        const byType = markers.reduce((acc, m) => {
+            const key = m.tipus || '';
+            (acc[key] = acc[key] || []).push(m);
+            return acc;
+        }, {});
 
+        BUILDING_TYPES.forEach((def, idx) => {
+            const list = byType[def.category] || [];
+            if (list.length > 0) {
+                this._addEdificiList(idx + 1, list, def.category, def.categoryName, def.type);
+            }
+        });
+
+        this.mapManager.addAllMarkersToCluster();
         return this.mapManager;
     }
 
-    addMilitars() {
-        this.addCastells();
-        this.addEpocaCarlina();
-        this.addMuralles();
-        this.addTorres();
+    async _loadMarkers() {
+        const inlineEl = document.getElementById('cm-edificis-data');
+        if (inlineEl) {
+            try { return JSON.parse(inlineEl.textContent); } catch (e) {
+                console.error('cm-edificis-data JSON invalid', e);
+            }
+        }
+
+        if (this.markersJsonUrl) {
+            const r = await fetch(this.markersJsonUrl);
+            return r.json();
+        }
+
+        return [];
     }
 
-    addCivils() {
-        this.addCasaForta();
-        this.addPalau();
-        this.addPont();
-        this.addTorreColomer();
-    }
+    _addEdificiList(id, list, category, categoryName, type) {
+        list.forEach((building, index) => {
+            const opt = this._extract(building, category, categoryName, index, type);
+            this.mapManager.addMarker(opt);
+        });
 
-    addReligioses() {
-        this.addBasilica();
-        this.addCatedral();
-        this.addErmita();
-        this.addEsglesia();
-        this.addEsglesiaFortificada();
-        this.addMonestir();
-    }
-
-    addAltres() {
-        this.addAltresLlocsInteres();
-    }
-
-    /** Militars */
-    addCastells() {
-        const type = 'militar';
-        const category = 'castell';
-        const categoryName = 'Castells';
-        this._addEdifici(1, aCastells, category, categoryName, type);
-    }
-
-    addEpocaCarlina() {
-        const type = 'militar';
-        const category = 'epoca-carlina';
-        const categoryName = 'Època Carlina';
-        this._addEdifici(2, aEpocaCarlina, category, categoryName, type);
-    }
-
-    addMuralles() {
-        const type = 'militar';
-        const category = 'muralles';
-        const categoryName = 'Muralles';
-        this._addEdifici(3, aMuralles, category, categoryName, type);
-    }
-
-    addTorres() {
-        const type = 'militar';
-        const category = 'torre';
-        const categoryName = 'Torres';
-        this._addEdifici(4, aTorres, category, categoryName, type);
-    }
-
-    /** Civils */
-    addCasaForta() {
-        const type = 'civil';
-        const category = 'casa-forta';
-        const categoryName = 'Cases Fortes';
-        this._addEdifici(5, aCasaForta, category, categoryName, type);
-    }
-
-    addPalau() {
-        const type = 'civil';
-        const category = 'palau';
-        const categoryName = 'Palaus';
-        this._addEdifici(6, aPalau, category, categoryName, type);
-    }
-
-    addPont() {
-        const type = 'civil';
-        const category = 'pont';
-        const categoryName = 'Ponts';
-        this._addEdifici(7, aPont, category, categoryName, type);
-    }
-
-    addTorreColomer() {
-        const type = 'civil';
-        const category = 'torre-colomer';
-        const categoryName = 'Torres Colomer';
-        this._addEdifici(8, aTorreColomer, category, categoryName, type);
-    }
-
-    /** Religios */
-    addBasilica() {
-        const type = 'religios';
-        const category = 'basilica';
-        const categoryName = 'Basíliques';
-        this._addEdifici(9, aBasilica, category, categoryName, type);
-    }
-
-    addCatedral() {
-        const type = 'religios';
-        const category = 'catedral';
-        const categoryName = 'Catedrals';
-        this._addEdifici(10, aCatedral, category, categoryName, type);
-    }
-
-    addErmita() {
-        const type = 'religios';
-        const category = 'ermita';
-        const categoryName = 'Ermites';
-        this._addEdifici(11, aErmita, category, categoryName, type);
-    }
-
-    addEsglesia() {
-        const type = 'religios';
-        const category = 'esglesia';
-        const categoryName = 'Esglésies';
-        this._addEdifici(12, aEsglesia, category, categoryName, type);
-    }
-
-    addEsglesiaFortificada() {
-        const type = 'religios';
-        const category = 'esglesia-fortificada';
-        const categoryName = 'Esglésies fortificades';
-        this._addEdifici(13, aEsglesiaFortificada, category, categoryName, type);
-    }
-
-    addMonestir() {
-        const type = 'religios';
-        const category = 'monestir';
-        const categoryName = "Monestirs";
-        this._addEdifici(14, aMonestir, category, categoryName, type);
-    }
-
-    addAltresLlocsInteres() {
-        const type = 'altres';
-        const category = 'altres-llocs-dinteres';
-        const categoryName = 'Altres llocs d\'Interés';
-        this._addEdifici(15, aAltres, category, categoryName, type);
+        const icon = this._getIcon(type, category, this.styleType1);
+        this.mapManager.addIcon({ id, visible: true, title: categoryName, category, icon });
     }
 
     _getIcon(type, category, styleType) {
@@ -173,31 +91,12 @@ class MonumentBuilder {
         return word[0].toUpperCase() + loweredCase.slice(1);
     }
 
-    _createContent(title, link, thumbs, municipi, poblacio, provincia, type, category, categoryName) {
-        //let icon = this._getIcon(type, category, this.styleType1)
-        let address = ""
-        if (municipi || poblacio || provincia) {
-            if (municipi) {
-                address += municipi + ", ";
-            }
-            if (poblacio) {
-                address += poblacio + ", ";
-            }
-
-            // Override in the case that we have Barcelona, Barcelona to only Barcelona
-            if (municipi && poblacio && municipi === poblacio) {
-                address = municipi + ", ";
-            }
-
-            // Override in the case that we have Barcelona, Barcelona, Barcelona to only Barcelona
-            if ((municipi && poblacio && provincia) && (municipi === poblacio) && (poblacio === provincia)) {
-                address = municipi;
-            }else{
-                address += provincia
-            }
-        }
-
-        //thumbs = "<img alt='The Museum of Modern Art' src='https://files.elfsightcdn.com/86d592a4-fc00-4d16-9b84-0566a28d5645/423cf9be-c155-4209-8f60-75ae45d9bcec/moma_renovation_and_expansion--1-.jpg'>"
+    _createContent(title, link, thumbs, municipi, comarca, provincia, type, category, categoryName) {
+        const parts = [];
+        if (municipi) parts.push(municipi);
+        if (comarca && comarca !== municipi) parts.push(comarca);
+        if (provincia) parts.push(provincia);
+        const address = parts.join(', ');
 
         let content = "";
         content += "<div class='catmed-google-maps-marker'>"
@@ -211,7 +110,6 @@ class MonumentBuilder {
         content += "    </div>"
         content += "    <div class='catmed-google-maps-marker-title-wrapper " + type + "'>"
         content += "            <a class='catmed-google-maps-marker-link-image' href='" + link + "' > "
-        //content += "                <span class='catmed-google-maps-building-icon'><img class='catmed-google-maps-building-icon-img' src='" + icon+ "' alt='"+category + "-" + type + "'></span>"
         content += "                <span class='catmed-google-maps-marker-title'>" + title + "</span>"
         content += "            </a>"
         content += this._add_ruta();
@@ -260,41 +158,25 @@ class MonumentBuilder {
     }
 
     _extract(edifici, category, categoryName, x, type) {
+        const thumbsHtml = edifici.img ? '<img src="' + edifici.img + '" alt="' + edifici.title + '">' : '';
+        const municipi  = edifici.municipi  || '';
+        const comarca   = edifici.comarca   || '';
+        const provincia = edifici.provincia || '';
+
         return {
             id: category + x,
             title: edifici.title,
             link: edifici.link,
-            type: type, //(militar,civil, religios)
-            lat: parseFloat(edifici.position.lat),
-            lng: parseFloat(edifici.position.long),
+            type,
+            lat:  edifici.lat,
+            lng:  edifici.lng,
             visible: true,
-            content: this._createContent(edifici.title, edifici.link, edifici.thumbs, edifici.municipi, edifici.poblacio, edifici.provincia, type, category, categoryName),
-            icon: this._getIcon(type, category, this.styleType1),
+            content: this._createContent(edifici.title, edifici.link, thumbsHtml, municipi, comarca, provincia, type, category, categoryName),
+            icon:  this._getIcon(type, category, this.styleType1),
             icon2: this._getIcon(type, category, this.styleType2),
-            category: category, // (building type Slug-Name)
-            categoryName: categoryName
+            category,
+            categoryName
         };
-    }
-
-    _addEdifici(id, arrayName, category, categoryName, type) {
-        if (arrayName.length > 0) {
-
-            //Add Marker to the Map
-            arrayName.forEach((building, index) => {
-                const opt = this._extract(building, category, categoryName, index, type);
-                this.mapManager.addMarker(opt);
-            })
-
-            //Add Icon related to the map to the map menu
-            const icon = this._getIcon(type, category, this.styleType1);
-            this.mapManager.addIcon({
-                id: id,
-                visible: true,
-                title: categoryName,
-                category: category,
-                icon: icon
-            });
-        }
     }
 
 }

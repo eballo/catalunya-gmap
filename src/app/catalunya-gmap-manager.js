@@ -37,7 +37,7 @@ export default class MapManager {
 
         this.serverHost = _cfg.serverHost || process.env.SERVER_HOST;
         this.secondaryDivId = _cfg.secondaryDivId || 'secondaryDiv';
-        this.listId = _cfg.listId || 'mapLlist';
+        this.listId = _cfg.listId || 'map-list';
         //this.userPosition = stringToBoolean(process.env.USER_POSITION);
 
     }
