@@ -5,8 +5,8 @@ import handleSearchTextList from'./catalunya-gmap-extra'
 async function initMapApplication() {
     try {
         const monument = new MonumentBuilder('gMap');
+        window.cmGmapManager = monument.mapManager;
         const mapManager = await monument.create();
-        window.cmGmapManager = mapManager;
 
         if (mapManager.getMarkers().length > 0) {
             $("#error").hide();

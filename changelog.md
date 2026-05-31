@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [6.0.0] - Unreleased
+## [6.0.0] - 2026-05-30
 
 ### Added
 - `buildPlugin` npm script: builds production bundle and copies output to the WordPress plugin directory
@@ -20,6 +20,9 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Image paths simplified: removed the redundant `catalunya-gmap/gmap/` prefix from all asset URLs
 - CSS cleaned up: removed commented-out rules and improved section organisation
+- Improved test suite to reach 100% coverage across all source files (statements, branches, functions, lines)
+- Added `scripts/deploy.js` for SFTP deployment (`npm run deploy`)
+- Added `CLAUDE.md` with release checklist and development notes
 
 ### Removed
 - Legacy image files under `web/images/catalunya-gmap/gmap/` (replaced by restructured paths)
