@@ -6,3 +6,4 @@
 - [Demo v5.0](http://demo.catalunyamedieval.es/gmap50)
 - [Demo v6.0](http://demo.catalunyamedieval.es/gmap60)
 - [Demo v6.1](http://demo.catalunyamedieval.es/gmap61)
+- [Demo v6.2](http://demo.catalunyamedieval.es/gmap62)
