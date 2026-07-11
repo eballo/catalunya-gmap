@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.0] - 2026-07-11
+
+### Changed
+- add auto release
+
 ## [6.0.0] - 2026-05-30
 
 ### Added

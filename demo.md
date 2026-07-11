@@ -5,3 +5,4 @@
 - [Demo v4.1](http://demo.catalunyamedieval.es/gmap41)
 - [Demo v5.0](http://demo.catalunyamedieval.es/gmap50)
 - [Demo v6.0](http://demo.catalunyamedieval.es/gmap60)
+- [Demo v6.1](http://demo.catalunyamedieval.es/gmap61)
