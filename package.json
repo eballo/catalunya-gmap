@@ -4,7 +4,7 @@
   "description": "Interactive map of Catalunya using GoogleMaps API.",
   "main": "index.js",
   "devDependencies": {
-    "@babel/core": "^7.24.4",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.24.4",
     "@googlemaps/js-api-loader": "^1.16.6",
     "@googlemaps/markerclusterer": "^2.5.3",
