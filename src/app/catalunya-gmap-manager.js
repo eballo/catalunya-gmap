@@ -1,4 +1,4 @@
-import {Loader} from "@googlemaps/js-api-loader";
+import {setOptions, importLibrary} from "@googlemaps/js-api-loader";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import {CATALUNYA_POSITION, STYLES} from "./catalunya-gmap-styles";
 import {stringToBoolean} from "./catalunya-gmap-extra";
@@ -10,10 +10,13 @@ export default class MapManager {
         const _cfg = (typeof catalunyaGmapConfig !== 'undefined') ? catalunyaGmapConfig : {};
         this.debug = stringToBoolean(_cfg.debug || process.env.DEBUG);
 
-        this.loader = new Loader({
-            apiKey: _cfg.apiKey || process.env.GOOGLE_MAPS_API_KEY,
-            version: "weekly",
-            libraries: ["core", "maps", "marker"]
+        // v2 functional API: setOptions() is a page-global call (must run before any
+        // importLibrary()), replacing the old per-instance `new Loader({...})`. Libraries are
+        // no longer preloaded via a constructor option — each is requested individually via
+        // importLibrary() in initMap(), same as before.
+        setOptions({
+            key: _cfg.apiKey || process.env.GOOGLE_MAPS_API_KEY,
+            v: "weekly",
         });
 
         // libraries that we are loading
@@ -50,9 +53,9 @@ export default class MapManager {
         try {
 
             const [google, marker, core] = await Promise.all([
-                this.loader.importLibrary("maps"),
-                this.loader.importLibrary("marker"),
-                this.loader.importLibrary("core"),
+                importLibrary("maps"),
+                importLibrary("marker"),
+                importLibrary("core"),
             ]);
 
             this.google = google
