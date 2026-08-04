@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.3.0] - 2026-08-04
+
+### Changed
+- Upgrade dependencies: security patches, sync with catalunya-map, googlemaps loader v2
+
 ## [6.2.0] - 2026-07-11
 
 ### Changed
