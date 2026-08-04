@@ -5,43 +5,42 @@
 import {afterEach, beforeEach, describe, expect, it, jest, test} from "@jest/globals"; // Adjust the path as needed
 import MapManager from '../app/catalunya-gmap-manager';
 
-// Mocking the Google Maps JavaScript API
+// Mocking the Google Maps JavaScript API (v2 functional API: setOptions()/importLibrary())
 jest.mock('@googlemaps/js-api-loader', () => ({
-    Loader: jest.fn().mockImplementation(() => ({
-        importLibrary: jest.fn(library => {
+    setOptions: jest.fn(),
+    importLibrary: jest.fn(library => {
 
-                    return Promise.resolve({
-                        Map: function() {
-                            return {
-                                setZoom: jest.fn(),
-                                setCenter: jest.fn(),
-                                setTilt: jest.fn(),
-                                addListener: jest.fn(),
-                                controls: Array.from({ length: 14 }, () => []),
-                            };
-                        },
-                        Marker: function(opts) {  // Ensure the constructor is correctly mocked
-                            return {
-                                setPosition: jest.fn(),
-                                setMap: jest.fn(),
-                                addListener: jest.fn(),
-                                ...opts
-                            };
-                        },
-                        InfoWindow: function() {
-                            return {
-                                setContent: jest.fn(),
-                                setPosition: jest.fn(),
-                                open: jest.fn(),
-                            };
-                        },
-                        ControlPosition: { TOP_LEFT: 0, TOP_RIGHT: 1, LEFT_TOP: 2, RIGHT_TOP: 3, BOTTOM_LEFT: 4 },
-                        MapTypeId: { ROADMAP: 'roadmap' },
-                        MapTypeControlStyle: { DROPDOWN_MENU: 'dropdown' },
-                    });
+                return Promise.resolve({
+                    Map: function() {
+                        return {
+                            setZoom: jest.fn(),
+                            setCenter: jest.fn(),
+                            setTilt: jest.fn(),
+                            addListener: jest.fn(),
+                            controls: Array.from({ length: 14 }, () => []),
+                        };
+                    },
+                    Marker: function(opts) {  // Ensure the constructor is correctly mocked
+                        return {
+                            setPosition: jest.fn(),
+                            setMap: jest.fn(),
+                            addListener: jest.fn(),
+                            ...opts
+                        };
+                    },
+                    InfoWindow: function() {
+                        return {
+                            setContent: jest.fn(),
+                            setPosition: jest.fn(),
+                            open: jest.fn(),
+                        };
+                    },
+                    ControlPosition: { TOP_LEFT: 0, TOP_RIGHT: 1, LEFT_TOP: 2, RIGHT_TOP: 3, BOTTOM_LEFT: 4 },
+                    MapTypeId: { ROADMAP: 'roadmap' },
+                    MapTypeControlStyle: { DROPDOWN_MENU: 'dropdown' },
+                });
 
-        }),
-    })),
+    }),
 }));
 
 // Mocking MarkerClusterer separately if it's from another library
@@ -388,10 +387,8 @@ describe('MapManager', () => {
 
     // --- initMap catch ---
     test('initMap logs error when loader fails', async () => {
-        const { Loader } = require('@googlemaps/js-api-loader');
-        Loader.mockImplementationOnce(() => ({
-            importLibrary: jest.fn().mockRejectedValue(new Error('load error')),
-        }));
+        const { importLibrary } = require('@googlemaps/js-api-loader');
+        importLibrary.mockRejectedValueOnce(new Error('load error'));
         const failingManager = new MapManager('mapId');
         jest.spyOn(console, 'error').mockImplementation(() => {});
         await failingManager.initMap();
