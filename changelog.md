@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.4.0] - 2026-09-05
+
+### Changed
+- Add a manual release workflow
+
 ## [6.3.0] - 2026-08-04
 
 ### Changed
