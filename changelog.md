@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.4.2] - 2026-09-18
+
+### Changed
+- Bump js-yaml to 3.15.2 (GHSA-2883-xcg3-v3hh)
+
 ## [6.4.1] - 2026-09-05
 
 ### Changed
