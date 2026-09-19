@@ -1,5 +1,5 @@
 import MapManager from "./catalunya-gmap-manager";
-import {stringToBoolean} from "./catalunya-gmap-extra";
+import {stringToBoolean, fetchMapData} from "./catalunya-gmap-extra";
 
 // One entry per building type — replaces the 15 hardcoded addXxx() methods.
 const BUILDING_TYPES = [
@@ -31,6 +31,7 @@ class MonumentBuilder {
         const _cfg = (typeof catalunyaGmapConfig !== 'undefined') ? catalunyaGmapConfig : {};
         this.serverHost     = _cfg.serverHost     || process.env.SERVER_HOST;
         this.markersJsonUrl = _cfg.markersJsonUrl || '';
+        this.mapDataNonce   = _cfg.mapDataNonce || '';
         this.userPosition   = stringToBoolean(_cfg.userPosition || process.env.USER_POSITION);
     }
 
@@ -65,7 +66,7 @@ class MonumentBuilder {
         }
 
         if (this.markersJsonUrl) {
-            const r = await fetch(this.markersJsonUrl);
+            const r = await fetchMapData(this.markersJsonUrl, this.mapDataNonce);
             return r.json();
         }
 

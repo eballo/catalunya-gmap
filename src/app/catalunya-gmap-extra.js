@@ -43,4 +43,10 @@ export function removeAccents(p) {
     return n;
 }
 
-
+/**
+ * fetch() the map JSON, sending the host's nonce as X-CM-Nonce when set, so
+ * the URL itself stays stable (cacheable, and no new crawler 403 per rotation).
+ */
+export function fetchMapData(url, nonce) {
+    return nonce ? fetch(url, { headers: { 'X-CM-Nonce': nonce } }) : fetch(url);
+}
