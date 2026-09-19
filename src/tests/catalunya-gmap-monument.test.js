@@ -14,7 +14,8 @@ jest.mock("../app/catalunya-gmap-manager", () => {
 });
 
 jest.mock('../app/catalunya-gmap-extra', () => ({
-    stringToBoolean: jest.fn()
+    stringToBoolean: jest.fn(),
+    fetchMapData: jest.fn((url, nonce) => nonce ? fetch(url, { headers: { 'X-CM-Nonce': nonce } }) : fetch(url)),
 }));
 
 process.env.SERVER_HOST = "http://localhost/";
@@ -35,6 +36,13 @@ describe("MonumentBuilder - Constructor", () => {
         expect(mb.styleType2).toBe(6);
         expect(mb.serverHost).toBe("http://localhost/");
         expect(mb.markersJsonUrl).toBe("");
+    });
+
+    it("reads mapDataNonce from catalunyaGmapConfig, empty by default", () => {
+        expect(new MonumentBuilder("testMapId").mapDataNonce).toBe("");
+        global.catalunyaGmapConfig = { mapDataNonce: "n0nce" };
+        expect(new MonumentBuilder("testMapId").mapDataNonce).toBe("n0nce");
+        delete global.catalunyaGmapConfig;
     });
 
     it("reads markersJsonUrl from catalunyaGmapConfig", () => {
@@ -120,6 +128,17 @@ describe("MonumentBuilder - _loadMarkers()", () => {
 
         expect(global.fetch).toHaveBeenCalledWith("http://localhost/markers.json");
         expect(markers).toEqual(mockMarkers);
+    });
+
+    it("sends mapDataNonce as X-CM-Nonce header when fetching markers", async () => {
+        const mb = new MonumentBuilder("testMapId");
+        mb.markersJsonUrl = "http://localhost/markers.json";
+        mb.mapDataNonce = "n0nce";
+        global.fetch = jest.fn().mockResolvedValue({ json: jest.fn().mockResolvedValue(mockMarkers) });
+
+        await mb._loadMarkers();
+
+        expect(global.fetch).toHaveBeenCalledWith("http://localhost/markers.json", { headers: { "X-CM-Nonce": "n0nce" } });
     });
 
     it("returns empty array when neither DOM element nor markersJsonUrl is available", async () => {

@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { stringToBoolean, default as handleSearchTextList } from '../app/catalunya-gmap-extra';
-import {describe, expect, test} from "@jest/globals";
+import { stringToBoolean, fetchMapData, default as handleSearchTextList } from '../app/catalunya-gmap-extra';
+import {describe, expect, test, jest} from "@jest/globals";
 
 describe('stringToBoolean', () => {
     test('converts "true" to true', () => {
@@ -72,5 +72,19 @@ describe('removeAccents', () => {
         expect(removeAccents('ÁÉÍÓÚ')).toBe('AEIOU');
         expect(removeAccents('çÇ')).toBe('cC');
         expect(removeAccents('hello')).toBe('hello'); // No change expected
+    });
+});
+
+describe('fetchMapData', () => {
+    test('fetches the bare url when there is no nonce', () => {
+        global.fetch = jest.fn().mockResolvedValue({});
+        fetchMapData('http://x/markers.json', '');
+        expect(global.fetch).toHaveBeenCalledWith('http://x/markers.json');
+    });
+
+    test('sends the nonce as X-CM-Nonce header, never in the url', () => {
+        global.fetch = jest.fn().mockResolvedValue({});
+        fetchMapData('http://x/markers.json', 'abc123');
+        expect(global.fetch).toHaveBeenCalledWith('http://x/markers.json', { headers: { 'X-CM-Nonce': 'abc123' } });
     });
 });

@@ -35,6 +35,7 @@ npm run deploy
 
 - The webpack dev server default port (9000) conflicts with PhpStorm's Xdebug listener. Use port 9090 instead.
 - `markersJsonUrl`, `serverHost` and `apiKey` must be provided by the host page via `window.catalunyaGmapConfig`; they default to `''`.
+- `mapDataNonce` (optional, same config object) is sent as an `X-CM-Nonce` request header on the markers JSON fetch, so the host can keep its nonce out of the URL.
 - `GOOGLE_MAPS_API_KEY` is required in `.env` for local development.
 - `buildPlugin` compiles JS + minifies CSS and copies both to `catalunya-medieval-plugins` automatically.
 - Playwright is available via `npx playwright`; the chromium binary is cached at `~/.npm/_npx/`.
