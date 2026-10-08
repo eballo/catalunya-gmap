@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.6.0] - 2026-10-08
+
+### Changed
+- Les releases fetes amb merges seguits ja no es trepitgen (#62)
+- Bump webpack-dev-middleware from 8.1.1 to 8.3.0 (#61)
+
 ## [6.5.0] - 2026-09-19
 
 ### Changed
