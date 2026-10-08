@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.7.0] - 2026-10-08
+
+### Changed
+- Bump brace-expansion (#66)
+- Bump proxy-addr from 2.0.7 to 2.0.8 (#65)
+- Bump shell-quote from 1.10.0 to 1.12.0 (#64)
+- Bump compression from 1.8.1 to 1.8.2 (#63)
+
 ## [6.6.0] - 2026-10-08
 
 ### Changed
