@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.8.0] - 2026-10-10
+
+### Changed
+- El gmap es posa al dia amb l'omap: mateixes funcionalitats, opcions i API (#67)
+
 ## [6.7.0] - 2026-10-08
 
 ### Changed
