@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.8.1] - 2026-10-10
+
+### Changed
+- Obrir el llistat ja no deixa el mapa en blanc a la pàgina de demo (#68)
+
 ## [6.8.0] - 2026-10-10
 
 ### Changed
