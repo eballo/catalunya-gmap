@@ -37,8 +37,10 @@ npm run deploy
 ## Development notes
 
 - The webpack dev server default port (9000) conflicts with PhpStorm's Xdebug listener. Use port 9090 instead.
-- `markersJsonUrl`, `serverHost` and `apiKey` must be provided by the host page via `window.catalunyaGmapConfig`; they default to `''`.
-- `mapDataNonce` (optional, same config object) is sent as an `X-CM-Nonce` request header on the markers JSON fetch, so the host can keep its nonce out of the URL.
+- **Kept in sync with `catalunya-omap`** (decided 10/10/2026, even though the theme's Epic 27 plans to drop Google Maps): same config options, same data, same public `MapManager` API (`window.cmGmapManager`), same popup card markup (`catmed-maps-marker-*`). A feature that lands in omap is ported here; only the provider-specific parts differ (InfoWindow with its own close button, `google.maps.Data` for the comarca boundaries, `Circle`, map styles `STYLES`/`STYLES_DARK` for the dark palette). The full option table is in the README.
+- `markersJsonUrl`, `serverHost` and `apiKey` must be provided by the host page via `window.catalunyaGmapConfig`; `serverHost` and `apiKey` fall back to `.env`. The demo page sets `markersJsonUrl` and `comarquesJsonUrl` itself (`web/js/*.json`, copies of omap's).
+- `mapDataNonce` (optional, same config object) is sent as an `X-CM-Nonce` request header on the markers and comarques JSON fetches, so the host can keep its nonce out of the URL.
+- The API key in `.env` is restricted by HTTP referrer, so on `localhost` Google answers `RefererNotAllowedMapError` and draws no map. To check the page anyway, let Playwright drop the `key` parameter from the `maps.googleapis.com/maps/api/js` request (`page.route`): Google then serves the map in development mode, watermarked and without the custom styles.
 - `GOOGLE_MAPS_API_KEY` is required in `.env` for local development.
 - `buildPlugin` compiles JS + minifies CSS and copies both to `catalunya-medieval-plugins` automatically.
 - Playwright is available via `npx playwright`; the chromium binary is cached at `~/.npm/_npx/`.

@@ -18,41 +18,76 @@ https://elfsight.com/google-maps-widget/#demo
 
 # How to use this library
 
-1. Add the following files to your html page
+The library has the same options, data and public API as
+[catalunya-omap](https://github.com/eballo/catalunya-omap) — only the map provider changes. A page
+can switch between the two by swapping the bundle, the stylesheet and the config object's name.
 
+1. Add the stylesheet inside the head tag
+
+``` html
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Droid+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="css/catalunya-gmap.css" rel="stylesheet" type="text/css">
 ```
+
+2. The map, the sidebar list and the scripts in the body
+
+``` html
     <div id="container">
-    
-        <div id="primaryDiv" class="primaryDiv_big">
-            <div id="mapContainer">
-                <div id="gMap"></div>
+        <div id="gMap"></div>
+        <div id="secondaryDiv" style="display:none;">
+            <input type="search" id="search-list" placeholder="Cercar monument…">
+            <div id="list">
+                <ul id="map-list"></ul>
             </div>
         </div>
-    
-        <div id="secondaryDiv">
-            <div id="error">
-                <h2>No hi ha cap edificaci&oacute; disponible per aquesta comcarca</h2>
-            </div>
-            <input type="text" id="search-llista" placeholder="cercar..">
-            <div id="llista">
-                <ul id="mapLlist"></ul>
-            </div>
-        </div>
-        
     </div>
-    ...
-    <footer>
-        <script type="text/javascript" src="assets/js/catalunya-gmap/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="assets/js/catalunya-gmap/bootstrap.min.js"></script>
-        <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap-path.min.js"></script>
-        <script type="text/javascript" src="assets/js/catalunya-gmap/catalunya-gmap.min.js"></script>
-    </footer>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/catalunya-gmap.min.js"></script>
 ```
 
-Inside the catalunya-gmap-main we can find the important code :
-```
-    const monument = new MonumentBuilder('gMap');
-    const mapManager = await monument.create()
+3. Configure it with `window.catalunyaGmapConfig`, set before the bundle loads
+
+| Option | What it does |
+|--------|--------------|
+| `apiKey` | Google Maps API key (falls back to `GOOGLE_MAPS_API_KEY` at build time) |
+| `serverHost` | Base URL of the `images/` folder, ending in `/` |
+| `markersJsonUrl` | URL of the buildings JSON (`catalunya-markers.json` format). An inline `<script type="application/json" id="cm-edificis-data">` wins over it |
+| `mapDataNonce` | Sent as an `X-CM-Nonce` header on the JSON requests |
+| `comarca`, `municipi` | Only show the buildings of that comarca / municipi (matched by name, accents ignored) |
+| `comarquesJsonUrl` | GeoJSON of the comarca boundaries: every outline faintly, or only the active comarca's |
+| `comarcaSlug` | The active comarca for the boundaries; derived from the loaded buildings when absent |
+| `edificiId` | Select that building: pinned out of its cluster, centred, card open, no «Veure contingut» link |
+| `userPosition` | Show the «Ruta» button (Google Maps directions to the building) on the cards |
+| `popupActions` | See [Popup actions](#popup-actions) |
+| `listId`, `secondaryDivId` | Ids of the sidebar list and its container (`map-list`, `secondaryDiv`) |
+| `listEnabled` | Start with the sidebar list open |
+| `useMarkerCluster` | Leave markers off the map until the clusterer takes them |
+
+The map follows the host page's theme: `data-theme="dark"` on `<html>` switches the stylesheet's
+palette and the map's own styles.
+
+Once loaded, the map manager is `window.cmGmapManager`: `getMarkers()`, `getMarkerById(id)`,
+`fitToMarkers()`, `fitToVisibleMarkers()`, `selectMarker(marker)`, `resize()`, `resetView()`,
+`loadComarcaBoundaries(url, slug, nonce)`, `setUserLocationMarker(lat, lng, { accuracy })`,
+`setSearchRadiusCircle(lat, lng, metres)`, `clearMarkers()`, `addMarker(location)` and
+`addAllMarkersToCluster()`.
+
+### Popup actions
+
+The host page can add its own controls to every marker card with `popupActions`: a function that
+receives the building (`id`, `title`, `link`, `lat`, `lng`, …) and returns HTML, appended at the end
+of the card inside `<div class='catmed-maps-marker-actions'>`. The HTML is inserted as it is, so it
+must be built by the host, not from user input. A hook that throws or returns anything but a string
+is ignored.
+
+``` javascript
+    window.catalunyaGmapConfig = {
+        // ...
+        popupActions: function (edifici) {
+            return '<button type="button" data-id="' + Number(edifici.id) + '">Afegeix</button>';
+        },
+    };
 ```
 
 ## Versions
@@ -74,7 +109,7 @@ more information, and create the following files:
 
 ```
 GOOGLE_MAPS_API_KEY=xxxxxxx
-SERVER_HOST='http://localhost:9000/'
+SERVER_HOST='http://localhost:9090/'
 DEBUG=true
 USER_POSITION=false
 PLUGIN_PATH=/path/to/your/plugin   # only needed for buildPlugin
@@ -91,7 +126,7 @@ From the command line:
 4. Start `npm run start`
 5. (optional) buildWatch `npm run buildWatch` 
 
-Open your browser [localhost:9000](http://localhost:9000/)
+Open your browser [localhost:9090](http://localhost:9090/) (`npm run start -- --port 9090`: port 9000 is PhpStorm's Xdebug listener)
 
 ### Available node commands
 
@@ -101,5 +136,5 @@ Open your browser [localhost:9000](http://localhost:9000/)
 * `buildProd`   — compile (production) and optimize the files in your web directory
 * `buildPlugin` — compile (production) and copy the output directly to the WordPress plugin directory (requires `PLUGIN_PATH`)
 * `buildWatch`  — compile (local) and watch for changes to update the files
-* `start`       — start the webpack dev server at [localhost:9000](http://localhost:9000/)
+* `start`       — start the webpack dev server (use `-- --port 9090`)
 
