@@ -132,9 +132,12 @@ body.gmap-page {
   font-family: 'Droid Serif', Georgia, serif;
   color: var(--cm-gmap-ink);
 
+  /* A fixed height, not a minimum: with min-height the open list (thousands
+     of items) stretched #container to its full length, and the map was
+     centred tens of thousands of pixels below the fold. */
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 body.gmap-page #site-header,
@@ -639,6 +642,7 @@ input#search-llista:focus {
 #list,
 #llista {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   outline: none;
