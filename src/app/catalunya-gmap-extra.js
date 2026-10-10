@@ -1,6 +1,13 @@
 
-export function stringToBoolean(string) {
-    return string.toLowerCase() === "false" ? false : Boolean(string);
+export function stringToBoolean(value) {
+    // Accepts a real boolean too, not just a string: config coming from
+    // window.catalunyaGmapConfig (JS object literals emitted by PHP, e.g.
+    // `userPosition: true`) is already a boolean, while config coming from
+    // process.env (dotenv-webpack) is always a string — this function is
+    // called with either.
+    if (typeof value === "boolean") return value;
+    if (!value) return false;
+    return value.toLowerCase() !== "false";
 }
 
 export default function handleSearchTextList(event) {
@@ -23,6 +30,32 @@ export default function handleSearchTextList(event) {
             li[i].style.display = "";
         }
     }
+}
+
+export function filterByField(markers, field, value) {
+    if (!value) return markers;
+    const target = removeAccents(value).trim().toUpperCase();
+    return markers.filter(m => removeAccents(m[field] || '').trim().toUpperCase() === target);
+}
+
+export function filterByComarca(markers, comarca) {
+    return filterByField(markers, 'comarca', comarca);
+}
+
+export function filterByMunicipi(markers, municipi) {
+    return filterByField(markers, 'municipi', municipi);
+}
+
+// Mirrors WordPress's sanitize_title(): strip accents, drop apostrophes
+// (no hyphen inserted — "Pla d'Urgell" -> "pla-durgell"), lowercase, replace
+// any other run of non-alphanumeric characters with a single hyphen. Verified
+// against all 43 real comarca slugs.
+export function slugify(value) {
+    return removeAccents(value || '')
+        .replace(/['’]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
 }
 
 export function removeAccents(p) {

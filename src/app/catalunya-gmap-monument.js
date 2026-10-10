@@ -1,5 +1,5 @@
 import MapManager from "./catalunya-gmap-manager";
-import {stringToBoolean, fetchMapData} from "./catalunya-gmap-extra";
+import {stringToBoolean, filterByComarca, filterByMunicipi, slugify, fetchMapData} from "./catalunya-gmap-extra";
 
 // One entry per building type — replaces the 15 hardcoded addXxx() methods.
 const BUILDING_TYPES = [
@@ -30,15 +30,29 @@ class MonumentBuilder {
         this.styleType2 = 6;
         const _cfg = (typeof catalunyaGmapConfig !== 'undefined') ? catalunyaGmapConfig : {};
         this.serverHost     = _cfg.serverHost     || process.env.SERVER_HOST;
-        this.markersJsonUrl = _cfg.markersJsonUrl || '';
-        this.mapDataNonce   = _cfg.mapDataNonce || '';
+        this.markersJsonUrl = _cfg.markersJsonUrl || process.env.MARKERS_JSON_URL || '';
         this.userPosition   = stringToBoolean(_cfg.userPosition || process.env.USER_POSITION);
+        this.comarca        = _cfg.comarca || '';
+        this.municipi       = _cfg.municipi || '';
+        this.edificiId      = _cfg.edificiId ? Number(_cfg.edificiId) : null;
+        this.comarquesJsonUrl = _cfg.comarquesJsonUrl || '';
+        this.comarcaSlug    = _cfg.comarcaSlug || '';
+        this.mapDataNonce   = _cfg.mapDataNonce || '';
+        // Host hook: function (edifici) returning trusted HTML appended to
+        // the marker popup, e.g. a button of the host page's own.
+        this.popupActions   = typeof _cfg.popupActions === 'function' ? _cfg.popupActions : null;
     }
 
     async create() {
         this.map = await this.mapManager.initMap();
 
-        const markers = await this._loadMarkers();
+        let markers = await this._loadMarkers();
+        if (this.comarca) {
+            markers = filterByComarca(markers, this.comarca);
+        }
+        if (this.municipi) {
+            markers = filterByMunicipi(markers, this.municipi);
+        }
 
         const byType = markers.reduce((acc, m) => {
             const key = m.tipus || '';
@@ -54,6 +68,35 @@ class MonumentBuilder {
         });
 
         this.mapManager.addAllMarkersToCluster();
+
+        // Fit to whatever markers were actually loaded, regardless of whether
+        // filtering happened here (config.comarca) or server-side (pre-filtered
+        // cm-edificis-data, as WordPress comarca/type listing pages already do).
+        this.mapManager.fitToMarkers();
+
+        if (this.comarquesJsonUrl) {
+            // Prefer an explicit slug (config.comarcaSlug) — PHP already knows
+            // it wherever this runs on a WordPress page, and it sidesteps any
+            // accent/apostrophe encoding mismatch between the marker data, the
+            // boundaries GeoJSON and whatever DB table supplied the name. Only
+            // fall back to deriving+slugifying a name from the loaded markers
+            // (same reasoning as fitToMarkers(): works whether filtering
+            // happened via config.comarca or server-side pre-filtering) for
+            // contexts, like the plain demo page, that don't have a slug.
+            let activeSlug = this.comarcaSlug;
+            if (!activeSlug) {
+                const comarquesInSet = [...new Set(markers.map(m => m.comarca).filter(Boolean))];
+                const activeComarca = comarquesInSet.length === 1 ? comarquesInSet[0] : this.comarca;
+                activeSlug = activeComarca ? slugify(activeComarca) : '';
+            }
+            await this.mapManager.loadComarcaBoundaries(this.comarquesJsonUrl, activeSlug, this.mapDataNonce);
+        }
+
+        if (this.edificiId) {
+            const marker = this.mapManager.getMarkerById(this.edificiId);
+            if (marker) this.mapManager.selectMarker(marker);
+        }
+
         return this.mapManager;
     }
 
@@ -92,7 +135,7 @@ class MonumentBuilder {
         return word[0].toUpperCase() + loweredCase.slice(1);
     }
 
-    _createContent(title, link, thumbs, municipi, comarca, provincia, type, category, categoryName) {
+    _createContent(title, link, thumbs, municipi, comarca, provincia, type, category, categoryName, isCurrentPost, lat, lng, actions) {
         const parts = [];
         if (municipi) parts.push(municipi);
         if (comarca && comarca !== municipi) parts.push(comarca);
@@ -100,34 +143,40 @@ class MonumentBuilder {
         const address = parts.join(', ');
 
         let content = "";
-        content += "<div class='catmed-google-maps-marker'>"
-        content += "    <div class='catmed-google-maps-marker-close' >"
-        content += "        <svg width='8' height='8' viewBox='0 0 14 14'>"
+        content += "<div class='catmed-maps-marker'>"
+        // Google's InfoWindow is opened without its own header (see
+        // MapManager._openInfoWindow), so the card carries its close button.
+        content += "    <button type='button' class='catmed-maps-marker-close' aria-label='Tanca'>"
+        content += "        <svg width='8' height='8' viewBox='0 0 14 14' aria-hidden='true'>"
         content += "            <path transform='translate(-18 -13)' d='M32 14.4L30.6 13 25 18.6 19.4 13 18 14.4l5.6 5.6-5.6 5.6 1.4 1.4 5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z'></path>"
         content += "        </svg>"
+        content += "    </button>"
+        content += "    <div class='catmed-maps-marker-header'>"
+        content += "            <div class='catmed-maps-marker-image'>" + thumbs + "</div>"
         content += "    </div>"
-        content += "    <div class='catmed-google-maps-marker-header'>"
-        content += "            <div class='catmed-google-maps-marker-image'>" + thumbs + "</div>"
-        content += "    </div>"
-        content += "    <div class='catmed-google-maps-marker-title-wrapper " + type + "'>"
-        content += "            <a class='catmed-google-maps-marker-link-image' href='" + link + "' > "
-        content += "                <span class='catmed-google-maps-marker-title'>" + title + "</span>"
+        content += "    <div class='catmed-maps-marker-title-wrapper " + type + "'>"
+        content += "            <a class='catmed-maps-marker-link-image' href='" + link + "' > "
+        content += "                <span class='catmed-maps-marker-title'>" + title + "</span>"
         content += "            </a>"
-        content += this._add_ruta();
+        content += this._add_ruta(lat, lng);
         content += "    </div>"
-        content += "    <div class='catmed-google-maps-marker-content'>"
-        content += "        <div class='catmed-google-maps-marker-info'>"
-        content += "            <div class='catmed-google-maps-marker-info-item-building-icon catmed-google-maps-marker-info-item'>"
-        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + categoryName + " - " + this._capitalize(type) + "</span>"
-        content += "            </div>"
-        content += "            <div class='catmed-google-maps-marker-info-item-address catmed-google-maps-marker-info-item'>"
-        content += "                <div class='catmed-google-maps-marker-info-item-icon-wrapper'>"
-        content += "                    <svg class='catmed-google-maps-marker-info-item-icon' width='12px' height='12px' viewBox='0 0 510 510'>"
-        content += "                        <path d='M255,0C155.55,0,76.5,79.05,76.5,178.5C76.5,311.1,255,510,255,510s178.5-198.9,178.5-331.5C433.5,79.05,354.45,0,255,0zM255,242.25c-35.7,0-63.75-28.05-63.75-63.75s28.05-63.75,63.75-63.75s63.75,28.05,63.75,63.75S290.7,242.25,255,242.25z'></path>"
-        content += "                    </svg>"
-        content += "                </div>"
-        content += "                <span class='catmed-google-maps-marker-info-item-text'>" + address + "</span>"
-        content += "            </div>"
+        content += "    <div class='catmed-maps-marker-content'>"
+        content += "        <div class='catmed-maps-marker-info'>"
+        content += "            <span class='catmed-maps-marker-badge " + type + "'>" + categoryName + "</span>"
+        if (address) {
+            content += "            <div class='catmed-maps-marker-info-item-address'>"
+            content += "                <svg class='catmed-maps-marker-info-item-icon' width='10' height='10' viewBox='0 0 510 510'>"
+            content += "                    <path d='M255,0C155.55,0,76.5,79.05,76.5,178.5C76.5,311.1,255,510,255,510s178.5-198.9,178.5-331.5C433.5,79.05,354.45,0,255,0zM255,242.25c-35.7,0-63.75-28.05-63.75-63.75s28.05-63.75,63.75-63.75s63.75,28.05,63.75,63.75S290.7,242.25,255,242.25z'></path>"
+            content += "                </svg>"
+            content += "                <span>" + address + "</span>"
+            content += "            </div>"
+        }
+        if (!isCurrentPost) {
+            content += "            <a class='catmed-maps-marker-cta " + type + "' href='" + link + "' target='_blank' rel='nofollow'>Veure contingut &rarr;</a>"
+        }
+        if (actions) {
+            content += "            <div class='catmed-maps-marker-actions'>" + actions + "</div>"
+        }
         content += "        </div>"
         content += "    </div>"
         content += "</div>"
@@ -135,13 +184,18 @@ class MonumentBuilder {
         return content;
     }
 
-    _add_ruta() {
+    _add_ruta(lat, lng) {
         let ruta = ""
-        if (this.userPosition) {
-            ruta = "        <div class='catmed-google-maps-marker-directions'>"
-            ruta += "            <a class='catmed-google-maps-marker-directions-button' href='https://www.google.com/maps/dir/?api=1&amp;destination=40.7614327, -73.97762159999999' target='_blank' rel='nofollow'>"
-            ruta += "                <span class='catmed-google-maps-marker-directions-label'>Ruta</span>"
-            ruta += "                <span class='catmed-google-maps-marker-directions-icon'>"
+        if (this.userPosition && lat && lng) {
+            // No origin in the URL on purpose: Google Maps fills it in from
+            // the visitor's own location (device prompt or "My location"),
+            // same as the theme's own "Com arribar-hi" button on the
+            // building page — this just mirrors it on the map marker popup.
+            const destination = lat + ',' + lng;
+            ruta = "        <div class='catmed-maps-marker-directions'>"
+            ruta += "            <a class='catmed-maps-marker-directions-button' href='https://www.google.com/maps/dir/?api=1&amp;destination=" + destination + "' target='_blank' rel='nofollow' title=\"Obre Google Maps amb indicacions en cotxe. Fes-ne ús amb precaució: no podem garantir que sempre es pugui arribar en cotxe fins a l'edificació.\">"
+            ruta += "                <span class='catmed-maps-marker-directions-label'>Ruta</span>"
+            ruta += "                <span class='catmed-maps-marker-directions-icon'>"
             ruta += "                    <svg width='20px' height='20px' viewBox='0 0 510 510'>"
             ruta += "                        <g>"
             ruta += "                            <g id='directions'>"
@@ -158,21 +212,40 @@ class MonumentBuilder {
         return ruta;
     }
 
+    // The host's popupActions() output for one building, or '' when there is
+    // no hook or it fails: a broken hook must not cost the map its popups.
+    _popupActions(edifici) {
+        if (!this.popupActions) {
+            return '';
+        }
+        try {
+            const html = this.popupActions(edifici);
+            return typeof html === 'string' ? html : '';
+        } catch (e) {
+            return '';
+        }
+    }
+
     _extract(edifici, category, categoryName, x, type) {
         const thumbsHtml = edifici.img ? '<img src="' + edifici.img + '" alt="' + edifici.title + '">' : '';
         const municipi  = edifici.municipi  || '';
         const comarca   = edifici.comarca   || '';
         const provincia = edifici.provincia || '';
+        // Hide the "Veure contingut" link on the marker for the building
+        // post the visitor is already on — following it would just reload
+        // the same page.
+        const isCurrentPost = this.edificiId != null && edifici.id === this.edificiId;
 
         return {
             id: category + x,
+            edificiId: edifici.id,
             title: edifici.title,
             link: edifici.link,
             type,
             lat:  edifici.lat,
             lng:  edifici.lng,
             visible: true,
-            content: this._createContent(edifici.title, edifici.link, thumbsHtml, municipi, comarca, provincia, type, category, categoryName),
+            content: this._createContent(edifici.title, edifici.link, thumbsHtml, municipi, comarca, provincia, type, category, categoryName, isCurrentPost, edifici.lat, edifici.lng, this._popupActions(edifici)),
             icon:  this._getIcon(type, category, this.styleType1),
             icon2: this._getIcon(type, category, this.styleType2),
             category,
