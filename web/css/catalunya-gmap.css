@@ -1,3 +1,279 @@
+:root {
+  --cm-gmap-page: #f5f0e6;
+  --cm-gmap-panel: #faf6ee;
+  --cm-gmap-panel-alt: #f0e8d4;
+  --cm-gmap-surface: #fff;
+  --cm-gmap-chip: #fff;
+  --cm-gmap-cluster-ink: #2c2416;
+  --cm-gmap-image-bg: #f5f0e8;
+  --cm-gmap-field-bg: #faf6ee;
+  --cm-gmap-chrome: #1a1510;
+  --cm-gmap-chrome-alt: #241d14;
+  --cm-gmap-gold: #c9a654;
+  --cm-gmap-gold-soft: #e8d5a0;
+  --cm-gmap-chrome-muted: #7a6a55;
+  --cm-gmap-chrome-label: #a89070;
+  --cm-gmap-gold-rgb: 201, 166, 84;
+  --cm-gmap-ink: #2c2416;
+  --cm-gmap-ink-list: #3a2e22;
+  --cm-gmap-ink-muted: #666;
+  --cm-gmap-placeholder: #b0a08a;
+  --cm-gmap-search-icon: #9a8468;
+  --cm-gmap-on-type: #fff;
+  --cm-gmap-border: #cfc4ad;
+  --cm-gmap-border-soft: #ddd5c0;
+  --cm-gmap-border-list: #ede6d4;
+  --cm-gmap-border-card: #ede8dd;
+  --cm-gmap-border-frame: #c9b897;
+  --cm-gmap-scroll-thumb-hover: #a89070;
+  --cm-gmap-control: #333;
+  --cm-gmap-control-hover: #000;
+  --cm-gmap-militar: #b4504c;
+  --cm-gmap-militar-text: #b4504c;
+  --cm-gmap-militar-legend: #b4504c;
+  --cm-gmap-civil: #5aab3a;
+  --cm-gmap-civil-text: #5aab3a;
+  --cm-gmap-civil-legend: #7ec259;
+  --cm-gmap-religios: #163ded;
+  --cm-gmap-religios-text: #163ded;
+  --cm-gmap-religios-legend: #163ded;
+  --cm-gmap-altres: #a028b8;
+  --cm-gmap-altres-text: #a028b8;
+  --cm-gmap-altres-legend: #a028b8;
+  --cm-gmap-militar-tint: #fff8f8;
+  --cm-gmap-civil-tint: #f6fbf4;
+  --cm-gmap-religios-tint: #f4f5ff;
+  --cm-gmap-altres-tint: #fdf4ff;
+  --cm-gmap-shadow-rgb: 44, 36, 22;
+  --cm-gmap-scrim-rgb: 0, 0, 0;
+}
+
+/* Dark palette. Inert on its own: nothing changes until something sets
+   data-theme="dark" on <html>. On the WordPress pages that is the theme's own
+   toggle, and this stylesheet just follows along; the standalone pages never
+   set it, so they stay light.
+
+   The header and filter bar keep their light-mode values on purpose — they were
+   already dark chrome (#1a1510 / #241d14) and re-darkening them would flatten
+   the only contrast the standalone page has.
+
+   The map itself is not CSS: MapManager swaps Google's map styles (STYLES /
+   STYLES_DARK) on the same data-theme switch. */
+:root[data-theme="dark"] {
+  --cm-gmap-page:        #1b1613;
+  --cm-gmap-panel:       #231c17;
+  --cm-gmap-panel-alt:   #1b1613;
+  --cm-gmap-surface:     #231c17;
+  --cm-gmap-image-bg:    #2a221c;
+  --cm-gmap-field-bg:    #2f2720;
+
+  --cm-gmap-ink:         #e7dccd;
+  --cm-gmap-ink-list:    #e7dccd;
+  --cm-gmap-ink-muted:   #b8ab99;
+  --cm-gmap-placeholder: #968879;
+  --cm-gmap-search-icon: #b09a80;
+
+  /* The Ruta circle stays light: it carries a dark glyph image we don't ship a
+     light variant of, so darkening the disc would hide the icon inside it. */
+  --cm-gmap-chip:        #f0e8dc;
+
+  --cm-gmap-border:       #4a3d33;
+  --cm-gmap-border-soft:  #3a3028;
+  --cm-gmap-border-list:  #302823;
+  --cm-gmap-border-card:  #332a24;
+  --cm-gmap-border-frame: #4a3d33;
+  --cm-gmap-scroll-thumb-hover: #6b5a48;
+
+  /* Type fills carry white text, so they are tuned for two constraints at once:
+     >= 4.5:1 against the white label, and >= 3:1 against the card behind them.
+     Militar already satisfied both; the other three had to move. */
+  --cm-gmap-militar:  #b4504c;
+  --cm-gmap-civil:    #3f7c28;
+  --cm-gmap-religios: #4a66e0;
+  --cm-gmap-altres:   #ab38c2;
+
+  /* The same four colours used as ink instead of as fill, so they invert. */
+  --cm-gmap-militar-text:  #f08b76;
+  --cm-gmap-civil-text:    #8fd06a;
+  --cm-gmap-religios-text: #9fb4ff;
+  --cm-gmap-altres-text:   #dc8fee;
+  --cm-gmap-militar-legend:  #f08b76;
+  --cm-gmap-civil-legend:    #8fd06a;
+  --cm-gmap-religios-legend: #9fb4ff;
+  --cm-gmap-altres-legend:   #dc8fee;
+
+  --cm-gmap-militar-tint:  #2e1f1c;
+  --cm-gmap-civil-tint:    #1f2a1b;
+  --cm-gmap-religios-tint: #1e2233;
+  --cm-gmap-altres-tint:   #2a1c2e;
+}
+
+/* Google draws the card's tip (the little arrow under it) itself, in white.
+   The card above it is ours and goes dark, so the tip has to follow or it
+   reads as a white notch. */
+:root[data-theme="dark"] .gm-style .gm-style-iw-tc::after {
+  background: var(--cm-gmap-surface);
+}
+
+/* ── Page base ── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Page chrome, for the standalone pages only (web/index.html and the demo).
+   This whole stylesheet also ships into catalunya-medieval-plugins and is
+   loaded on the WordPress map templates, where an unscoped `body` rule wins
+   over the theme's own — it set the background, colour and font for the
+   entire site on every page carrying a map. Same opt-in class as the flex
+   layout below. */
+body.gmap-page {
+  margin: 0;
+  padding: 0;
+  background: var(--cm-gmap-page);
+  font-family: 'Droid Serif', Georgia, serif;
+  color: var(--cm-gmap-ink);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body.gmap-page #site-header,
+body.gmap-page #gmap-filters {
+  flex-shrink: 0;
+}
+
+body.gmap-page #container {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+}
+
+/* ── Site header ── */
+
+#site-header {
+  background: var(--cm-gmap-chrome);
+  border-bottom: 2px solid var(--cm-gmap-gold);
+  padding: 0 20px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+#title-h1 {
+  font-family: 'Cinzel', 'Droid Serif', Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cm-gmap-gold-soft);
+  margin: 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+#title-h4 {
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 10px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cm-gmap-chrome-muted);
+  margin: 0;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+#title-h4 a {
+  color: var(--cm-gmap-gold);
+  text-decoration: none;
+}
+
+#title-h4 a:hover { text-decoration: underline; }
+
+.header-right { flex-shrink: 0; }
+
+
+/* ── Comarca / edifici filter bar ── */
+
+#gmap-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 16px;
+  padding: 8px 24px;
+  background: var(--cm-gmap-chrome-alt);
+  border-bottom: 1px solid var(--cm-gmap-gold);
+}
+
+#gmap-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cm-gmap-chrome-label);
+}
+
+#gmap-filters select {
+  min-width: 200px;
+  padding: 5px 8px;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 12px;
+  color: var(--cm-gmap-ink);
+  background: var(--cm-gmap-field-bg);
+  border: 1px solid var(--cm-gmap-border);
+  border-radius: 4px;
+}
+
+#gmap-filters select:disabled { opacity: 0.55; }
+
+#gmap-filters button {
+  padding: 6px 14px;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 11.5px;
+  color: var(--cm-gmap-gold-soft);
+  background: transparent;
+  border: 1px solid var(--cm-gmap-gold);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#gmap-filters button:hover { background: rgba(var(--cm-gmap-gold-rgb), 0.15); }
+
+#gmap-filters-current {
+  margin-left: auto;
+  align-self: center;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--cm-gmap-gold);
+}
+
+.header-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.header-logo-link:hover .header-logo { opacity: 1; }
+
+
 /* ── Legend ── */
 
 #legend {
@@ -22,7 +298,7 @@ ul.legend {
 }
 
 .legend span {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(var(--cm-gmap-scrim-rgb), 0.15);
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -32,34 +308,43 @@ ul.legend {
   padding: 0;
 }
 
-.legend .legend-militar { background-color: #b4504c; }
-.legend-text-militar, .legend-text-militar a { color: #b4504c; }
+.legend .legend-militar { background-color: var(--cm-gmap-militar-legend); }
+.legend-text-militar, .legend-text-militar a { color: var(--cm-gmap-militar-legend); }
 
-.legend .legend-civil { background-color: #7ec259; }
-.legend-text-civil, .legend-text-civil a { color: #7ec259; }
+.legend .legend-civil { background-color: var(--cm-gmap-civil-legend); }
+.legend-text-civil, .legend-text-civil a { color: var(--cm-gmap-civil-legend); }
 
-.legend .legend-religios { background-color: #163ded; }
-.legend-text-religios, .legend-text-religios a { color: #163ded; }
+.legend .legend-religios { background-color: var(--cm-gmap-religios-legend); }
+.legend-text-religios, .legend-text-religios a { color: var(--cm-gmap-religios-legend); }
 
-.legend .legend-altres { background-color: #a028b8; }
-.legend-text-altres, .legend-text-altres a { color: #a028b8; }
+.legend .legend-altres { background-color: var(--cm-gmap-altres-legend); }
+.legend-text-altres, .legend-text-altres a { color: var(--cm-gmap-altres-legend); }
 
 .legend-bold { font-weight: 700; }
 
 
-/* ── Map wrapper — centered with breathing room ── */
+/* ── Map container ── */
 
+#container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* WordPress embedded wrapper — centered with breathing room. The theme's gmap
+   templates still print the cm-gmap-* names. */
+.cm-map-outer,
 .cm-gmap-outer {
   margin: 8px 24px 32px;
 }
 
+.cm-map-container,
 .cm-gmap-container {
   display: flex;
   height: 660px;
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid #c9b897;
-  box-shadow: 0 4px 28px rgba(44, 36, 22, 0.13), 0 1px 4px rgba(44, 36, 22, 0.08);
+  border: 1px solid var(--cm-gmap-border-frame);
+  box-shadow: 0 4px 28px rgba(var(--cm-gmap-shadow-rgb), 0.13), 0 1px 4px rgba(var(--cm-gmap-shadow-rgb), 0.08);
 }
 
 #gMap {
@@ -68,202 +353,290 @@ ul.legend {
   overflow: hidden;
 }
 
-#gMap.fullscreen {
-  width: 100%;
-  height: 100%;
+/* Show/hide icons (MapManager._setIconsControl): one control holding them all,
+   so when they don't fit the map height they wrap into extra columns towards
+   the left instead of being clipped. MapManager bounds its height. */
+.cm-gmap-icons {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap-reverse;
+  align-items: flex-end;
 }
 
-/* Override Google Maps InfoWindow scroll */
-#gMap .gm-style-iw-d {
-  overflow: visible !important;
-  max-height: 506px;
+.cm-gmap-icon {
+  cursor: pointer;
+  text-align: center;
+  padding: 2px;
+}
+
+/* InfoWindow: Google's header is off (headerDisabled) and the card is ours,
+   edge to edge, with its own close button. */
+.gm-style .gm-style-iw-c {
+  padding: 0 !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.gm-style .gm-style-iw-d {
+  overflow: hidden !important;
+  max-height: none !important;
   outline: none;
 }
 
 
 /* ── Marker popup card ── */
 
-.catmed-google-maps-marker {
-  margin-left: -16px;
-  margin-top: -16px;
-  margin-right: -10px;
+.catmed-maps-marker {
   cursor: default;
-  max-width: 300px;
-  min-width: 200px;
+  width: 280px;
   position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  z-index: 100000;
-  font: 400 10px Roboto, Arial, sans-serif;
+  font: 400 12px 'Droid Serif', Georgia, serif;
+  background: var(--cm-gmap-surface);
 }
 
-.catmed-google-maps-marker-close {
+.catmed-maps-marker-close {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  opacity: .4;
-  background: #fff;
-  border-radius: 60%;
-  height: 11px;
-  width: 11px;
-  text-align: center;
-  cursor: pointer;
-  z-index: 100000;
-  transition: opacity .3s;
-}
-
-.catmed-google-maps-marker-close:hover { opacity: 1; }
-
-.catmed-google-maps-marker-header { position: relative; }
-
-.catmed-google-maps-marker-image {
-  position: relative;
-  height: 150px;
-  overflow: hidden;
-  margin-bottom: 0;
-  background: #fff;
-}
-
-.catmed-google-maps-marker-title-wrapper {
-  background: #4285f4;
-  padding: 16px;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
   display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.catmed-maps-marker-close:hover { opacity: 1; }
+.catmed-maps-marker-close svg { fill: #333; }
+
+.catmed-maps-marker-header { position: relative; }
+
+.catmed-maps-marker-image {
+  height: 160px;
+  overflow: hidden;
+  background: var(--cm-gmap-image-bg);
+}
+
+.catmed-maps-marker-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.catmed-maps-marker-title-wrapper {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
-.catmed-google-maps-building-icon { position: relative; }
-
-.catmed-google-maps-building-icon-img {
-  position: absolute;
-  left: 5px;
-  bottom: -38px;
+.catmed-maps-marker-link-image {
+  text-decoration: none !important;
+  border: none !important;
+  display: block;
+  width: 100%;
 }
 
-.catmed-google-maps-marker-title {
-  color: #fff;
-  font-size: 14px;
-  line-height: 1.3;
-  position: relative;
-  padding-right: 28px;
+.catmed-maps-marker-link-image:hover .catmed-maps-marker-title {
+  text-decoration: underline;
 }
 
-.catmed-google-maps-marker-directions {
+.catmed-maps-marker-title {
+  color: var(--cm-gmap-on-type);
+  font-size: 13px;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-weight: 700;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(var(--cm-gmap-scrim-rgb), 0.25);
+}
+
+.catmed-maps-marker-directions {
   position: relative;
   max-width: 80px;
   min-width: 70px;
   text-align: center;
 }
 
-.catmed-google-maps-marker-link-image {
-  text-decoration: none !important;
-  border: none !important;
-}
-
-.catmed-google-maps-marker-directions-button {
+.catmed-maps-marker-directions-button {
   text-decoration: none !important;
   border: none !important;
   opacity: .7;
 }
 
-.catmed-google-maps-marker-directions-button:hover { opacity: 1; }
+.catmed-maps-marker-directions-button:hover { opacity: 1; }
 
-.catmed-google-maps-marker-directions-label {
-  color: #fff;
+.catmed-maps-marker-directions-label {
+  color: var(--cm-gmap-on-type);
   font-size: 13px;
 }
 
-.catmed-google-maps-marker-directions-icon {
-  width: 38px;
-  height: 38px;
+.catmed-maps-marker-directions-icon {
+  width: 36px;
+  height: 36px;
   border-radius: 100%;
-  background-color: #fff;
+  background-color: var(--cm-gmap-chip);
   position: absolute;
-  bottom: -38px;
+  bottom: -36px;
   right: 50%;
   transform: translate(50%, 0);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 6px 0 rgba(var(--cm-gmap-scrim-rgb), 0.3);
 }
 
-.catmed-google-maps-content {
-  padding: 16px;
-  padding-top: 28px;
-  background: #fff;
-  color: #222;
-  font-size: 13px;
-}
+.catmed-maps-marker-content { background: var(--cm-gmap-surface); }
 
-.catmed-google-maps-marker-info {
-  padding: 16px;
-  padding-top: 28px;
-  background: #fff;
-  color: #222;
-  font-size: 13px;
-}
-
-.catmed-google-maps-marker-info-item {
+.catmed-maps-marker-info {
+  padding: 10px 14px 12px;
+  background: var(--cm-gmap-surface);
+  border-top: 1px solid var(--cm-gmap-border-card);
   display: flex;
-  align-items: center;
-  margin-bottom: 8px;
+  flex-direction: column;
+  gap: 7px;
 }
 
-.catmed-google-maps-marker-info-item-icon { fill: rgb(184, 45, 45); }
-
-.catmed-google-maps-marker-info-item-address { font-size: 10px; }
-
-.catmed-google-maps-marker-info-item-icon-wrapper {
-  display: flex;
-  align-items: center;
-  flex: 0 0 12px;
-  margin-right: 12px;
-}
-
-.edifici_tile-header-titles h2 {
-  float: left;
-  text-align: left;
-  font-family: 'Droid Serif', serif;
-  font-size: 12px;
-  padding: 2px;
-  background-color: white;
-  color: black;
-  margin: 2px;
+/* Category badge */
+.catmed-maps-marker-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 10px;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  color: var(--cm-gmap-on-type);
+  padding: 2px 9px 3px;
   border-radius: 10px;
 }
+.catmed-maps-marker-badge.militar  { background-color: var(--cm-gmap-militar); }
+.catmed-maps-marker-badge.civil    { background-color: var(--cm-gmap-civil); }
+.catmed-maps-marker-badge.religios { background-color: var(--cm-gmap-religios); }
+.catmed-maps-marker-badge.altres   { background-color: var(--cm-gmap-altres); }
 
-.edifici_tile-header-titles h3 {
-  font-family: 'Droid Serif', serif;
-  font-size: 12px;
-  padding: 10px;
-  color: white;
-  margin: 0;
-  margin-top: 0.8px;
-  border-radius: 0 0 10px 10px;
-  border: 1px solid #e7c9a3;
+/* Address row */
+.catmed-maps-marker-info-item-address {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--cm-gmap-ink-muted);
+}
+
+.catmed-maps-marker-info-item-icon {
+  flex-shrink: 0;
+  fill: var(--cm-gmap-militar);
+}
+
+/* CTA link */
+.catmed-maps-marker-cta {
+  display: block;
+  font-size: 11px;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-weight: 700;
+  text-align: right;
+  text-decoration: none !important;
+  border: none !important;
+  letter-spacing: 0.02em;
+  padding-top: 2px;
+  border-top: 1px solid var(--cm-gmap-border-card) !important;
+}
+.catmed-maps-marker-cta.militar  { color: var(--cm-gmap-militar-text); background: transparent; }
+.catmed-maps-marker-cta.civil    { color: var(--cm-gmap-civil-text); background: transparent; }
+.catmed-maps-marker-cta.religios { color: var(--cm-gmap-religios-text); background: transparent; }
+.catmed-maps-marker-cta.altres   { color: var(--cm-gmap-altres-text); background: transparent; }
+.catmed-maps-marker-cta:hover    { text-decoration: underline !important; }
+
+/* Host controls from catalunyaGmapConfig.popupActions; the host styles them. */
+.catmed-maps-marker-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 6px;
 }
 
 
-/* ── Building type colours ── */
+/* ── Building type colours — only title wrapper and badge ── */
 
-.militar  { background-color: #c14444; }
-.civil    { background-color: #66c547; }
-.religios { background-color: #0f35f7; }
-.altres   { background-color: #af00bf; }
+.catmed-maps-marker-title-wrapper.militar,
+.catmed-maps-marker-badge.militar  { background-color: var(--cm-gmap-militar); }
+
+.catmed-maps-marker-title-wrapper.civil,
+.catmed-maps-marker-badge.civil    { background-color: var(--cm-gmap-civil); }
+
+.catmed-maps-marker-title-wrapper.religios,
+.catmed-maps-marker-badge.religios { background-color: var(--cm-gmap-religios); }
+
+.catmed-maps-marker-title-wrapper.altres,
+.catmed-maps-marker-badge.altres   { background-color: var(--cm-gmap-altres); }
 
 
-/* ── Sidebar list ── */
+/* ── Sidebar ── */
 
 #secondaryDiv {
-  display: none;
-  flex-direction: column;
-  width: 300px;
+  width: 280px;
   flex-shrink: 0;
-  border-left: 1px solid #c9b897;
-  background: #faf8f3;
+  background: var(--cm-gmap-panel);
+  border-left: 1px solid var(--cm-gmap-border-soft);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Search */
+.search-wrapper {
+  position: relative;
+  padding: 10px 12px;
+  background: var(--cm-gmap-panel-alt);
+  border-bottom: 1px solid var(--cm-gmap-border-soft);
+  flex-shrink: 0;
+}
+
+.search-icon {
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 13px;
+  color: var(--cm-gmap-search-icon);
+  pointer-events: none;
+}
+
+input#search-list,
+input#search-llista {
+  width: 100%;
+  background: var(--cm-gmap-surface);
+  border: 1px solid var(--cm-gmap-border);
+  border-radius: 4px;
+  padding: 7px 10px 7px 30px;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 11.5px;
+  color: var(--cm-gmap-ink);
+  outline: none;
+  margin: 0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input#search-list::placeholder,
+input#search-llista::placeholder { color: var(--cm-gmap-placeholder); font-style: italic; }
+
+input#search-list:focus,
+input#search-llista:focus {
+  border-color: var(--cm-gmap-gold);
+  box-shadow: 0 0 0 2px rgba(var(--cm-gmap-gold-rgb), 0.18);
+}
+
+/* List */
+#list,
 #llista {
   flex: 1;
   overflow-y: auto;
@@ -271,50 +644,109 @@ ul.legend {
   outline: none;
 }
 
+#list::-webkit-scrollbar,
 #llista::-webkit-scrollbar { width: 5px; }
-#llista::-webkit-scrollbar-track { background: #f0ece0; }
-#llista::-webkit-scrollbar-thumb { background: #c9b897; border-radius: 3px; }
-#llista::-webkit-scrollbar-thumb:hover { background: #a89070; }
+#list::-webkit-scrollbar-track,
+#llista::-webkit-scrollbar-track { background: var(--cm-gmap-panel-alt); }
+#list::-webkit-scrollbar-thumb,
+#llista::-webkit-scrollbar-thumb { background: var(--cm-gmap-border-frame); border-radius: 3px; }
+#list::-webkit-scrollbar-thumb:hover,
+#llista::-webkit-scrollbar-thumb:hover { background: var(--cm-gmap-scroll-thumb-hover); }
 
+#map-list,
 #mapLlist {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+#map-list li,
 #mapLlist li {
-  padding: 10px 14px;
-  font-size: 12px;
-  color: #3a2e22;
-  background: #faf8f3;
-  border-bottom: 1px solid #e8e0cc;
+  display: block;
+  padding: 8px 14px 8px 17px;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 11.5px;
+  color: var(--cm-gmap-ink-list);
+  background: var(--cm-gmap-panel);
+  border-bottom: 1px solid var(--cm-gmap-border-list);
+  border-left: 3px solid transparent;
   cursor: pointer;
-  transition: background 0.1s;
+  transition: background 0.12s, border-left-color 0.12s, padding-left 0.12s;
   line-height: 1.4;
 }
 
+#map-list li:last-child,
 #mapLlist li:last-child { border-bottom: none; }
 
+/* Category headers */
+#map-list li.header,
 #mapLlist li.header {
+  font-family: 'Cinzel', 'Droid Serif', Georgia, serif;
   font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--cm-gmap-on-type);
   padding: 6px 14px;
   cursor: default;
   border-bottom: none;
+  border-left: 3px solid rgba(var(--cm-gmap-scrim-rgb), 0.2);
 }
 
-#mapLlist li:hover:not(.header) { background: #f0ece0; }
+/* Header colors per type */
+#map-list li.castell.header, #map-list li.muralles.header,
+#map-list li.torre.header, #map-list li.epoca-carlina.header,
+#mapLlist li.castell.header, #mapLlist li.muralles.header,
+#mapLlist li.torre.header, #mapLlist li.epoca-carlina.header {
+  background: var(--cm-gmap-militar);
+}
 
-input#search-llista {
-  width: 100%;
-  padding: 10px 14px;
-  font-size: 12px;
-  border: none;
-  border-bottom: 1px solid #c9b897;
-  background: #f0ece0;
-  color: #3a2e22;
-  outline: none;
+#map-list li.casa-forta.header, #map-list li.palau.header,
+#map-list li.pont.header, #map-list li.torre-colomer.header,
+#mapLlist li.casa-forta.header, #mapLlist li.palau.header,
+#mapLlist li.pont.header, #mapLlist li.torre-colomer.header {
+  background: var(--cm-gmap-civil);
+}
+
+#map-list li.basilica.header, #map-list li.catedral.header,
+#map-list li.ermita.header, #map-list li.esglesia.header,
+#map-list li.monestir.header, #map-list li.esglesia-fortificada.header,
+#mapLlist li.basilica.header, #mapLlist li.catedral.header,
+#mapLlist li.ermita.header, #mapLlist li.esglesia.header,
+#mapLlist li.monestir.header, #mapLlist li.esglesia-fortificada.header {
+  background: var(--cm-gmap-religios);
+}
+
+#map-list li.altres-llocs-dinteres.header,
+#mapLlist li.altres-llocs-dinteres.header {
+  background: var(--cm-gmap-altres);
+}
+
+/* Item hover — left accent per type */
+#map-list li.castell:hover:not(.header), #map-list li.muralles:hover:not(.header),
+#map-list li.torre:hover:not(.header), #map-list li.epoca-carlina:hover:not(.header),
+#mapLlist li.castell:hover:not(.header), #mapLlist li.muralles:hover:not(.header),
+#mapLlist li.torre:hover:not(.header), #mapLlist li.epoca-carlina:hover:not(.header) {
+  background: var(--cm-gmap-militar-tint); border-left-color: var(--cm-gmap-militar); padding-left: 20px;
+}
+
+#map-list li.casa-forta:hover:not(.header), #map-list li.palau:hover:not(.header),
+#map-list li.pont:hover:not(.header), #map-list li.torre-colomer:hover:not(.header),
+#mapLlist li.casa-forta:hover:not(.header), #mapLlist li.palau:hover:not(.header),
+#mapLlist li.pont:hover:not(.header), #mapLlist li.torre-colomer:hover:not(.header) {
+  background: var(--cm-gmap-civil-tint); border-left-color: var(--cm-gmap-civil); padding-left: 20px;
+}
+
+#map-list li.basilica:hover:not(.header), #map-list li.catedral:hover:not(.header),
+#map-list li.ermita:hover:not(.header), #map-list li.esglesia:hover:not(.header),
+#map-list li.monestir:hover:not(.header), #map-list li.esglesia-fortificada:hover:not(.header),
+#mapLlist li.basilica:hover:not(.header), #mapLlist li.catedral:hover:not(.header),
+#mapLlist li.ermita:hover:not(.header), #mapLlist li.esglesia:hover:not(.header),
+#mapLlist li.monestir:hover:not(.header), #mapLlist li.esglesia-fortificada:hover:not(.header) {
+  background: var(--cm-gmap-religios-tint); border-left-color: var(--cm-gmap-religios); padding-left: 20px;
+}
+
+#map-list li.altres-llocs-dinteres:hover:not(.header),
+#mapLlist li.altres-llocs-dinteres:hover:not(.header) {
+  background: var(--cm-gmap-altres-tint); border-left-color: var(--cm-gmap-altres); padding-left: 20px;
 }
