@@ -1,54 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 
 <head>
-    <title>Interactive Map of Catalunya using GoogleMaps API - Demo V6.7</title>
+    <title>Mapa Interactiu de Catalunya Medieval - Demo V6.7</title>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-    <meta content="GoogleMaps gMap Catalunya Map" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta content="Mapa interactiu d'edificacions medievals de Catalunya amb Google Maps" name="description">
     <meta content="Enric Ballo" name="author">
     <link href="favicon.png" rel="shortcut icon"/>
 
     <!-- facebook tags -->
     <meta content="assets/images/CM.png" property="og:image"/>
     <meta content="auto" property="og:image:width"/>
-    <meta content="Interactive map of Catalonia based GoogleMaps library." property="og:description"/>
-    <meta content="https://demo.catalunyamedieval.es/gmap60/" property="og:url"/>
-    <meta content="Interactive Map of Catalunya using GoogleMaps API" property="og:title"/>
+    <meta content="Mapa interactiu d'edificacions medievals de Catalunya." property="og:description"/>
+    <meta content="https://demo.catalunyamedieval.es/gmap67/" property="og:url"/>
+    <meta content="Mapa Interactiu de Catalunya Medieval" property="og:title"/>
 
-    <link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet">
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Droid+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
     <link href="css/catalunya-gmap.css" rel="stylesheet" type="text/css">
+
+    <script>
+        (function () {
+            const params = new URLSearchParams(window.location.search);
+            window.catalunyaGmapConfig = window.catalunyaGmapConfig || {};
+            window.catalunyaGmapConfig.markersJsonUrl = 'js/catalunya-markers.json';
+            window.catalunyaGmapConfig.comarquesJsonUrl = 'js/catalunya-comarques-limits.json';
+
+            const comarca = params.get('comarca');
+            const municipi = params.get('municipi');
+            const edificiId = params.get('edificiId');
+            if (comarca) window.catalunyaGmapConfig.comarca = comarca;
+            if (municipi) window.catalunyaGmapConfig.municipi = municipi;
+            if (edificiId) window.catalunyaGmapConfig.edificiId = edificiId;
+        })();
+    </script>
 </head>
 
-<body>
-<h1 id="title-h1">Interactive Map of Catalunya using GoogleMaps API - Demo V6.7</h1>
-<h4 id="title-h4"> :: Catalunya Medieval Project - <a href="https://www.catalunyamedieval.es/" target="_blank"
-                                                      title="Catalunya Medieval">www.catalunyamedieval.es</a> ::</h4>
-<div id="container">
+<body class="gmap-page">
 
-    <div class="primaryDiv_big" id="primaryDiv">
-        <div id="mapContainer">
-            <div id="gMap"></div>
+<header id="site-header">
+    <div class="header-inner">
+        <div class="header-left">
+            <h1 id="title-h1">Catalunya Medieval &middot; Demo V6.7</h1>
+            <p id="title-h4">Mapa interactiu d'edificacions medievals amb Google Maps &middot;
+                <a href="https://www.catalunyamedieval.es/" target="_blank" title="Catalunya Medieval">www.catalunyamedieval.es</a>
+            </p>
+        </div>
+        <div class="header-right">
+            <a href="https://www.catalunyamedieval.es/" target="_blank" class="header-logo-link" title="Catalunya Medieval">
+                <img src="images/logo/logoCM-red-mini.png" alt="Catalunya Medieval" class="header-logo">
+            </a>
         </div>
     </div>
+</header>
 
-    <div id="secondaryDiv">
-        <div id="error">
-            <h2>No hi ha cap edificaci&oacute; disponible per aquesta comcarca</h2></div>
-        <label for="search-llista"></label>
-        <input id="search-llista" placeholder="cercar.." type="search">
-        <div id="llista">
-            <ul id="mapLlist"></ul>
+<div id="gmap-filters">
+    <label>
+        Comarca
+        <select id="filter-comarca">
+            <option value="">— Totes les comarques —</option>
+        </select>
+    </label>
+    <label>
+        Població
+        <select id="filter-poblacio" disabled>
+            <option value="">— Selecciona una comarca primer —</option>
+        </select>
+    </label>
+    <label>
+        Edificació
+        <select id="filter-edifici" disabled>
+            <option value="">— Selecciona una comarca primer —</option>
+        </select>
+    </label>
+    <button id="filter-clear" type="button">Netejar filtres</button>
+    <span id="gmap-filters-current"></span>
+</div>
+
+<div id="container">
+
+    <div id="gMap"></div>
+
+    <div id="secondaryDiv" style="display:none;">
+        <div class="search-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input id="search-list" placeholder="Cercar monument…" type="search" autocomplete="off">
+        </div>
+        <div id="list">
+            <ul id="map-list"></ul>
         </div>
     </div>
 
 </div>
+
+<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/catalunya-gmap.min.js" type="text/javascript"></script>
+
+<script>
+    (function () {
+        const params = new URLSearchParams(window.location.search);
+        const comarcaSelect = document.getElementById('filter-comarca');
+        const poblacioSelect = document.getElementById('filter-poblacio');
+        const edificiSelect = document.getElementById('filter-edifici');
+        const clearBtn = document.getElementById('filter-clear');
+        const currentLabel = document.getElementById('gmap-filters-current');
+
+        const currentComarca = params.get('comarca') || '';
+        const currentMunicipi = params.get('municipi') || '';
+        const currentEdificiId = params.get('edificiId') || '';
+
+        currentLabel.textContent = currentComarca
+            ? ('Filtrant: ' + currentComarca
+                + (currentMunicipi ? ' · ' + currentMunicipi : '')
+                + (currentEdificiId ? ' · edifici #' + currentEdificiId : ''))
+            : '';
+
+        function navigateTo(comarca, municipi, edificiId) {
+            const url = new URL(window.location.href);
+            url.search = '';
+            if (comarca) url.searchParams.set('comarca', comarca);
+            if (municipi) url.searchParams.set('municipi', municipi);
+            if (edificiId) url.searchParams.set('edificiId', edificiId);
+            window.location.href = url.toString();
+        }
+
+        function fillEdificiOptions(buildings) {
+            edificiSelect.innerHTML = '';
+            const optAll = document.createElement('option');
+            optAll.value = '';
+            optAll.textContent = '— Totes les edificacions —';
+            edificiSelect.appendChild(optAll);
+
+            buildings
+                .slice()
+                .sort((a, b) => a.title.localeCompare(b.title))
+                .forEach(b => {
+                    const opt = document.createElement('option');
+                    opt.value = b.id;
+                    opt.textContent = b.title + (b.municipi ? ' (' + b.municipi + ')' : '');
+                    if (String(b.id) === currentEdificiId) opt.selected = true;
+                    edificiSelect.appendChild(opt);
+                });
+
+            edificiSelect.disabled = buildings.length === 0;
+        }
+
+        function groupBy(list, field) {
+            return list.reduce((acc, m) => {
+                const key = m[field] || '';
+                if (!key) return acc;
+                (acc[key] = acc[key] || []).push(m);
+                return acc;
+            }, {});
+        }
+
+        function fillPoblacioOptions(comarcaMarkers) {
+            poblacioSelect.innerHTML = '';
+            const optAll = document.createElement('option');
+            optAll.value = '';
+            optAll.textContent = '— Totes les poblacions de la comarca —';
+            poblacioSelect.appendChild(optAll);
+
+            const byMunicipi = groupBy(comarcaMarkers, 'municipi');
+            Object.keys(byMunicipi).sort().forEach(municipi => {
+                const opt = document.createElement('option');
+                opt.value = municipi;
+                opt.textContent = municipi + ' (' + byMunicipi[municipi].length + ')';
+                if (municipi === currentMunicipi) opt.selected = true;
+                poblacioSelect.appendChild(opt);
+            });
+
+            poblacioSelect.disabled = false;
+            return byMunicipi;
+        }
+
+        fetch('js/catalunya-markers.json')
+            .then(r => r.json())
+            .then(markers => {
+                const byComarca = groupBy(markers, 'comarca');
+
+                Object.keys(byComarca).sort().forEach(comarca => {
+                    const opt = document.createElement('option');
+                    opt.value = comarca;
+                    opt.textContent = comarca + ' (' + byComarca[comarca].length + ')';
+                    if (comarca === currentComarca) opt.selected = true;
+                    comarcaSelect.appendChild(opt);
+                });
+
+                let byMunicipi = {};
+                if (currentComarca && byComarca[currentComarca]) {
+                    byMunicipi = fillPoblacioOptions(byComarca[currentComarca]);
+                    const scoped = currentMunicipi && byMunicipi[currentMunicipi]
+                        ? byMunicipi[currentMunicipi]
+                        : byComarca[currentComarca];
+                    fillEdificiOptions(scoped);
+                }
+
+                comarcaSelect.addEventListener('change', () => {
+                    navigateTo(comarcaSelect.value, '', '');
+                });
+
+                poblacioSelect.addEventListener('change', () => {
+                    navigateTo(comarcaSelect.value, poblacioSelect.value, '');
+                });
+
+                edificiSelect.addEventListener('change', () => {
+                    navigateTo(comarcaSelect.value, poblacioSelect.value, edificiSelect.value);
+                });
+            });
+
+        clearBtn.addEventListener('click', () => navigateTo('', '', ''));
+    })();
+</script>
+
 </body>
-
-<footer>
-    <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="js/catalunya-gmap-path.js" type="text/javascript"></script>
-    <script src="js/catalunya-gmap.min.js" type="text/javascript"></script>
-</footer>
-
 </html>

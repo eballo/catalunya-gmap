@@ -1,5 +1,5 @@
 import MonumentBuilder from './catalunya-gmap-monument'
-import handleSearchTextList from'./catalunya-gmap-extra'
+import handleSearchTextList from './catalunya-gmap-extra'
 
 
 async function initMapApplication() {
@@ -39,11 +39,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     await initMapApplication()
 
     // --- Search List -----
-    const input = document.querySelector('#search-llista');
-    if (input) {
+    // #search-list as in catalunya-omap; #search-llista is what the theme's
+    // gmap templates still print.
+    document.querySelectorAll('#search-list, #search-llista').forEach(input => {
         input.addEventListener('blur', handleSearchTextList);
         input.addEventListener('input', handleSearchTextList);
-    }
+    });
 });
 
 export default initMapApplication;
