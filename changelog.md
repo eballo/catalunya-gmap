@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.9.0] - 2026-10-13
+
+### Changed
+- Fix dev-dependency audit warnings (sprintf-js, fast-uri) (#69)
+
 ## [6.8.1] - 2026-10-10
 
 ### Changed
