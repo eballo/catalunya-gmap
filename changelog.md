@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.11.0] - 2026-10-15
+
+### Changed
+- Sync with catalunya-omap: «Cercar» button that opens the side list (#71)
+
 ## [6.10.0] - 2026-10-15
 
 ### Changed
