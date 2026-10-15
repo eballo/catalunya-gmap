@@ -312,22 +312,31 @@ describe('MapManager - search button (searchButton)', () => {
         expect(document.activeElement.id).toBe('search-list');
     });
 
-    it('keeps the list open when pressed again, and only moves the cursor', async () => {
+    it('closes the list when pressed again', async () => {
         global.catalunyaGmapConfig = { searchButton: true };
         const mm = await initManager(HTML);
         const button = document.querySelector('.cm-gmap-search button');
         button.click();
-        document.getElementById('search-list').blur();
         button.click();
-        expect(mm.ListTextEnabled).toBe(true);
-        expect(document.getElementById('secondaryDiv').style.display).toBe('');
-        expect(document.activeElement.id).toBe('search-list');
+        expect(mm.ListTextEnabled).toBe(false);
+        expect(document.getElementById('secondaryDiv').style.display).toBe('none');
+    });
+
+    it('says whether the list is open, whoever opened it', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        const mm = await initManager(HTML);
+        const button = document.querySelector('.cm-gmap-search button');
+        expect(button.getAttribute('aria-expanded')).toBe('false');
+        button.click();
+        expect(button.getAttribute('aria-expanded')).toBe('true');
+        mm._setListOpen(false);
+        expect(button.getAttribute('aria-expanded')).toBe('false');
     });
 
     it('does not break when the page has no list', async () => {
         global.catalunyaGmapConfig = { searchButton: true };
         const mm = await initManager('<div id="gMap"></div><ul id="map-list"></ul>');
-        expect(() => mm._openSearch()).not.toThrow();
+        expect(() => mm._toggleSearch()).not.toThrow();
     });
 });
 
