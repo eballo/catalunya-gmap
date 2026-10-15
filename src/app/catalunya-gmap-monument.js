@@ -123,7 +123,7 @@ class MonumentBuilder {
         });
 
         const icon = this._getIcon(type, category, this.styleType1);
-        this.mapManager.addIcon({ id, visible: true, title: categoryName, category, icon });
+        this.mapManager.addIcon({ id, visible: true, title: categoryName, category, icon, type });
     }
 
     _getIcon(type, category, styleType) {

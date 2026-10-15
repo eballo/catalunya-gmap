@@ -7,6 +7,21 @@ import {stringToBoolean, fetchMapData} from "./catalunya-gmap-extra";
 // area): fitBounds() would otherwise go all the way to maxZoom.
 const SINGLE_POINT_ZOOM = 16;
 
+// «Localitza'm»: never zoomed out of a closer view, and a fix a minute old is
+// good enough to centre a map. Same values as catalunya-omap.
+const LOCATE_ZOOM = 13;
+const LOCATE_OPTIONS = { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 };
+const LOCATE_MESSAGE_MS = 5000;
+
+// Any map whose host asked for foldLayers: the category buttons are folded
+// behind «Capes», and the host's own legend toggles the four groups
+// (setGroupVisible()). The second class is toggled by the «Capes» button.
+const FOLDED_CLASS = 'cm-gmap--folded';
+const LAYERS_OPEN_CLASS = 'cm-gmap--layers-open';
+// Fired on document after a group is switched, so a legend outside the map
+// can show which groups are on (catalunya-omap fires cm-omap:groups-changed).
+export const GROUPS_CHANGED_EVENT = 'cm-gmap:groups-changed';
+
 export default class MapManager {
     constructor(mapId) {
 
@@ -45,6 +60,11 @@ export default class MapManager {
         this.serverHost = _cfg.serverHost || process.env.SERVER_HOST;
         this.secondaryDivId = _cfg.secondaryDivId || 'secondaryDiv';
         this.listId = _cfg.listId || 'map-list';
+        // Opt-in, as in catalunya-omap: the host page decides, because its
+        // Permissions-Policy has to allow geolocation there too or the
+        // browser refuses without asking.
+        this.locateButton = _cfg.locateButton === true;
+        this.foldLayers = _cfg.foldLayers === true;
 
         // Last fit/focus, replayed by resize() when it ran while the map was
         // hidden (zero size), where Google can only compute a wrong zoom.
@@ -119,6 +139,8 @@ export default class MapManager {
             this._setIconTextList();
             this._setIconsControl();
             this._setRemoveAllIcons();
+            this._setLayersControlIfAsked();
+            this._setLocateControlIfAsked();
             this._followHostTheme();
 
             return this.map;
@@ -545,6 +567,7 @@ export default class MapManager {
             this.visibleBuildings = !this.visibleBuildings;
             this._changeVisibility(this.visibleBuildings);
             this.fitToVisibleMarkers();
+            this._announceGroups();
             const number = this.visibleBuildings ? "06" : "05";
             const image = document.getElementById("visibleBuildings");
             if (image) image.src = this.serverHost + 'images/controls/' + number + '.png';
@@ -559,12 +582,144 @@ export default class MapManager {
         this.iconsControl.appendChild(controlUI);
 
         controlUI.addEventListener('click', () => {
-            edifici.visible = !edifici.visible;
-            this._setVisible(edifici.category, edifici.visible);
+            this._setCategoryVisible(edifici, !edifici.visible);
             this.fitToVisibleMarkers();
+            this._announceGroups();
         });
 
         return controlUI;
+    }
+
+    // One category on or off: its markers, list entries and button.
+    _setCategoryVisible(edifici, visible) {
+        edifici.visible = visible;
+        this._setVisible(edifici.category, visible);
+    }
+
+    // A group is one of the four kinds of building (militar, civil, religios,
+    // altres). It is on while any of its categories is.
+    isGroupVisible(type) {
+        return this.icons.some(i => i.type === type && i.visible);
+    }
+
+    setGroupVisible(type, visible) {
+        this.icons.filter(i => i.type === type).forEach(i => this._setCategoryVisible(i, visible));
+        this.fitToVisibleMarkers();
+        this._announceGroups();
+    }
+
+    _announceGroups() {
+        const types = [...new Set(this.icons.map(i => i.type).filter(Boolean))];
+        const groups = Object.fromEntries(types.map(t => [t, this.isGroupVisible(t)]));
+        document.dispatchEvent(new CustomEvent(GROUPS_CHANGED_EVENT, { detail: { groups } }));
+    }
+
+    // The «Capes» button, next to the show/hide-all one: the category buttons
+    // (one per kind of building) fold behind it.
+    _setLayersControlIfAsked() {
+        if (!this.foldLayers) return;
+        const element = document.getElementById(this.mapId);
+        if (element) element.classList.add(FOLDED_CLASS);
+
+        const controlUI = document.createElement('div');
+        controlUI.className = 'cm-gmap-icon cm-gmap-layers';
+        controlUI.title = 'Capes';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.setAttribute('aria-label', 'Capes');
+        button.setAttribute('aria-expanded', 'false');
+        button.innerHTML = this._layersIcon();
+        controlUI.appendChild(button);
+        this.iconsControl.appendChild(controlUI);
+
+        button.addEventListener('click', () => {
+            const open = element ? element.classList.toggle(LAYERS_OPEN_CLASS) : false;
+            button.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    }
+
+    _layersIcon() {
+        return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+        </svg>`;
+    }
+
+    // Centres the map on the visitor. It only asks for the position when the
+    // button is pressed, never on load, and the position stays in the
+    // browser: nothing is sent anywhere. A refusal or a failure is said next
+    // to the button instead of being swallowed.
+    _setLocateControlIfAsked() {
+        if (!this.locateButton) return;
+        const control = document.createElement('div');
+        control.className = 'cm-gmap-locate';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.title = "Localitza'm";
+        button.setAttribute('aria-label', "Localitza'm");
+        button.innerHTML = this._locateIcon();
+        const message = document.createElement('span');
+        message.className = 'cm-gmap-locate-message';
+        message.setAttribute('role', 'status');
+        message.hidden = true;
+        control.appendChild(button);
+        control.appendChild(message);
+        this.map.controls[this.core.ControlPosition.LEFT_TOP].push(control);
+
+        button.addEventListener('click', () => this._locate(button, message));
+    }
+
+    _locate(button, message) {
+        if (typeof navigator === 'undefined' || !navigator.geolocation) {
+            this._showLocateMessage(message, 'El teu navegador no pot donar la ubicació.');
+            return;
+        }
+        button.classList.add('cm-gmap-locate--busy');
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                button.classList.remove('cm-gmap-locate--busy');
+                message.hidden = true;
+                this._showPosition(position.coords, position.coords.accuracy);
+            },
+            (err) => {
+                button.classList.remove('cm-gmap-locate--busy');
+                this._showLocateMessage(message, this._locateErrorMessage(err));
+            },
+            LOCATE_OPTIONS
+        );
+    }
+
+    // The dot replaces the previous one when the button is pressed again.
+    _showPosition(coords, accuracy) {
+        this.setUserLocationMarker(coords.latitude, coords.longitude, { accuracy });
+        const current = this.map.getZoom() || 0;
+        this.map.setCenter({ lat: coords.latitude, lng: coords.longitude });
+        this.map.setZoom(Math.max(LOCATE_ZOOM, current));
+    }
+
+    _showLocateMessage(message, text) {
+        message.textContent = text;
+        message.hidden = false;
+        clearTimeout(this._locateMessageTimer);
+        this._locateMessageTimer = setTimeout(() => { message.hidden = true; }, LOCATE_MESSAGE_MS);
+    }
+
+    _locateErrorMessage(err) {
+        switch (err && err.code) {
+            case 1: // PERMISSION_DENIED
+                return "Has denegat l'accés a la ubicació. Pots canviar-ho als permisos del navegador.";
+            case 3: // TIMEOUT
+                return 'No hem pogut obtenir la ubicació a temps. Torna-ho a provar.';
+            default:
+                return 'No hem pogut obtenir la teva ubicació.';
+        }
+    }
+
+    _locateIcon() {
+        return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.5"/><circle cx="12" cy="12" r="8"/>
+            <line x1="12" y1="1" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/>
+            <line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/>
+        </svg>`;
     }
 
     /**
