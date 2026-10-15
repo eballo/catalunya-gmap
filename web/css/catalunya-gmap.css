@@ -400,7 +400,8 @@ ul.legend {
 
 .cm-gmap-layers { display: none; }
 .cm-gmap--folded:not(:fullscreen) .cm-gmap-layers { display: block; }
-.cm-gmap--folded:not(:fullscreen):not(.cm-gmap--layers-open) .cm-gmap-icon:has(> img[id^="img-"]) { display: none; }
+.cm-gmap--folded:not(:fullscreen):not(.cm-gmap--layers-open) .cm-gmap-icon:has(> img[id^="img-"]),
+.cm-gmap--folded:not(:fullscreen):not(.cm-gmap--layers-open) .cm-gmap-icon:has(> #visibleBuildings) { display: none; }
 
 /* The map of a page about one building (selectMarker() was called), on a
    phone: a 320 px wide map cannot spare a column of twelve category buttons, a

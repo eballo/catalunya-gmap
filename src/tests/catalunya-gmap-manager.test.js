@@ -974,7 +974,7 @@ describe('MapManager - map controls', () => {
         const mm = await initManager();
         mm.addMarker(location());
         mm.addIcon({ category: 'castell', title: 'Castells', icon: 'c.png', visible: true });
-        const all = mm.iconsControl.children[0];
+        const all = document.getElementById('visibleBuildings').parentElement;
         all.click();
         expect(mm.visibleBuildings).toBe(false);
         expect(mm.icons[0].visible).toBe(false);
