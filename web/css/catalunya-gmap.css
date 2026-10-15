@@ -376,7 +376,8 @@ ul.legend {
    hidden until «Capes» is pressed; in fullscreen, where there is room, they
    are all back. */
 .cm-gmap-layers button,
-.cm-gmap-locate button {
+.cm-gmap-locate button,
+.cm-gmap-search button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -392,7 +393,10 @@ ul.legend {
 }
 
 .cm-gmap-layers button:hover,
-.cm-gmap-locate button:hover { color: #000; }
+.cm-gmap-locate button:hover,
+.cm-gmap-search button:hover { color: #000; }
+
+.cm-gmap-search { margin: 10px; }
 
 .cm-gmap-layers { display: none; }
 .cm-gmap--folded:not(:fullscreen) .cm-gmap-layers { display: block; }

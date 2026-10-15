@@ -294,6 +294,43 @@ describe('MapManager - the map of one building on a phone', () => {
     });
 });
 
+describe('MapManager - search button (searchButton)', () => {
+    const HTML = '<div id="gMap"></div><div id="secondaryDiv" style="display:none;"><input type="search" id="search-list"></div><ul id="map-list"></ul>';
+
+    it('is not drawn unless the host page opts in with searchButton', async () => {
+        await initManager(HTML);
+        expect(document.querySelector('.cm-gmap-search button')).toBeNull();
+    });
+
+    it('opens the side list and puts the cursor in its search box', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        const mm = await initManager(HTML);
+        expect(document.getElementById('secondaryDiv').style.display).toBe('none');
+        document.querySelector('.cm-gmap-search button').click();
+        expect(mm.ListTextEnabled).toBe(true);
+        expect(document.getElementById('secondaryDiv').style.display).toBe('');
+        expect(document.activeElement.id).toBe('search-list');
+    });
+
+    it('keeps the list open when pressed again, and only moves the cursor', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        const mm = await initManager(HTML);
+        const button = document.querySelector('.cm-gmap-search button');
+        button.click();
+        document.getElementById('search-list').blur();
+        button.click();
+        expect(mm.ListTextEnabled).toBe(true);
+        expect(document.getElementById('secondaryDiv').style.display).toBe('');
+        expect(document.activeElement.id).toBe('search-list');
+    });
+
+    it('does not break when the page has no list', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        const mm = await initManager('<div id="gMap"></div><ul id="map-list"></ul>');
+        expect(() => mm._openSearch()).not.toThrow();
+    });
+});
+
 describe('MapManager - folded layers and groups', () => {
     function withIcons(mm) {
         mm.icons = [

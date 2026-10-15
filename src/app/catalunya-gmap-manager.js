@@ -72,6 +72,8 @@ export default class MapManager {
         // browser refuses without asking.
         this.locateButton = _cfg.locateButton === true;
         this.foldLayers = _cfg.foldLayers === true;
+        // Opt-in: a visible way into the search that lives in the side list.
+        this.searchButton = _cfg.searchButton === true;
 
         // Last fit/focus, replayed by resize() when it ran while the map was
         // hidden (zero size), where Google can only compute a wrong zoom.
@@ -148,6 +150,7 @@ export default class MapManager {
             this._setRemoveAllIcons();
             this._setLayersControl();
             this._setLocateControlIfAsked();
+            this._setSearchControlIfAsked();
             this._followHostTheme();
 
             return this.map;
@@ -792,16 +795,50 @@ export default class MapManager {
 
         this.map.controls[this.core.ControlPosition.TOP_RIGHT].push(showTextList);
 
-        showTextList.addEventListener('click', () => {
-            this.ListTextEnabled = !this.ListTextEnabled;
-            const number = this.ListTextEnabled ? "04" : "03";
-            const llistat = document.getElementById("llistat");
-            if (llistat) llistat.src = this.serverHost + 'images/controls/' + number + '.png';
-            const secondaryDiv = document.getElementById(this.secondaryDivId);
-            if (secondaryDiv) secondaryDiv.style.display = this.ListTextEnabled ? '' : 'none';
-            if (this.infowindow) this.infowindow.close();
-            this.resize();
-        });
+        showTextList.addEventListener('click', () => this._setListOpen(!this.ListTextEnabled));
+    }
+
+    // The side list with its search box, shown or hidden.
+    _setListOpen(open) {
+        this.ListTextEnabled = open;
+        const number = open ? "04" : "03";
+        const llistat = document.getElementById("llistat");
+        if (llistat) llistat.src = this.serverHost + 'images/controls/' + number + '.png';
+        const secondaryDiv = document.getElementById(this.secondaryDivId);
+        if (secondaryDiv) secondaryDiv.style.display = open ? '' : 'none';
+        if (this.infowindow) this.infowindow.close();
+        this.resize();
+    }
+
+    // A magnifier under the other buttons that opens the side list and puts
+    // the cursor in its search box: the search was always there, but behind
+    // an unlabelled icon.
+    _setSearchControlIfAsked() {
+        if (!this.searchButton) return;
+        const control = document.createElement('div');
+        control.className = 'cm-gmap-search';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.title = 'Cercar una edificació';
+        button.setAttribute('aria-label', 'Cercar una edificació');
+        button.innerHTML = this._searchIcon();
+        control.appendChild(button);
+        this.map.controls[this.core.ControlPosition.LEFT_TOP].push(control);
+
+        button.addEventListener('click', () => this._openSearch());
+    }
+
+    _openSearch() {
+        if (!this.ListTextEnabled) this._setListOpen(true);
+        const secondaryDiv = document.getElementById(this.secondaryDivId);
+        const input = secondaryDiv && secondaryDiv.querySelector('input[type="search"]');
+        if (input) input.focus();
+    }
+
+    _searchIcon() {
+        return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>`;
     }
 
     _setVisible(category, visible) {
