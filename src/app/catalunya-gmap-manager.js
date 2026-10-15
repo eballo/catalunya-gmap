@@ -145,7 +145,11 @@ export default class MapManager {
 
             // Initialize map
             this._setLogoCatalunyaMedieval();
-            this._setIconTextList();
+            // The search button opens and closes the same list, so with it the
+            // unlabelled list icon would only be a second way to do the same.
+            if (!this.searchButton) {
+                this._setIconTextList();
+            }
             this._setIconsControl();
             this._setRemoveAllIcons();
             this._setLayersControl();

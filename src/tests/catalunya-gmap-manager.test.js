@@ -333,6 +333,17 @@ describe('MapManager - search button (searchButton)', () => {
         expect(button.getAttribute('aria-expanded')).toBe('false');
     });
 
+    it('replaces the list icon: the magnifier does the same, so the icon is not drawn', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        await initManager(HTML);
+        expect(document.getElementById('llistat')).toBeNull();
+    });
+
+    it('keeps the list icon on a map without the search button', async () => {
+        await initManager(HTML);
+        expect(document.getElementById('llistat')).not.toBeNull();
+    });
+
     it('does not break when the page has no list', async () => {
         global.catalunyaGmapConfig = { searchButton: true };
         const mm = await initManager('<div id="gMap"></div><ul id="map-list"></ul>');
