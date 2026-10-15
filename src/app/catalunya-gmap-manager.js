@@ -13,6 +13,13 @@ const LOCATE_ZOOM = 13;
 const LOCATE_OPTIONS = { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 };
 const LOCATE_MESSAGE_MS = 5000;
 
+// Same breakpoint as the Catalunya Medieval theme's phone layout.
+const PHONE_QUERY = '(max-width: 600px)';
+
+// The map of a page about one building (selectMarker() was called). On a
+// phone its CSS folds the category buttons behind the «Capes» button.
+const ENTRY_MAP_CLASS = 'cm-gmap--entry';
+
 // Any map whose host asked for foldLayers: the category buttons are folded
 // behind «Capes», and the host's own legend toggles the four groups
 // (setGroupVisible()). The second class is toggled by the «Capes» button.
@@ -139,7 +146,7 @@ export default class MapManager {
             this._setIconTextList();
             this._setIconsControl();
             this._setRemoveAllIcons();
-            this._setLayersControlIfAsked();
+            this._setLayersControl();
             this._setLocateControlIfAsked();
             this._followHostTheme();
 
@@ -190,13 +197,20 @@ export default class MapManager {
     selectMarker(marker, zoom = SINGLE_POINT_ZOOM) {
         if (!marker) return;
         this._pinMarker(marker);
+        const element = document.getElementById(this.mapId);
+        if (element) element.classList.add(ENTRY_MAP_CLASS);
+        // On a phone the card would cover most of a small map, so the
+        // building is shown in its hover colour instead and the card opens
+        // on tap. Without a hover icon there is nothing to highlight with, so
+        // the card opens after all.
+        const highlighted = this._isPhone() && this._highlightMarker(marker);
         // `zoom` is a floor, not a target: never zoom back out of a level the
         // view is already at (e.g. after the visitor zoomed in).
         const focus = () => {
             const current = this.map.getZoom() || 0;
             this.map.setCenter(this._positionOf(marker));
             this.map.setZoom(Math.max(zoom, current));
-            this._openInfoWindow(marker);
+            if (!highlighted) this._openInfoWindow(marker);
             this._fitWhileHidden = this._isHidden();
         };
         this._pendingFit = focus;
@@ -204,6 +218,18 @@ export default class MapManager {
         // Re-assert the final view/card once any layout or animation has
         // settled (same retry pattern as resizeMap() in the theme's page.js).
         setTimeout(focus, 400);
+    }
+
+    _isPhone() {
+        return typeof window.matchMedia === 'function' && window.matchMedia(PHONE_QUERY).matches;
+    }
+
+    // Keeps the marker in its hover icon; the mouseout handlers leave it alone.
+    _highlightMarker(marker) {
+        if (!marker.hoverIconUrl) return false;
+        marker._highlighted = true;
+        marker.setIcon(marker.hoverIconUrl);
+        return true;
     }
 
     // The selected building is the one the page is about, so it leaves the
@@ -279,11 +305,12 @@ export default class MapManager {
         marker._latLng = { lat: Number(location.lat), lng: Number(location.lng) };
         marker.visible = location.visible;
         marker.category = location.category;
+        marker.hoverIconUrl = location.icon2;
 
         if (location.icon2) {
             marker.addListener('mouseover', () => marker.setIcon(location.icon2));
             marker.addListener('mouseout', () => {
-                if (location.icon) marker.setIcon(location.icon);
+                if (location.icon && !marker._highlighted) marker.setIcon(location.icon);
             });
         }
 
@@ -527,7 +554,7 @@ export default class MapManager {
 
         li.addEventListener("mouseout", () => {
             marker.setZIndex(1);
-            if (opts.icon) marker.setIcon(opts.icon);
+            if (opts.icon && !marker._highlighted) marker.setIcon(opts.icon);
         });
 
     }
@@ -615,11 +642,12 @@ export default class MapManager {
     }
 
     // The «Capes» button, next to the show/hide-all one: the category buttons
-    // (one per kind of building) fold behind it.
-    _setLayersControlIfAsked() {
-        if (!this.foldLayers) return;
+    // (one per kind of building) fold behind it. Always in the page, and
+    // hidden by the CSS except on a map with foldLayers and on the map of one
+    // building on a phone.
+    _setLayersControl() {
         const element = document.getElementById(this.mapId);
-        if (element) element.classList.add(FOLDED_CLASS);
+        if (this.foldLayers && element) element.classList.add(FOLDED_CLASS);
 
         const controlUI = document.createElement('div');
         controlUI.className = 'cm-gmap-icon cm-gmap-layers';

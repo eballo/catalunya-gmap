@@ -227,6 +227,73 @@ describe("MapManager - «Localitza'm» (locateButton)", () => {
     });
 });
 
+describe('MapManager - the map of one building on a phone', () => {
+    function setPhone(matches) {
+        window.matchMedia = jest.fn().mockReturnValue({ matches });
+    }
+
+    afterEach(() => {
+        delete window.matchMedia;
+    });
+
+    it('marks the map as the one of a building, once, and not before a selection', async () => {
+        const mm = await initManager();
+        const map = document.getElementById('gMap');
+        expect(map.classList.contains('cm-gmap--entry')).toBe(false);
+        mm.selectMarker(mm.addMarker(location()));
+        expect(map.classList.contains('cm-gmap--entry')).toBe(true);
+    });
+
+    it('highlights the building in its hover icon instead of opening its card', async () => {
+        setPhone(true);
+        const mm = await initManager();
+        const marker = mm.addMarker(location());
+        marker.setIcon.mockClear();
+        mm.selectMarker(marker);
+        expect(marker.setIcon).toHaveBeenCalledWith('icon2.png');
+        expect(mockInfoWindow.open).not.toHaveBeenCalled();
+        expect(mockMap.setCenter).toHaveBeenCalled();
+    });
+
+    it('keeps the highlight when the pointer leaves the marker or its list entry', async () => {
+        setPhone(true);
+        const mm = await initManager();
+        const marker = mm.addMarker(location());
+        mm.selectMarker(marker);
+        marker.setIcon.mockClear();
+        marker.fire('mouseout');
+        document.querySelector('#map-list li:not(.header)').dispatchEvent(new Event('mouseout'));
+        expect(marker.setIcon).not.toHaveBeenCalled();
+    });
+
+    it('opens the card when there is no hover icon to highlight with', async () => {
+        setPhone(true);
+        const mm = await initManager();
+        mm.selectMarker(mm.addMarker(location({ icon2: undefined })));
+        expect(mockInfoWindow.open).toHaveBeenCalled();
+    });
+
+    it('opens the card on a larger screen and when matchMedia is missing', async () => {
+        setPhone(false);
+        const mm = await initManager();
+        mm.selectMarker(mm.addMarker(location()));
+        expect(mockInfoWindow.open).toHaveBeenCalledTimes(1);
+        delete window.matchMedia;
+        mm.selectMarker(mm.addMarker(location()));
+        expect(mockInfoWindow.open).toHaveBeenCalledTimes(2);
+    });
+
+    it('«Capes» is in the page and opens and closes the category buttons', async () => {
+        await initManager();
+        const map = document.getElementById('gMap');
+        const button = document.querySelector('.cm-gmap-layers button');
+        expect(button.getAttribute('aria-expanded')).toBe('false');
+        button.click();
+        expect(map.classList.contains('cm-gmap--layers-open')).toBe(true);
+        expect(button.getAttribute('aria-expanded')).toBe('true');
+    });
+});
+
 describe('MapManager - folded layers and groups', () => {
     function withIcons(mm) {
         mm.icons = [
@@ -248,7 +315,6 @@ describe('MapManager - folded layers and groups', () => {
     it('does not fold them otherwise', async () => {
         await initManager();
         expect(document.getElementById('gMap').classList.contains('cm-gmap--folded')).toBe(false);
-        expect(document.querySelector('.cm-gmap-layers')).toBeNull();
     });
 
     it('«Capes» opens and closes the buttons', async () => {
@@ -843,7 +909,8 @@ describe('MapManager - map controls', () => {
         const mm = await initManager();
         mm.addIcon({ category: 'castell', title: 'Castells', icon: 'c.png', visible: true });
         expect(mockMap.controls[3]).toEqual([mm.iconsControl]);
-        expect(mm.iconsControl.children).toHaveLength(2);
+        // «all», the «Capes» button (hidden by the CSS unless folded) and the category.
+        expect(mm.iconsControl.children).toHaveLength(3);
     });
 
     it('hides and shows every category from the "all" icon, then re-centres', async () => {
@@ -864,10 +931,10 @@ describe('MapManager - map controls', () => {
         const mm = await initManager();
         mm.addMarker(location());
         mm.addIcon({ category: 'castell', title: 'Castells', icon: 'c.png', visible: true });
-        mm.iconsControl.children[1].click();
+        mm.iconsControl.children[2].click();
         expect(mm.icons[0].visible).toBe(false);
         expect(document.getElementById('img-castell').style.opacity).toBe('0.5');
-        mm.iconsControl.children[1].click();
+        mm.iconsControl.children[2].click();
         expect(document.getElementById('img-castell').style.opacity).toBe('1');
         expect(mockMap.setCenter).toHaveBeenCalledTimes(1);
     });
