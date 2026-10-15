@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.10.0] - 2026-10-15
+
+### Changed
+- Sync with catalunya-omap: «Localitza'm», folded layers and group switching (#70)
+
 ## [6.9.0] - 2026-10-13
 
 ### Changed
