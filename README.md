@@ -61,6 +61,7 @@ can switch between the two by swapping the bundle, the stylesheet and the config
 | `userPosition` | Show the «Ruta» button (Google Maps directions to the building) on the cards |
 | `locateButton` | Draw a «Localitza'm» button that centres the map on the visitor (asks for the position only when pressed). Off unless `true`: the host page must also allow geolocation in its `Permissions-Policy` |
 | `foldLayers` | Fold the category buttons behind a «Capes» button. Off unless `true`. The host page can then switch the four groups (`militar`, `civil`, `religios`, `altres`) itself with `window.cmGmapManager.setGroupVisible(type, visible)` / `isGroupVisible(type)`, and listens to `cm-gmap:groups-changed` on `document` (`detail.groups`: `{ militar: true, … }`) to show which are on |
+| `searchButton` | Draw a magnifier button that opens the sidebar list with the cursor in its search box, and closes it when pressed again. It replaces the list icon at the top right. Off unless `true` |
 | `popupActions` | See [Popup actions](#popup-actions) |
 | `listId`, `secondaryDivId` | Ids of the sidebar list and its container (`map-list`, `secondaryDiv`) |
 | `listEnabled` | Start with the sidebar list open |

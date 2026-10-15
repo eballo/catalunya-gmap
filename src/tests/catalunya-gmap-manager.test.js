@@ -294,6 +294,63 @@ describe('MapManager - the map of one building on a phone', () => {
     });
 });
 
+describe('MapManager - search button (searchButton)', () => {
+    const HTML = '<div id="gMap"></div><div id="secondaryDiv" style="display:none;"><input type="search" id="search-list"></div><ul id="map-list"></ul>';
+
+    it('is not drawn unless the host page opts in with searchButton', async () => {
+        await initManager(HTML);
+        expect(document.querySelector('.cm-gmap-search button')).toBeNull();
+    });
+
+    it('opens the side list and puts the cursor in its search box', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        const mm = await initManager(HTML);
+        expect(document.getElementById('secondaryDiv').style.display).toBe('none');
+        document.querySelector('.cm-gmap-search button').click();
+        expect(mm.ListTextEnabled).toBe(true);
+        expect(document.getElementById('secondaryDiv').style.display).toBe('');
+        expect(document.activeElement.id).toBe('search-list');
+    });
+
+    it('closes the list when pressed again', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        const mm = await initManager(HTML);
+        const button = document.querySelector('.cm-gmap-search button');
+        button.click();
+        button.click();
+        expect(mm.ListTextEnabled).toBe(false);
+        expect(document.getElementById('secondaryDiv').style.display).toBe('none');
+    });
+
+    it('says whether the list is open, whoever opened it', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        const mm = await initManager(HTML);
+        const button = document.querySelector('.cm-gmap-search button');
+        expect(button.getAttribute('aria-expanded')).toBe('false');
+        button.click();
+        expect(button.getAttribute('aria-expanded')).toBe('true');
+        mm._setListOpen(false);
+        expect(button.getAttribute('aria-expanded')).toBe('false');
+    });
+
+    it('replaces the list icon: the magnifier does the same, so the icon is not drawn', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        await initManager(HTML);
+        expect(document.getElementById('llistat')).toBeNull();
+    });
+
+    it('keeps the list icon on a map without the search button', async () => {
+        await initManager(HTML);
+        expect(document.getElementById('llistat')).not.toBeNull();
+    });
+
+    it('does not break when the page has no list', async () => {
+        global.catalunyaGmapConfig = { searchButton: true };
+        const mm = await initManager('<div id="gMap"></div><ul id="map-list"></ul>');
+        expect(() => mm._toggleSearch()).not.toThrow();
+    });
+});
+
 describe('MapManager - folded layers and groups', () => {
     function withIcons(mm) {
         mm.icons = [
@@ -917,7 +974,7 @@ describe('MapManager - map controls', () => {
         const mm = await initManager();
         mm.addMarker(location());
         mm.addIcon({ category: 'castell', title: 'Castells', icon: 'c.png', visible: true });
-        const all = mm.iconsControl.children[0];
+        const all = document.getElementById('visibleBuildings').parentElement;
         all.click();
         expect(mm.visibleBuildings).toBe(false);
         expect(mm.icons[0].visible).toBe(false);
