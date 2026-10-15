@@ -147,6 +147,231 @@ function setSize(element, width, height) {
 
 // ---------------------------------------------------------------------------
 
+describe("MapManager - «Localitza'm» (locateButton)", () => {
+    let getCurrentPosition;
+
+    function setGeolocation(value) {
+        Object.defineProperty(navigator, 'geolocation', { value, configurable: true });
+    }
+
+    async function locateManager(config) {
+        if (config !== undefined) global.catalunyaGmapConfig = config;
+        const mm = await initManager();
+        const button = document.querySelector('.cm-gmap-locate button');
+        const message = document.querySelector('.cm-gmap-locate-message');
+        return { mm, button, message };
+    }
+
+    beforeEach(() => {
+        getCurrentPosition = jest.fn();
+        setGeolocation({ getCurrentPosition });
+        jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+        setGeolocation(undefined);
+    });
+
+    it('is not drawn unless the host page opts in with locateButton', async () => {
+        const { button } = await locateManager();
+        expect(button).toBeNull();
+    });
+
+    it('does not ask for the position until the button is pressed', async () => {
+        await locateManager({ locateButton: true });
+        expect(getCurrentPosition).not.toHaveBeenCalled();
+    });
+
+    it('centres the map on the visitor and draws the dot on a fix', async () => {
+        const { mm, button } = await locateManager({ locateButton: true });
+        getCurrentPosition.mockImplementation((ok) => ok({ coords: { latitude: 41.5, longitude: 2.1, accuracy: 30 } }));
+        button.click();
+        expect(mm._userLocationMarker).not.toBeNull();
+        expect(mockMap.setCenter).toHaveBeenLastCalledWith({ lat: 41.5, lng: 2.1 });
+        expect(mockMap.setZoom).toHaveBeenLastCalledWith(13);
+    });
+
+    it('never zooms out of a closer view', async () => {
+        const { button } = await locateManager({ locateButton: true });
+        mockMap.getZoom.mockReturnValue(16);
+        getCurrentPosition.mockImplementation((ok) => ok({ coords: { latitude: 41.5, longitude: 2.1 } }));
+        button.click();
+        expect(mockMap.setZoom).toHaveBeenLastCalledWith(16);
+    });
+
+    it('says so when the visitor refuses, and does not move the map', async () => {
+        const { button, message } = await locateManager({ locateButton: true });
+        mockMap.setCenter.mockClear();
+        getCurrentPosition.mockImplementation((ok, fail) => fail({ code: 1 }));
+        button.click();
+        expect(message.hidden).toBe(false);
+        expect(message.textContent).toContain('denegat');
+        expect(mockMap.setCenter).not.toHaveBeenCalled();
+    });
+
+    it('says so on a timeout and hides the message after a few seconds', async () => {
+        const { button, message } = await locateManager({ locateButton: true });
+        getCurrentPosition.mockImplementation((ok, fail) => fail({ code: 3 }));
+        button.click();
+        expect(message.textContent).toContain('a temps');
+        jest.advanceTimersByTime(5000);
+        expect(message.hidden).toBe(true);
+    });
+
+    it('says so when the browser has no geolocation', async () => {
+        const { button, message } = await locateManager({ locateButton: true });
+        setGeolocation(undefined);
+        button.click();
+        expect(message.hidden).toBe(false);
+        expect(getCurrentPosition).not.toHaveBeenCalled();
+    });
+});
+
+describe('MapManager - the map of one building on a phone', () => {
+    function setPhone(matches) {
+        window.matchMedia = jest.fn().mockReturnValue({ matches });
+    }
+
+    afterEach(() => {
+        delete window.matchMedia;
+    });
+
+    it('marks the map as the one of a building, once, and not before a selection', async () => {
+        const mm = await initManager();
+        const map = document.getElementById('gMap');
+        expect(map.classList.contains('cm-gmap--entry')).toBe(false);
+        mm.selectMarker(mm.addMarker(location()));
+        expect(map.classList.contains('cm-gmap--entry')).toBe(true);
+    });
+
+    it('highlights the building in its hover icon instead of opening its card', async () => {
+        setPhone(true);
+        const mm = await initManager();
+        const marker = mm.addMarker(location());
+        marker.setIcon.mockClear();
+        mm.selectMarker(marker);
+        expect(marker.setIcon).toHaveBeenCalledWith('icon2.png');
+        expect(mockInfoWindow.open).not.toHaveBeenCalled();
+        expect(mockMap.setCenter).toHaveBeenCalled();
+    });
+
+    it('keeps the highlight when the pointer leaves the marker or its list entry', async () => {
+        setPhone(true);
+        const mm = await initManager();
+        const marker = mm.addMarker(location());
+        mm.selectMarker(marker);
+        marker.setIcon.mockClear();
+        marker.fire('mouseout');
+        document.querySelector('#map-list li:not(.header)').dispatchEvent(new Event('mouseout'));
+        expect(marker.setIcon).not.toHaveBeenCalled();
+    });
+
+    it('opens the card when there is no hover icon to highlight with', async () => {
+        setPhone(true);
+        const mm = await initManager();
+        mm.selectMarker(mm.addMarker(location({ icon2: undefined })));
+        expect(mockInfoWindow.open).toHaveBeenCalled();
+    });
+
+    it('opens the card on a larger screen and when matchMedia is missing', async () => {
+        setPhone(false);
+        const mm = await initManager();
+        mm.selectMarker(mm.addMarker(location()));
+        expect(mockInfoWindow.open).toHaveBeenCalledTimes(1);
+        delete window.matchMedia;
+        mm.selectMarker(mm.addMarker(location()));
+        expect(mockInfoWindow.open).toHaveBeenCalledTimes(2);
+    });
+
+    it('«Capes» is in the page and opens and closes the category buttons', async () => {
+        await initManager();
+        const map = document.getElementById('gMap');
+        const button = document.querySelector('.cm-gmap-layers button');
+        expect(button.getAttribute('aria-expanded')).toBe('false');
+        button.click();
+        expect(map.classList.contains('cm-gmap--layers-open')).toBe(true);
+        expect(button.getAttribute('aria-expanded')).toBe('true');
+    });
+});
+
+describe('MapManager - folded layers and groups', () => {
+    function withIcons(mm) {
+        mm.icons = [
+            { category: 'castell', type: 'militar', visible: true },
+            { category: 'torre', type: 'militar', visible: true },
+            { category: 'palau', type: 'civil', visible: true },
+        ];
+        mm._setVisible = jest.fn();
+        mm.fitToVisibleMarkers = jest.fn();
+    }
+
+    it('folds the category buttons only when the host asks with foldLayers', async () => {
+        global.catalunyaGmapConfig = { foldLayers: true };
+        await initManager();
+        expect(document.getElementById('gMap').classList.contains('cm-gmap--folded')).toBe(true);
+        expect(document.querySelector('.cm-gmap-layers button')).not.toBeNull();
+    });
+
+    it('does not fold them otherwise', async () => {
+        await initManager();
+        expect(document.getElementById('gMap').classList.contains('cm-gmap--folded')).toBe(false);
+    });
+
+    it('«Capes» opens and closes the buttons', async () => {
+        global.catalunyaGmapConfig = { foldLayers: true };
+        await initManager();
+        const map = document.getElementById('gMap');
+        const button = document.querySelector('.cm-gmap-layers button');
+        button.click();
+        expect(map.classList.contains('cm-gmap--layers-open')).toBe(true);
+        expect(button.getAttribute('aria-expanded')).toBe('true');
+        button.click();
+        expect(map.classList.contains('cm-gmap--layers-open')).toBe(false);
+        expect(button.getAttribute('aria-expanded')).toBe('false');
+    });
+
+    it('a group is on while any of its categories is', () => {
+        const mm = buildManager();
+        withIcons(mm);
+        expect(mm.isGroupVisible('militar')).toBe(true);
+        mm.icons[0].visible = false;
+        expect(mm.isGroupVisible('militar')).toBe(true);
+        mm.icons[1].visible = false;
+        expect(mm.isGroupVisible('militar')).toBe(false);
+        expect(mm.isGroupVisible('inexistent')).toBe(false);
+    });
+
+    it('switches off every category of a group and only those', () => {
+        const mm = buildManager();
+        withIcons(mm);
+        mm.setGroupVisible('militar', false);
+        expect(mm._setVisible).toHaveBeenCalledWith('castell', false);
+        expect(mm._setVisible).toHaveBeenCalledWith('torre', false);
+        expect(mm._setVisible).not.toHaveBeenCalledWith('palau', expect.anything());
+        expect(mm.icons.map(i => i.visible)).toEqual([false, false, true]);
+        expect(mm.fitToVisibleMarkers).toHaveBeenCalled();
+    });
+
+    it('announces which groups are on after a switch', () => {
+        const mm = buildManager();
+        withIcons(mm);
+        const seen = jest.fn();
+        document.addEventListener('cm-gmap:groups-changed', e => seen(e.detail.groups));
+        mm.setGroupVisible('civil', false);
+        expect(seen).toHaveBeenCalledWith({ militar: true, civil: false });
+    });
+
+    it('the show/hide-all button announces the groups too', async () => {
+        const mm = await initManager();
+        mm.icons = [{ category: 'castell', type: 'militar', visible: true }];
+        mm._setVisible = jest.fn();
+        const seen = jest.fn();
+        document.addEventListener('cm-gmap:groups-changed', e => seen(e.detail.groups));
+        document.querySelector('#visibleBuildings').parentElement.click();
+        expect(seen).toHaveBeenCalledWith({ militar: false });
+    });
+});
+
 describe('MapManager - constructor', () => {
     it('sets default properties', () => {
         const mm = buildManager();
@@ -684,7 +909,8 @@ describe('MapManager - map controls', () => {
         const mm = await initManager();
         mm.addIcon({ category: 'castell', title: 'Castells', icon: 'c.png', visible: true });
         expect(mockMap.controls[3]).toEqual([mm.iconsControl]);
-        expect(mm.iconsControl.children).toHaveLength(2);
+        // «all», the «Capes» button (hidden by the CSS unless folded) and the category.
+        expect(mm.iconsControl.children).toHaveLength(3);
     });
 
     it('hides and shows every category from the "all" icon, then re-centres', async () => {
@@ -705,10 +931,10 @@ describe('MapManager - map controls', () => {
         const mm = await initManager();
         mm.addMarker(location());
         mm.addIcon({ category: 'castell', title: 'Castells', icon: 'c.png', visible: true });
-        mm.iconsControl.children[1].click();
+        mm.iconsControl.children[2].click();
         expect(mm.icons[0].visible).toBe(false);
         expect(document.getElementById('img-castell').style.opacity).toBe('0.5');
-        mm.iconsControl.children[1].click();
+        mm.iconsControl.children[2].click();
         expect(document.getElementById('img-castell').style.opacity).toBe('1');
         expect(mockMap.setCenter).toHaveBeenCalledTimes(1);
     });

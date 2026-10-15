@@ -59,6 +59,8 @@ can switch between the two by swapping the bundle, the stylesheet and the config
 | `comarcaSlug` | The active comarca for the boundaries; derived from the loaded buildings when absent |
 | `edificiId` | Select that building: pinned out of its cluster, centred, card open, no «Veure contingut» link |
 | `userPosition` | Show the «Ruta» button (Google Maps directions to the building) on the cards |
+| `locateButton` | Draw a «Localitza'm» button that centres the map on the visitor (asks for the position only when pressed). Off unless `true`: the host page must also allow geolocation in its `Permissions-Policy` |
+| `foldLayers` | Fold the category buttons behind a «Capes» button. Off unless `true`. The host page can then switch the four groups (`militar`, `civil`, `religios`, `altres`) itself with `window.cmGmapManager.setGroupVisible(type, visible)` / `isGroupVisible(type)`, and listens to `cm-gmap:groups-changed` on `document` (`detail.groups`: `{ militar: true, … }`) to show which are on |
 | `popupActions` | See [Popup actions](#popup-actions) |
 | `listId`, `secondaryDivId` | Ids of the sidebar list and its container (`map-list`, `secondaryDiv`) |
 | `listEnabled` | Start with the sidebar list open |

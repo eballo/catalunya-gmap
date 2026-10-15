@@ -372,6 +372,67 @@ ul.legend {
   padding: 2px;
 }
 
+/* foldLayers: the category buttons (the ones with an img#img-<category>) are
+   hidden until «Capes» is pressed; in fullscreen, where there is room, they
+   are all back. */
+.cm-gmap-layers button,
+.cm-gmap-locate button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: #fff;
+  color: #666;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.cm-gmap-layers button:hover,
+.cm-gmap-locate button:hover { color: #000; }
+
+.cm-gmap-layers { display: none; }
+.cm-gmap--folded:not(:fullscreen) .cm-gmap-layers { display: block; }
+.cm-gmap--folded:not(:fullscreen):not(.cm-gmap--layers-open) .cm-gmap-icon:has(> img[id^="img-"]) { display: none; }
+
+/* The map of a page about one building (selectMarker() was called), on a
+   phone: a 320 px wide map cannot spare a column of twelve category buttons, a
+   list toggle and a logo. The category buttons fold behind «Capes», the list
+   toggle and the logo go. In fullscreen, where there is room, everything is
+   back. */
+@media (max-width: 600px) {
+  .cm-gmap--entry:not(:fullscreen) .cm-gmap-layers { display: block; }
+  .cm-gmap--entry:not(:fullscreen):not(.cm-gmap--layers-open) .cm-gmap-icon:has(> img[id^="img-"]) { display: none; }
+  .cm-gmap--entry:not(:fullscreen) .cm-gmap-icon:has(> #llistat) { display: none; }
+  .cm-gmap--entry:not(:fullscreen) div:has(> img[src*="logoCM"]) { display: none; }
+}
+
+/* «Localitza'm»: under the zoom buttons; the message sits beside the button. */
+.cm-gmap-locate {
+  position: relative;
+  margin: 10px;
+}
+
+.cm-gmap-locate-message {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 8px);
+  width: max-content;
+  max-width: 220px;
+  padding: 6px 10px;
+  border-radius: 2px;
+  background: #fff;
+  color: #333;
+  font: 12px/1.35 Roboto, Arial, sans-serif;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cm-gmap-locate-message[hidden] { display: none; }
+.cm-gmap-locate button.cm-gmap-locate--busy { opacity: 0.5; cursor: progress; }
+
 /* InfoWindow: Google's header is off (headerDisabled) and the card is ours,
    edge to edge, with its own close button. */
 .gm-style .gm-style-iw-c {
