@@ -16,32 +16,24 @@ jest.mock('../app/catalunya-gmap-extra', () => ({
     default: jest.fn(),
 }));
 
-// main.js uses the page's jQuery: a small stand-in records what it was asked.
-const jq = { calls: [] };
-function $(target) {
-    const el = {
-        hide: jest.fn(() => jq.calls.push(['hide', target])),
-        show: jest.fn(() => jq.calls.push(['show', target])),
-        resize: jest.fn((fn) => { jq.resize = fn; }),
-        bind: jest.fn((events, fn) => { jq.fullscreen = fn; }),
-    };
-    return el;
-}
-global.$ = $;
-
 import MonumentBuilder from '../app/catalunya-gmap-monument';
 import handleSearchTextList from '../app/catalunya-gmap-extra';
 import initMapApplication from '../app/catalunya-gmap-main';
 
 beforeEach(() => {
     jest.clearAllMocks();
-    jq.calls = [];
+    document.body.innerHTML = '<div id="error">No buildings</div><div id="llistat">list</div>';
     delete window.cmGmapManager;
     mockCreate.mockResolvedValue(mockManager);
     mockManager.getMarkers.mockReturnValue([]);
 });
 
 describe('initMapApplication()', () => {
+    test('needs no jQuery on the page', () => {
+        expect(window.$).toBeUndefined();
+        expect(window.jQuery).toBeUndefined();
+    });
+
     test('builds the map on #gMap and exposes the manager as window.cmGmapManager', async () => {
         await initMapApplication();
         expect(MonumentBuilder).toHaveBeenCalledWith('gMap');
@@ -51,28 +43,29 @@ describe('initMapApplication()', () => {
     test('hides the "no buildings" message once there are markers', async () => {
         mockManager.getMarkers.mockReturnValue([{}]);
         await initMapApplication();
-        expect(jq.calls).toContainEqual(['hide', '#error']);
+        expect(document.getElementById('error').style.display).toBe('none');
     });
 
     test('keeps the message when there are no markers', async () => {
         await initMapApplication();
-        expect(jq.calls).not.toContainEqual(['hide', '#error']);
+        expect(document.getElementById('error').style.display).not.toBe('none');
     });
 
     test('resizes the map with the window', async () => {
         await initMapApplication();
-        jq.resize();
+        window.dispatchEvent(new Event('resize'));
         expect(mockManager.resize).toHaveBeenCalled();
     });
 
     test('hides the list icon in fullscreen and shows it again after', async () => {
         await initMapApplication();
+        const list = document.getElementById('llistat');
         document.webkitIsFullScreen = true;
-        jq.fullscreen();
-        expect(jq.calls).toContainEqual(['hide', '#llistat']);
+        document.dispatchEvent(new Event('webkitfullscreenchange'));
+        expect(list.style.display).toBe('none');
         document.webkitIsFullScreen = false;
-        jq.fullscreen();
-        expect(jq.calls).toContainEqual(['show', '#llistat']);
+        document.dispatchEvent(new Event('webkitfullscreenchange'));
+        expect(list.style.display).not.toBe('none');
     });
 
     test('logs instead of throwing when the map cannot be built', async () => {
