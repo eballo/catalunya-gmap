@@ -10,11 +10,8 @@
  *   SFTP_PRIVATE_KEY  Path to private key    (optional — skips password prompt if set)
  *   SFTP_DEBUG        Set to "true" for verbose output
  *
- * The target directory is built from the version in package.json:
- *   6.0.0 → gmap6   (minor=0, patch=0)
- *   6.1.0 → gmap61  (patch=0)
- *   6.1.1 → gmap611 (patch≠0)
- * The version is read automatically from package.json.
+ * The target directory is always <SFTP_REMOTE_PATH>/gmap: only the latest version
+ * is kept on the demo site. Its contents are wiped before every upload.
  * The password is always prompted interactively unless SFTP_PRIVATE_KEY is set.
  *
  * Usage:
@@ -29,10 +26,7 @@ const SftpClient = require('ssh2-sftp-client');
 
 const ROOT    = path.resolve(__dirname, '..');
 const pkg     = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
-const [MAJOR, MINOR, PATCH] = pkg.version.split('.');
-const MAP_DIR = MINOR === '0' ? `gmap${MAJOR}`
-    : PATCH === '0' ? `gmap${MAJOR}${MINOR}`
-    : `gmap${MAJOR}${MINOR}${PATCH}`;
+const MAP_DIR = 'gmap';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -171,8 +165,11 @@ async function deploy() {
     }
     logOk('Connected');
 
-    log(`Creating remote directory...`);
+    log(`Preparing remote directory (wiping the previous version)...`);
     try {
+        if (await sftp.exists(remotePath)) {
+            await sftp.rmdir(remotePath, true);
+        }
         await sftp.mkdir(remotePath, true);
         logOk(`Remote directory ready: ${remotePath}`);
     } catch (err) {
