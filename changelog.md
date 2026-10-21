@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.13.0] - 2026-10-21
+
+### Changed
+- Keep only the latest demo version in a fixed directory (#73)
+
 ## [6.12.0] - 2026-10-21
 
 ### Changed
