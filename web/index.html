@@ -27,9 +27,21 @@
             window.catalunyaGmapConfig = window.catalunyaGmapConfig || {};
             window.catalunyaGmapConfig.markersJsonUrl = 'js/catalunya-markers.json';
             window.catalunyaGmapConfig.comarquesJsonUrl = 'js/catalunya-comarques-limits.json';
-            window.catalunyaGmapConfig.locateButton = true;
-            window.catalunyaGmapConfig.foldLayers = true;
-            window.catalunyaGmapConfig.searchButton = true;
+            // Feature buttons (bar under the filters): their state lives in the URL, so a configuration
+            // can be shared as a link. Only what differs from the defaults is written (?locateButton=0).
+            const DEFAULTS = {locateButton: true, foldLayers: true, searchButton: true, userPosition: false, darkMode: false};
+            const state = {};
+            Object.keys(DEFAULTS).forEach(function (name) {
+                state[name] = params.has(name) ? params.get(name) === '1' : DEFAULTS[name];
+            });
+            Object.assign(window.catalunyaGmapConfig, {
+                locateButton: state.locateButton,
+                foldLayers: state.foldLayers,
+                searchButton: state.searchButton,
+                userPosition: state.userPosition
+            });
+            if (state.darkMode) document.documentElement.setAttribute('data-theme', 'dark');
+            window.cmDemoOptions = {defaults: DEFAULTS, state: state};
 
             const comarca = params.get('comarca');
             const municipi = params.get('municipi');
@@ -39,6 +51,45 @@
             if (edificiId) window.catalunyaGmapConfig.edificiId = edificiId;
         })();
     </script>
+
+    <style>
+        /* Demo-only: feature buttons bar, same look as the filters bar. */
+        body.gmap-page #demo-options { flex-shrink: 0; }
+        #demo-options {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 10px;
+            padding: 6px 24px;
+            background: var(--cm-gmap-chrome-alt);
+            border-bottom: 1px solid var(--cm-gmap-gold);
+        }
+        #demo-options .demo-options__title {
+            font-size: 9.5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--cm-gmap-chrome-label, var(--cm-gmap-gold-soft));
+        }
+        #demo-options .demo-option {
+            padding: 5px 12px;
+            font-family: 'Droid Serif', Georgia, serif;
+            font-size: 11.5px;
+            color: var(--cm-gmap-gold-soft);
+            background: transparent;
+            border: 1px solid var(--cm-gmap-gold);
+            border-radius: 14px;
+            cursor: pointer;
+        }
+        #demo-options .demo-option:hover { background: rgba(var(--cm-gmap-gold-rgb), 0.15); }
+        #demo-options .demo-option[aria-pressed="true"] {
+            color: var(--cm-gmap-chrome);
+            background: var(--cm-gmap-gold);
+        }
+        #demo-options .demo-options__reset {
+            font-size: 11.5px;
+            color: var(--cm-gmap-gold);
+        }
+    </style>
 </head>
 
 <body class="gmap-page">
@@ -82,6 +133,26 @@
     <span id="gmap-filters-current"></span>
 </div>
 
+<div id="demo-options" role="group" aria-label="Funcionalitats del mapa">
+    <span class="demo-options__title">Funcionalitats</span>
+    <button type="button" class="demo-option" data-option="locateButton" aria-pressed="false"
+            title="Botó «Localitza'm»: centra el mapa on ets (demana la posició només en prémer-lo)">Localitza'm
+    </button>
+    <button type="button" class="demo-option" data-option="foldLayers" aria-pressed="false"
+            title="Plega els botons de categoria darrere d'un botó «Capes»">Capes plegables
+    </button>
+    <button type="button" class="demo-option" data-option="searchButton" aria-pressed="false"
+            title="Lupa que obre la llista lateral amb el cursor al cercador">Cerca
+    </button>
+    <button type="button" class="demo-option" data-option="userPosition" aria-pressed="false"
+            title="Botó «Ruta» a les fitxes: indicacions fins a l'edificació">Botó «Ruta»
+    </button>
+    <button type="button" class="demo-option" data-option="darkMode" aria-pressed="false"
+            title="El mapa segueix el tema fosc de la pàgina">Mode fosc
+    </button>
+    <a class="demo-options__reset" href="?">Restableix</a>
+</div>
+
 <div id="container">
 
     <div id="gMap"></div>
@@ -106,6 +177,26 @@
 
 <script>
     (function () {
+        const options = window.cmDemoOptions;
+        document.querySelectorAll('#demo-options .demo-option').forEach(function (btn) {
+            const name = btn.dataset.option;
+            btn.setAttribute('aria-pressed', String(options.state[name]));
+            btn.addEventListener('click', function () {
+                const next = Object.assign({}, options.state);
+                next[name] = !next[name];
+                const query = new URLSearchParams(window.location.search);
+                Object.keys(options.defaults).forEach(function (option) {
+                    query.delete(option);
+                    if (next[option] !== options.defaults[option]) query.set(option, next[option] ? '1' : '0');
+                });
+                window.location.search = query.toString();
+            });
+        });
+    })();
+</script>
+
+<script>
+    (function () {
         const params = new URLSearchParams(window.location.search);
         const comarcaSelect = document.getElementById('filter-comarca');
         const poblacioSelect = document.getElementById('filter-poblacio');
@@ -126,6 +217,9 @@
         function navigateTo(comarca, municipi, edificiId) {
             const url = new URL(window.location.href);
             url.search = '';
+            Object.keys(window.cmDemoOptions.defaults).forEach(function (option) {
+                if (params.has(option)) url.searchParams.set(option, params.get(option));
+            });
             if (comarca) url.searchParams.set('comarca', comarca);
             if (municipi) url.searchParams.set('municipi', municipi);
             if (edificiId) url.searchParams.set('edificiId', edificiId);
