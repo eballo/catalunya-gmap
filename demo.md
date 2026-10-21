@@ -19,3 +19,4 @@
 - [Demo v6.9](http://demo.catalunyamedieval.es/gmap69)
 - [Demo v6.10](http://demo.catalunyamedieval.es/gmap610)
 - [Demo v6.11](http://demo.catalunyamedieval.es/gmap611)
+- [Demo v6.12](http://demo.catalunyamedieval.es/gmap612)

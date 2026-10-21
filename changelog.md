@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.12.0] - 2026-10-21
+
+### Changed
+- gmap without jQuery (#72)
+
 ## [6.11.0] - 2026-10-15
 
 ### Changed
