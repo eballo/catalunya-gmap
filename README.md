@@ -42,9 +42,10 @@ can switch between the two by swapping the bundle, the stylesheet and the config
         </div>
     </div>
 
-    <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/catalunya-gmap.min.js"></script>
 ```
+
+The map needs no jQuery (since 6.12.0): the host page does not have to load it or define a global `$`.
 
 3. Configure it with `window.catalunyaGmapConfig`, set before the bundle loads
 
