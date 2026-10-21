@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.14.0] - 2026-10-21
+
+### Changed
+- Bump launch-editor from 2.14.1 to 2.14.2 (#74)
+- Demo data points to production instead of localhost (#75)
+
 ## [6.13.0] - 2026-10-21
 
 ### Changed
