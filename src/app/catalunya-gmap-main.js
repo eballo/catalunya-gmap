@@ -9,26 +9,31 @@ async function initMapApplication() {
         const mapManager = await monument.create();
 
         if (mapManager.getMarkers().length > 0) {
-            $("#error").hide();
+            const error = document.getElementById('error');
+            if (error) {
+                error.style.display = 'none';
+            }
         }
 
-        $(window).resize(function () {
+        window.addEventListener('resize', () => {
             mapManager.resize();
-        })
+        });
 
         /**
          * Full Screen event
          * On full screen we remove the list icon
          */
-        $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function () {
+        const toggleListOnFullScreen = () => {
             const isFullScreen = document.fullScreen ||
                 document.mozFullScreen ||
                 document.webkitIsFullScreen;
-            if (isFullScreen) {
-                $('#llistat').hide();
-            } else {
-                $('#llistat').show();
+            const list = document.getElementById('llistat');
+            if (list) {
+                list.style.display = isFullScreen ? 'none' : '';
             }
+        };
+        ['webkitfullscreenchange', 'mozfullscreenchange', 'fullscreenchange'].forEach((name) => {
+            document.addEventListener(name, toggleListOnFullScreen);
         });
 
     } catch (error) {
