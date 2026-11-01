@@ -41,6 +41,8 @@ function makeMarker(opts) {
         getMap: jest.fn(function () { return this.map; }),
         setIcon: jest.fn(),
         setZIndex: jest.fn(),
+        bindTo: jest.fn(),
+        unbindAll: jest.fn(),
         getPosition: jest.fn(() => ({ lat: () => opts.position.lat, lng: () => opts.position.lng })),
         addListener: jest.fn((evt, fn) => { handlers[evt] = fn; }),
         fire: (evt) => handlers[evt] && handlers[evt](),
@@ -224,6 +226,44 @@ describe("MapManager - «Localitza'm» (locateButton)", () => {
         button.click();
         expect(message.hidden).toBe(false);
         expect(getCurrentPosition).not.toHaveBeenCalled();
+    });
+});
+
+describe('MapManager - setVisited()', () => {
+    it('puts a green star on a visited building and a gold one on a verified one, bound to the marker', async () => {
+        const mm = await initManager();
+        const a = mm.addMarker(location({ edificiId: 1 }));
+        const b = mm.addMarker(location({ edificiId: 2 }));
+        const c = mm.addMarker(location({ edificiId: 3 }));
+        mm.setVisited(new Map([[1, false], [2, true]]));
+        expect(a._visitedStar.opts.icon.fillColor).toBe('#2a6050');
+        expect(b._visitedStar.opts.icon.fillColor).toBe('#f19d39');
+        expect(c._visitedStar).toBeFalsy();
+        expect(a._visitedStar.bindTo).toHaveBeenCalledWith('map', a);
+        expect(a._visitedStar.bindTo).toHaveBeenCalledWith('visible', a);
+    });
+
+    it('marks the markers added after the set is known', async () => {
+        const mm = await initManager();
+        mm.setVisited(new Map([[7, false]]));
+        expect(mm.addMarker(location({ edificiId: 7 }))._visitedStar).toBeTruthy();
+    });
+
+    it('takes the stars away when the visitor has none', async () => {
+        const mm = await initManager();
+        const a = mm.addMarker(location({ edificiId: 1 }));
+        mm.setVisited(new Map([[1, false]]));
+        const star = a._visitedStar;
+        mm.setVisited(new Map());
+        expect(star.setMap).toHaveBeenCalledWith(null);
+        expect(a._visitedStar).toBeNull();
+    });
+
+    it('ignores a value that is not a Map', async () => {
+        const mm = await initManager();
+        mm.addMarker(location({ edificiId: 1 }));
+        expect(() => mm.setVisited({ 1: true })).not.toThrow();
+        expect(mm.visited.size).toBe(0);
     });
 });
 
