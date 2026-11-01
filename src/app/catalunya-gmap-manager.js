@@ -61,6 +61,8 @@ export default class MapManager {
         this.mapId = mapId;             // The mapId
         this.map = null;                // The created map
         this.markers = [];              // All the markers
+        // Building id -> true when a visit was verified on the spot. Set by the host page for a signed-in visitor.
+        this.visited = new Map();
         this.clusterer = null;          // custer elements
         this.iconsControl = null;       // Container of the show/hide icons (top right)
 
@@ -172,6 +174,7 @@ export default class MapManager {
 
         // add marker to the markers array
         this.markers.push(marker);
+        this._syncVisitedStar(marker);
 
         // if we have the content object set up
         this.addContentToMarker(location, marker);
@@ -179,6 +182,50 @@ export default class MapManager {
         // Create right buttons on the map
         this._createMarkerButton(marker, location)
         return marker;
+    }
+
+    /**
+     * Marks the buildings the visitor has been to with a star at the corner of their marker: green, or gold when a
+     * visit was verified on the spot. Kept in step with catalunya-omap's setVisited().
+     *
+     * @param {Map<number, boolean>} visited building id -> verified
+     */
+    setVisited(visited) {
+        this.visited = visited instanceof Map ? visited : new Map();
+        this.markers.forEach(marker => this._syncVisitedStar(marker));
+    }
+
+    _syncVisitedStar(marker) {
+        if (marker._visitedStar) {
+            marker._visitedStar.unbindAll();
+            marker._visitedStar.setMap(null);
+            marker._visitedStar = null;
+        }
+        if (!this.visited.has(marker.edificiId)) return;
+
+        const verified = this.visited.get(marker.edificiId) === true;
+        // The star's own path is 24 units wide; at this scale its top-left corner lands just right of, and above, the
+        // marker's 32 px picture (anchored at the bottom centre).
+        const scale = 0.75;
+        const anchor = { x: -2 / scale, y: 32 / scale };
+        const star = new this.marker.Marker({
+            position: marker.getPosition(),
+            clickable: false,
+            zIndex: 1000,
+            icon: {
+                path: 'M12 2l3 6.5 7 .9-5.1 4.9 1.3 7L12 17.8 5.8 21.3l1.3-7L2 9.4l7-.9z',
+                fillColor: verified ? '#f19d39' : '#2a6050',
+                fillOpacity: 1,
+                strokeColor: '#ffffff',
+                strokeWeight: 1.5,
+                scale,
+                anchor: this.google && this.google.Point ? new this.google.Point(anchor.x, anchor.y) : anchor
+            }
+        });
+        // Where the marker is drawn, so is its star: categories and clusters change `map` and `visible`.
+        star.bindTo('map', marker);
+        star.bindTo('visible', marker);
+        marker._visitedStar = star;
     }
 
     getMarkers() {
@@ -439,7 +486,13 @@ export default class MapManager {
         if (this.clusterer) {
             this.clusterer.clearMarkers();
         }
-        this.markers.forEach(marker => marker.setMap(null));
+        this.markers.forEach(marker => {
+            marker.setMap(null);
+            if (marker._visitedStar) {
+                marker._visitedStar.unbindAll();
+                marker._visitedStar.setMap(null);
+            }
+        });
         this.markers = [];
         this.arrayCategoriesText = [];
         if (this.infowindow) this.infowindow.close();
