@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.16.0] - 2026-11-01
+
+### Changed
+- Mark visited buildings with a star on the map markers (#78)
+
 ## [6.15.0] - 2026-10-21
 
 ### Changed
