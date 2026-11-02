@@ -49,9 +49,29 @@ export function centuryRange(markers) {
     return { min: Math.min(...centuries), max: Math.max(...centuries) };
 }
 
-/** Markers whose first century is reached at `century`; undated ones never. */
-export function visibleAt(markers, century) {
-    return markers.filter(m => Number.isInteger(m.segleIni) && m.segleIni <= century);
+/** True when the century belongs to one of the chosen periods; no period chosen means all of them. */
+export function inEras(century, eraIds) {
+    if (!eraIds || eraIds.length === 0) return true;
+    const era = eraOf(century);
+    return era !== null && eraIds.includes(era.id);
+}
+
+/** Centuries of the range that belong to the chosen periods, in order. */
+export function eraCenturies(range, eraIds) {
+    const centuries = [];
+    for (let century = range.min; century <= range.max; century++) {
+        if (inEras(century, eraIds)) centuries.push(century);
+    }
+    return centuries;
+}
+
+/**
+ * Markers whose first century is reached at `century` and that fall in the
+ * chosen periods (all of them when none is chosen); undated ones never.
+ * Buildings of an earlier period that is not chosen are not carried along.
+ */
+export function visibleAt(markers, century, eraIds = []) {
+    return markers.filter(m => Number.isInteger(m.segleIni) && m.segleIni <= century && inEras(m.segleIni, eraIds));
 }
 
 export function formatCount(number) {
@@ -65,6 +85,8 @@ export default class TimelineControl {
         this.markers = mapManager.getMarkers();
         this.range = centuryRange(this.markers);
         this.century = null;
+        // Periods the visitor chose (ids); empty means the whole timeline.
+        this.selected = new Set();
         this.onMap = new Set(this.markers);
         this.timer = null;
         this.speedIndex = 0;
@@ -75,16 +97,52 @@ export default class TimelineControl {
     start() {
         if (!this.range) return false;
         this.dated = this.markers.filter(m => Number.isInteger(m.segleIni)).length;
-        this.manager.setTimelineFilter(marker => Number.isInteger(marker.segleIni) && marker.segleIni <= this.century);
+        this.manager.setTimelineFilter(marker => this._wants(marker));
         this._buildControl();
         this.setCentury(this.range.min);
         return true;
     }
 
+    _eraIds() {
+        return [...this.selected];
+    }
+
+    _wants(marker) {
+        return Number.isInteger(marker.segleIni) && marker.segleIni <= this.century && inEras(marker.segleIni, this._eraIds());
+    }
+
+    /** Centuries the slider can stop at: those of the chosen periods. */
+    _included() {
+        const centuries = eraCenturies(this.range, this._eraIds());
+        return centuries.length ? centuries : eraCenturies(this.range, []);
+    }
+
+    // Lands on the first included century from `century` on, or the last one.
     setCentury(century) {
-        this.century = Math.min(Math.max(century, this.range.min), this.range.max);
+        const included = this._included();
+        this.century = included.find(c => c >= century) ?? included[included.length - 1];
         this._apply();
         this._render();
+    }
+
+    _neighbour(delta) {
+        const included = this._included();
+        const next = delta > 0 ? included.find(c => c > this.century) : [...included].reverse().find(c => c < this.century);
+        return next ?? this.century;
+    }
+
+    /** Chooses or drops a period and shows every building of the choice at once. */
+    _toggleEra(id) {
+        if (this.selected.has(id)) this.selected.delete(id);
+        else this.selected.add(id);
+        this._showChoice();
+    }
+
+    _showChoice() {
+        this.pause();
+        const included = this._included();
+        this.century = null;
+        this.setCentury(included[included.length - 1]);
     }
 
     // Incremental: only the markers whose state changed are added or removed.
@@ -92,8 +150,7 @@ export default class TimelineControl {
         const toAdd = [];
         const toRemove = [];
         this.markers.forEach(marker => {
-            const wanted = Number.isInteger(marker.segleIni) && marker.segleIni <= this.century
-                && this.manager.isCategoryVisible(marker.category);
+            const wanted = this._wants(marker) && this.manager.isCategoryVisible(marker.category);
             const shown = this.onMap.has(marker);
             if (wanted && !shown) toAdd.push(marker);
             if (!wanted && shown) toRemove.push(marker);
@@ -142,14 +199,16 @@ export default class TimelineControl {
     }
 
     _erasMarkup() {
-        const buttons = erasInRange(this.range).map(era => `<button type="button" class="cm-gmap-timeline-era cm-gmap-timeline-era--${era.id}" data-act="era" data-century="${era.from}" data-era="${era.id}" style="flex-grow:${era.to - era.from + 1}" title="${era.name}" aria-label="${era.name}: del segle ${toRoman(era.from)} al ${toRoman(era.to)}">${era.short}</button>`);
-        return `<div class="cm-gmap-timeline-eras" role="group" aria-label="Períodes">${buttons.join('')}</div>`;
+        const all = `<button type="button" class="cm-gmap-timeline-era cm-gmap-timeline-era--all" data-act="all" title="Tots els períodes" aria-label="Tots els períodes" aria-pressed="true">Totes</button>`;
+        const buttons = erasInRange(this.range).map(era => `<button type="button" class="cm-gmap-timeline-era cm-gmap-timeline-era--${era.id}" data-act="era" data-era="${era.id}" style="flex-grow:${era.to - era.from + 1}" title="${era.name}" aria-label="${era.name}: del segle ${toRoman(era.from)} al ${toRoman(era.to)}" aria-pressed="false">${era.short}</button>`);
+        return `<div class="cm-gmap-timeline-eras" role="group" aria-label="Períodes (en pots triar diversos)">${all}${buttons.join('')}</div>`;
     }
 
     _onAction(action, button) {
-        if (action === 'era') { this.pause(); this.setCentury(Number(button.dataset.century)); }
-        if (action === 'prev') { this.pause(); this.setCentury(this.century - 1); }
-        if (action === 'next') { this.pause(); this.setCentury(this.century + 1); }
+        if (action === 'era') this._toggleEra(button.dataset.era);
+        if (action === 'all') { this.selected.clear(); this._showChoice(); }
+        if (action === 'prev') { this.pause(); this.setCentury(this._neighbour(-1)); }
+        if (action === 'next') { this.pause(); this.setCentury(this._neighbour(1)); }
         if (action === 'play') this.timer ? this.pause() : this.play();
         if (action === 'speed') {
             this.speedIndex = (this.speedIndex + 1) % SPEEDS.length;
@@ -161,10 +220,12 @@ export default class TimelineControl {
     play() {
         if (this.reducedMotion) return;
         window.clearInterval(this.timer);
-        if (this.century >= this.range.max) this.setCentury(this.range.min);
+        const included = this._included();
+        if (this.century >= included[included.length - 1]) this.setCentury(included[0]);
         this.timer = window.setInterval(() => {
-            if (this.century >= this.range.max) { this.pause(); return; }
-            this.setCentury(this.century + 1);
+            const next = this._neighbour(1);
+            if (next === this.century) { this.pause(); return; }
+            this.setCentury(next);
         }, STEP_MS / SPEEDS[this.speedIndex]);
         this._renderPlay();
     }
@@ -184,11 +245,16 @@ export default class TimelineControl {
 
     _render() {
         if (!this.el) return;
-        const count = visibleAt(this.markers, this.century).length;
+        const count = visibleAt(this.markers, this.century, this._eraIds()).length;
+        const included = this._included();
+        this.slider.min = included[0];
+        this.slider.max = included[included.length - 1];
         this.slider.value = this.century;
         const era = eraOf(this.century);
+        const chosen = ERAS.filter(e => this.selected.has(e.id)).map(e => e.name);
+        const label = chosen.length ? chosen.join(' + ') : (era ? era.name : '');
         this.el.querySelector('.cm-gmap-timeline-status').textContent =
-            `Segle ${toRoman(this.century)} · ${era ? era.name + ' · ' : ''}${formatCount(count)} edificis`;
+            `Segle ${toRoman(this.century)} · ${label ? label + ' · ' : ''}${formatCount(count)} edificis`;
         this._renderEras(era);
         this.el.querySelector('.cm-gmap-timeline-dated').textContent =
             `${formatCount(this.dated)} de ${formatCount(this.markers.length)} edificis amb segle`;
@@ -197,6 +263,8 @@ export default class TimelineControl {
     _renderEras(current) {
         if (!this.el || typeof this.el.querySelectorAll !== 'function') return;
         this.el.querySelectorAll('.cm-gmap-timeline-era').forEach(button => {
+            const isAll = button.dataset.act === 'all';
+            button.setAttribute('aria-pressed', String(isAll ? this.selected.size === 0 : this.selected.has(button.dataset.era)));
             if (current && button.dataset.era === current.id) button.setAttribute('aria-current', 'true');
             else button.removeAttribute('aria-current');
         });
