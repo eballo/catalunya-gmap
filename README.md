@@ -63,6 +63,7 @@ The map needs no jQuery (since 6.12.0): the host page does not have to load it o
 | `locateButton` | Draw a «Localitza'm» button that centres the map on the visitor (asks for the position only when pressed). Off unless `true`: the host page must also allow geolocation in its `Permissions-Policy` |
 | `foldLayers` | Fold the category buttons behind a «Capes» button. Off unless `true`. The host page can then switch the four groups (`militar`, `civil`, `religios`, `altres`) itself with `window.cmGmapManager.setGroupVisible(type, visible)` / `isGroupVisible(type)`, and listens to `cm-gmap:groups-changed` on `document` (`detail.groups`: `{ militar: true, … }`) to show which are on |
 | `searchButton` | Draw a magnifier button that opens the sidebar list with the cursor in its search box, and closes it when pressed again. It replaces the list icon at the top right. Off unless `true` |
+| `timeline` | «Segle a segle»: a century slider under the map, with one toggle band per historical period. A building appears at its first century (`segleIni` in its marker) and stays; the chosen periods filter what is painted, without the earlier ones. New buildings use Google's drop animation. Off unless `true`; in the demo, `?timeline=1`. Kept in step with catalunya-omap (see its `docs/timeline-map.md`) |
 | `popupActions` | See [Popup actions](#popup-actions) |
 | `listId`, `secondaryDivId` | Ids of the sidebar list and its container (`map-list`, `secondaryDiv`) |
 | `listEnabled` | Start with the sidebar list open |
