@@ -14,6 +14,7 @@
   --cm-gmap-chrome-muted: #7a6a55;
   --cm-gmap-chrome-label: #a89070;
   --cm-gmap-gold-rgb: 201, 166, 84;
+  --cm-gmap-rubric: #8b1e14;
   --cm-gmap-ink: #2c2416;
   --cm-gmap-ink-list: #3a2e22;
   --cm-gmap-ink-muted: #666;
@@ -70,6 +71,7 @@
   --cm-gmap-ink:         #e7dccd;
   --cm-gmap-ink-list:    #e7dccd;
   --cm-gmap-ink-muted:   #b8ab99;
+  --cm-gmap-rubric:      #f08b76;
   --cm-gmap-placeholder: #968879;
   --cm-gmap-search-icon: #b09a80;
 
@@ -819,4 +821,60 @@ input#search-llista:focus {
 #map-list li.altres-llocs-dinteres:hover:not(.header),
 #mapLlist li.altres-llocs-dinteres:hover:not(.header) {
   background: var(--cm-gmap-altres-tint); border-left-color: var(--cm-gmap-altres); padding-left: 20px;
+}
+
+/* Segle a segle: century slider under the map */
+.cm-gmap-timeline {
+  min-width: min(440px, calc(100vw - 32px));
+  padding: 10px 14px;
+  font-family: 'Droid Serif', Georgia, serif;
+  color: var(--cm-gmap-ink);
+  background: var(--cm-gmap-panel);
+  border: 1px solid var(--cm-gmap-border-frame);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(70, 48, 28, 0.25);
+}
+
+.cm-gmap-timeline-status {
+  font-family: Cinzel, Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cm-gmap-rubric);
+}
+
+.cm-gmap-timeline-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 4px;
+}
+
+.cm-gmap-timeline-btn {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--cm-gmap-control);
+  background: var(--cm-gmap-surface);
+  border: 1px solid var(--cm-gmap-border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cm-gmap-timeline-btn:hover,
+.cm-gmap-timeline-btn:focus-visible {
+  color: var(--cm-gmap-control-hover);
+  border-color: var(--cm-gmap-gold);
+}
+
+.cm-gmap-timeline-slider {
+  flex: 1;
+  min-width: 80px;
+  accent-color: var(--cm-gmap-rubric);
+}
+
+.cm-gmap-timeline-dated {
+  font-size: 11px;
+  color: var(--cm-gmap-ink-muted);
 }

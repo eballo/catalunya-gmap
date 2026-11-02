@@ -29,7 +29,7 @@
             window.catalunyaGmapConfig.comarquesJsonUrl = 'js/catalunya-comarques-limits.json';
             // Feature buttons (bar under the filters): their state lives in the URL, so a configuration
             // can be shared as a link. Only what differs from the defaults is written (?locateButton=0).
-            const DEFAULTS = {locateButton: true, foldLayers: true, searchButton: true, userPosition: false, darkMode: false};
+            const DEFAULTS = {locateButton: true, foldLayers: true, searchButton: true, userPosition: false, darkMode: false, timeline: false};
             const state = {};
             Object.keys(DEFAULTS).forEach(function (name) {
                 state[name] = params.has(name) ? params.get(name) === '1' : DEFAULTS[name];
@@ -38,7 +38,8 @@
                 locateButton: state.locateButton,
                 foldLayers: state.foldLayers,
                 searchButton: state.searchButton,
-                userPosition: state.userPosition
+                userPosition: state.userPosition,
+                timeline: state.timeline
             });
             if (state.darkMode) document.documentElement.setAttribute('data-theme', 'dark');
             window.cmDemoOptions = {defaults: DEFAULTS, state: state};
@@ -149,6 +150,9 @@
     </button>
     <button type="button" class="demo-option" data-option="darkMode" aria-pressed="false"
             title="El mapa segueix el tema fosc de la pàgina">Mode fosc
+    </button>
+    <button type="button" class="demo-option" data-option="timeline" aria-pressed="false"
+            title="Segle a segle: una línia del temps que va pintant les edificacions al mapa">Segle a segle
     </button>
     <a class="demo-options__reset" href="?">Restableix</a>
 </div>
