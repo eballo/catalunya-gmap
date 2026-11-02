@@ -1,4 +1,4 @@
-import TimelineControl, { toRoman, centuryRange, visibleAt, formatCount, ERAS, eraOf, erasInRange } from '../app/catalunya-gmap-timeline';
+import TimelineControl, { toRoman, centuryRange, visibleAt, formatCount, ERAS, eraOf, erasInRange, inEras, eraCenturies } from '../app/catalunya-gmap-timeline';
 
 describe('toRoman', () => {
     it.each([[1, 'I'], [4, 'IV'], [9, 'IX'], [11, 'XI'], [14, 'XIV'], [19, 'XIX'], [20, 'XX']])('%i -> %s', (n, roman) => {
@@ -54,6 +54,32 @@ describe('eras', () => {
     });
 });
 
+describe('period choice', () => {
+    it('takes every century when no period is chosen', () => {
+        expect(inEras(3, [])).toBe(true);
+        expect(inEras(3)).toBe(true);
+    });
+
+    it('takes only the centuries of the chosen periods', () => {
+        expect(inEras(12, ['plena'])).toBe(true);
+        expect(inEras(10, ['plena'])).toBe(false);
+        expect(inEras(10, ['alta', 'baixa'])).toBe(true);
+        expect(inEras(99, ['alta'])).toBe(false);
+    });
+
+    it('lists the centuries of the choice', () => {
+        expect(eraCenturies({ min: 9, max: 15 }, ['alta', 'baixa'])).toEqual([9, 10, 14, 15]);
+        expect(eraCenturies({ min: 9, max: 11 }, [])).toEqual([9, 10, 11]);
+    });
+
+    it('does not carry the earlier periods along in visibleAt', () => {
+        const markers = [{ id: 1, segleIni: 3 }, { id: 2, segleIni: 12 }, { id: 3, segleIni: 14 }];
+        expect(visibleAt(markers, 20, ['plena']).map(m => m.id)).toEqual([2]);
+        expect(visibleAt(markers, 20, ['romana', 'baixa']).map(m => m.id)).toEqual([1, 3]);
+        expect(visibleAt(markers, 13).map(m => m.id)).toEqual([1, 2]);
+    });
+});
+
 describe('formatCount', () => {
     it('groups thousands the Catalan way', () => {
         expect(formatCount(1491)).toMatch(/^1\D?491$/);
@@ -104,7 +130,7 @@ describe('TimelineControl', () => {
         const marked = [];
         const button = id => ({
             dataset: { era: id },
-            setAttribute: () => marked.push(id),
+            setAttribute: (name) => name === 'aria-current' && marked.push(id),
             removeAttribute: () => {}
         });
         control.slider = {};
@@ -117,11 +143,75 @@ describe('TimelineControl', () => {
         expect(marked).toEqual(['plena']);
     });
 
-    it('jumps to the first century of a period', () => {
+    it('shows only the chosen period, without the earlier ones', () => {
+        const { manager, control } = build(makeMarkers());
+        control.start();
+        manager.setMarkersOnMap.mockClear();
+        control._onAction('era', { dataset: { era: 'plena' } });
+        // Century XII is the last of the choice: the X building (alta) is not carried along.
+        expect(control.century).toBe(12);
+        expect(removedIds(manager).flat()).toEqual([1]);
+        expect(addedIds(manager).flat().sort()).toEqual([2, 3]);
+    });
+
+    it('chooses several periods and skips the centuries in between', () => {
+        const markers = [
+            { id: 1, segleIni: 6, category: 'castell' },
+            { id: 2, segleIni: 12, category: 'castell' },
+            { id: 3, segleIni: 14, category: 'castell' }
+        ];
+        const { manager, control } = build(markers);
+        control.start();
+        control._onAction('era', { dataset: { era: 'alta' } });
+        control._onAction('era', { dataset: { era: 'baixa' } });
+        expect(control._included()).toEqual([6, 7, 8, 9, 10, 14]);
+        expect(control.century).toBe(14);
+        expect(control._eraIds().sort()).toEqual(['alta', 'baixa']);
+        control._onAction('prev');
+        expect(control.century).toBe(10);
+        control._onAction('next');
+        expect(control.century).toBe(14);
+        // The XII building (plena) is not part of the choice.
+        expect(control._wants(markers[1])).toBe(false);
+        expect(manager.setMarkersOnMap).toHaveBeenCalled();
+    });
+
+    it('lands on the next included century when the slider stops in a gap', () => {
+        const markers = [{ id: 1, segleIni: 6 }, { id: 2, segleIni: 14 }];
+        const { control } = build(markers);
+        control.start();
+        control._onAction('era', { dataset: { era: 'alta' } });
+        control._onAction('era', { dataset: { era: 'baixa' } });
+        control.setCentury(12);
+        expect(control.century).toBe(14);
+    });
+
+    it('drops a period when chosen again and goes back to everything with «Totes»', () => {
         const { control } = build(makeMarkers());
         control.start();
-        control._onAction('era', { dataset: { century: '12' } });
+        control._onAction('era', { dataset: { era: 'plena' } });
+        control._onAction('era', { dataset: { era: 'plena' } });
+        expect(control.selected.size).toBe(0);
+        control._onAction('era', { dataset: { era: 'alta' } });
+        control._onAction('all');
+        expect(control.selected.size).toBe(0);
         expect(control.century).toBe(12);
+    });
+
+    it('plays only through the chosen centuries', () => {
+        const markers = [{ id: 1, segleIni: 6 }, { id: 2, segleIni: 14 }];
+        const { control } = build(markers);
+        control.start();
+        control._onAction('era', { dataset: { era: 'alta' } });
+        control._onAction('era', { dataset: { era: 'baixa' } });
+        control.play();
+        expect(control.century).toBe(6);
+        jest.advanceTimersByTime(1400 * 4);
+        expect(control.century).toBe(10);
+        jest.advanceTimersByTime(1400);
+        expect(control.century).toBe(14);
+        jest.advanceTimersByTime(1400);
+        expect(control.timer).toBeNull();
     });
 
     it('does not start when no building is dated', () => {

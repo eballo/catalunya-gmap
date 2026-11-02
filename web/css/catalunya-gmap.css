@@ -913,6 +913,18 @@ input#search-llista:focus {
 .cm-gmap-timeline-era[aria-current="true"] {
   font-weight: 700;
   color: var(--cm-gmap-ink);
+  border-color: var(--cm-gmap-gold);
+}
+
+.cm-gmap-timeline-era[aria-pressed="true"] {
+  font-weight: 700;
+  color: var(--cm-gmap-ink);
   background: var(--cm-gmap-gold-soft);
   border-color: var(--cm-gmap-gold);
+}
+
+/* «Totes» has a fixed width: it is not a period of the timeline. */
+.cm-gmap-timeline-era--all {
+  flex: 0 0 auto;
+  padding: 3px 6px;
 }
