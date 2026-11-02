@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.20.0] - 2026-11-02
+
+### Changed
+- Let the periods filter the timeline (#81)
+
 ## [6.19.0] - 2026-11-02
 
 ### Changed
