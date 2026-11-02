@@ -878,3 +878,41 @@ input#search-llista:focus {
   font-size: 11px;
   color: var(--cm-gmap-ink-muted);
 }
+
+/* Segle a segle: the periods, one band each, as wide as the centuries they cover */
+.cm-gmap-timeline-eras {
+  display: flex;
+  gap: 2px;
+  margin: 2px 0 6px;
+}
+
+.cm-gmap-timeline-era {
+  flex-basis: 0;
+  min-width: 0;
+  padding: 3px 2px;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: 10px;
+  line-height: 1.2;
+  color: var(--cm-gmap-ink-muted);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: var(--cm-gmap-panel-alt);
+  border: 1px solid var(--cm-gmap-border-soft);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.cm-gmap-timeline-era:hover,
+.cm-gmap-timeline-era:focus-visible {
+  color: var(--cm-gmap-ink);
+  border-color: var(--cm-gmap-gold);
+}
+
+.cm-gmap-timeline-era[aria-current="true"] {
+  font-weight: 700;
+  color: var(--cm-gmap-ink);
+  background: var(--cm-gmap-gold-soft);
+  border-color: var(--cm-gmap-gold);
+}

@@ -1,4 +1,4 @@
-import TimelineControl, { toRoman, centuryRange, visibleAt, formatCount } from '../app/catalunya-gmap-timeline';
+import TimelineControl, { toRoman, centuryRange, visibleAt, formatCount, ERAS, eraOf, erasInRange } from '../app/catalunya-gmap-timeline';
 
 describe('toRoman', () => {
     it.each([[1, 'I'], [4, 'IV'], [9, 'IX'], [11, 'XI'], [14, 'XIV'], [19, 'XIX'], [20, 'XX']])('%i -> %s', (n, roman) => {
@@ -28,6 +28,29 @@ describe('visibleAt', () => {
 
     it('never shows undated buildings', () => {
         expect(visibleAt(markers, 99).map(m => m.id)).not.toContain(3);
+    });
+});
+
+describe('eras', () => {
+    it('cover every century from I to XXI exactly once', () => {
+        for (let century = 1; century <= 21; century++) {
+            expect(ERAS.filter(era => century >= era.from && century <= era.to)).toHaveLength(1);
+        }
+    });
+
+    it.each([[1, 'romana'], [4, 'romana'], [5, 'alta'], [10, 'alta'], [11, 'plena'], [13, 'plena'], [14, 'baixa'], [15, 'baixa'], [16, 'moderna'], [19, 'contemporania']])(
+        'century %i is %s', (century, id) => {
+            expect(eraOf(century).id).toBe(id);
+        });
+
+    it('knows no era outside the table', () => {
+        expect(eraOf(0)).toBeNull();
+        expect(eraOf(22)).toBeNull();
+    });
+
+    it('cuts the periods to the range of the data', () => {
+        const eras = erasInRange({ min: 9, max: 12 });
+        expect(eras.map(era => [era.id, era.from, era.to])).toEqual([['alta', 9, 10], ['plena', 11, 12]]);
     });
 });
 
@@ -71,6 +94,34 @@ describe('TimelineControl', () => {
         jest.useRealTimers();
         jest.restoreAllMocks();
         delete global.window;
+    });
+
+    it('names the period in the status and marks it', () => {
+        const { control } = build(makeMarkers());
+        control.start();
+        const status = { textContent: '' };
+        const dated = { textContent: '' };
+        const marked = [];
+        const button = id => ({
+            dataset: { era: id },
+            setAttribute: () => marked.push(id),
+            removeAttribute: () => {}
+        });
+        control.slider = {};
+        control.el = {
+            querySelector: selector => (selector.includes('status') ? status : dated),
+            querySelectorAll: () => [button('alta'), button('plena')]
+        };
+        control.setCentury(11);
+        expect(status.textContent).toBe('Segle XI · Plena edat mitjana · 2 edificis');
+        expect(marked).toEqual(['plena']);
+    });
+
+    it('jumps to the first century of a period', () => {
+        const { control } = build(makeMarkers());
+        control.start();
+        control._onAction('era', { dataset: { century: '12' } });
+        expect(control.century).toBe(12);
     });
 
     it('does not start when no building is dated', () => {

@@ -7,6 +7,29 @@ const STEP_MS = 1400;
 const SPEEDS = [1, 2, 4];
 const SPROUT_SPREAD_MS = 500;
 
+// Historical periods along the timeline. Every century belongs to one period
+// only, so the border centuries (V, XV) are placed with the later period of
+// the old one: V in the Alta edat mitjana, XV in the Baixa.
+export const ERAS = [
+    { id: 'romana', name: 'Època romana', short: 'Romana', from: 1, to: 4 },
+    { id: 'alta', name: 'Alta edat mitjana', short: 'Alta', from: 5, to: 10 },
+    { id: 'plena', name: 'Plena edat mitjana', short: 'Plena', from: 11, to: 13 },
+    { id: 'baixa', name: 'Baixa edat mitjana', short: 'Baixa', from: 14, to: 15 },
+    { id: 'moderna', name: 'Època moderna', short: 'Moderna', from: 16, to: 18 },
+    { id: 'contemporania', name: 'Època contemporània', short: 'Actual', from: 19, to: 21 }
+];
+
+export function eraOf(century) {
+    return ERAS.find(era => century >= era.from && century <= era.to) || null;
+}
+
+/** The periods that overlap the data's range, each cut to it. */
+export function erasInRange(range) {
+    return ERAS
+        .filter(era => era.to >= range.min && era.from <= range.max)
+        .map(era => ({ ...era, from: Math.max(era.from, range.min), to: Math.min(era.to, range.max) }));
+}
+
 export function toRoman(number) {
     let rest = number;
     let out = '';
@@ -103,10 +126,11 @@ export default class TimelineControl {
                 <input type="range" class="cm-gmap-timeline-slider" min="${this.range.min}" max="${this.range.max}" step="1" value="${this.range.min}" aria-label="Segle">
                 <button type="button" class="cm-gmap-timeline-btn cm-gmap-timeline-speed" data-act="speed" aria-label="Velocitat">1×</button>
             </div>
+            ${this._erasMarkup()}
             <div class="cm-gmap-timeline-dated"></div>`;
         div.addEventListener('click', event => {
             const button = event.target.closest('button[data-act]');
-            if (button) this._onAction(button.dataset.act);
+            if (button) this._onAction(button.dataset.act, button);
         });
         this.slider = div.querySelector('.cm-gmap-timeline-slider');
         this.slider.addEventListener('input', () => {
@@ -117,7 +141,13 @@ export default class TimelineControl {
         this.manager.map.controls[this.manager.core.ControlPosition.BOTTOM_LEFT].push(div);
     }
 
-    _onAction(action) {
+    _erasMarkup() {
+        const buttons = erasInRange(this.range).map(era => `<button type="button" class="cm-gmap-timeline-era cm-gmap-timeline-era--${era.id}" data-act="era" data-century="${era.from}" data-era="${era.id}" style="flex-grow:${era.to - era.from + 1}" title="${era.name}" aria-label="${era.name}: del segle ${toRoman(era.from)} al ${toRoman(era.to)}">${era.short}</button>`);
+        return `<div class="cm-gmap-timeline-eras" role="group" aria-label="Períodes">${buttons.join('')}</div>`;
+    }
+
+    _onAction(action, button) {
+        if (action === 'era') { this.pause(); this.setCentury(Number(button.dataset.century)); }
         if (action === 'prev') { this.pause(); this.setCentury(this.century - 1); }
         if (action === 'next') { this.pause(); this.setCentury(this.century + 1); }
         if (action === 'play') this.timer ? this.pause() : this.play();
@@ -156,9 +186,19 @@ export default class TimelineControl {
         if (!this.el) return;
         const count = visibleAt(this.markers, this.century).length;
         this.slider.value = this.century;
+        const era = eraOf(this.century);
         this.el.querySelector('.cm-gmap-timeline-status').textContent =
-            `Segle ${toRoman(this.century)} · ${formatCount(count)} edificis`;
+            `Segle ${toRoman(this.century)} · ${era ? era.name + ' · ' : ''}${formatCount(count)} edificis`;
+        this._renderEras(era);
         this.el.querySelector('.cm-gmap-timeline-dated').textContent =
             `${formatCount(this.dated)} de ${formatCount(this.markers.length)} edificis amb segle`;
+    }
+
+    _renderEras(current) {
+        if (!this.el || typeof this.el.querySelectorAll !== 'function') return;
+        this.el.querySelectorAll('.cm-gmap-timeline-era').forEach(button => {
+            if (current && button.dataset.era === current.id) button.setAttribute('aria-current', 'true');
+            else button.removeAttribute('aria-current');
+        });
     }
 }
