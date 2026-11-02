@@ -64,6 +64,8 @@ export default class MapManager {
         // Building id -> true when a visit was verified on the spot. Set by the host page for a signed-in visitor.
         this.visited = new Map();
         this.clusterer = null;          // custer elements
+        // Timeline mode: a marker the filter rejects stays off the map even when its category is switched on.
+        this.timelineFilter = null;
         this.iconsControl = null;       // Container of the show/hide icons (top right)
 
         this.serverHost = _cfg.serverHost || process.env.SERVER_HOST;
@@ -338,6 +340,26 @@ export default class MapManager {
         }
     }
 
+    setTimelineFilter(filter) {
+        this.timelineFilter = typeof filter === 'function' ? filter : null;
+    }
+
+    isCategoryVisible(category) {
+        return this.icons.some(icon => icon.category === category && icon.visible);
+    }
+
+    /** Adds and removes whole batches of markers, so a timeline step costs one cluster render. */
+    setMarkersOnMap(toAdd, toRemove) {
+        if (this.clusterer) {
+            if (toRemove.length) this.clusterer.removeMarkers(toRemove, true);
+            if (toAdd.length) this.clusterer.addMarkers(toAdd, true);
+            this.clusterer.render();
+            return;
+        }
+        toRemove.forEach(marker => marker.setMap(null));
+        toAdd.forEach(marker => marker.setMap(this.map));
+    }
+
     addAllMarkersToCluster() {
         if (!this.clusterer) {
             this.clusterer = new MarkerClusterer({ map: this.map, markers: this.markers });
@@ -361,6 +383,7 @@ export default class MapManager {
         marker._latLng = { lat: Number(location.lat), lng: Number(location.lng) };
         marker.visible = location.visible;
         marker.category = location.category;
+        marker.segleIni = location.segleIni;
         marker.hoverIconUrl = location.icon2;
 
         if (location.icon2) {
@@ -912,9 +935,10 @@ export default class MapManager {
         this.markers.forEach(marker => {
             if (marker.category !== category) return;
             marker.visible = visible;
+            const shown = visible && (!this.timelineFilter || this.timelineFilter(marker));
             if (marker._pinned || !this.clusterer) {
-                marker.setMap(visible ? this.map : null);
-            } else if (visible) {
+                marker.setMap(shown ? this.map : null);
+            } else if (shown) {
                 this.clusterer.addMarker(marker, true);
             } else {
                 this.clusterer.removeMarker(marker, true);

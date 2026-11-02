@@ -1143,3 +1143,62 @@ describe('MapManager - helpers', () => {
         expect(mm.iconsControl.style.maxHeight).toBe('');
     });
 });
+
+// ---------------------------------------------------------------------------
+describe('MapManager - timeline mode', () => {
+    it('keeps a building the timeline filter rejects off the map when its category is switched on', async () => {
+        const mm = await initManager();
+        const early = mm.addMarker(location({ segleIni: 10 }));
+        const late = mm.addMarker(location({ segleIni: 14 }));
+        mm.clusterer = null;
+        mm.setTimelineFilter(marker => marker.segleIni <= 11);
+        early.setMap = jest.fn();
+        late.setMap = jest.fn();
+        mm._setVisible('castell', true);
+        expect(early.setMap).toHaveBeenCalledWith(mm.map);
+        expect(late.setMap).toHaveBeenCalledWith(null);
+    });
+
+    it('drops the filter when it is not a function', async () => {
+        const mm = await initManager();
+        mm.setTimelineFilter(() => false);
+        mm.setTimelineFilter(null);
+        expect(mm.timelineFilter).toBeNull();
+    });
+
+    it('knows which categories are switched on', async () => {
+        const mm = await initManager();
+        mm.addIcon({ id: 1, category: 'castell', visible: true, title: 'Castells', icon: 'i.png', type: 'militar' });
+        mm.addIcon({ id: 2, category: 'ermita', visible: false, title: 'Ermites', icon: 'i.png', type: 'religios' });
+        expect(mm.isCategoryVisible('castell')).toBe(true);
+        expect(mm.isCategoryVisible('ermita')).toBe(false);
+        expect(mm.isCategoryVisible('palau')).toBe(false);
+    });
+
+    it('adds and removes a batch of markers with one cluster render', async () => {
+        const mm = await initManager();
+        mm.clusterer = { addMarkers: jest.fn(), removeMarkers: jest.fn(), render: jest.fn() };
+        mm.setMarkersOnMap([{ id: 1 }], [{ id: 2 }]);
+        expect(mm.clusterer.addMarkers).toHaveBeenCalledWith([{ id: 1 }], true);
+        expect(mm.clusterer.removeMarkers).toHaveBeenCalledWith([{ id: 2 }], true);
+        expect(mm.clusterer.render).toHaveBeenCalledTimes(1);
+    });
+
+    it('skips the cluster calls for an empty batch', async () => {
+        const mm = await initManager();
+        mm.clusterer = { addMarkers: jest.fn(), removeMarkers: jest.fn(), render: jest.fn() };
+        mm.setMarkersOnMap([], []);
+        expect(mm.clusterer.addMarkers).not.toHaveBeenCalled();
+        expect(mm.clusterer.removeMarkers).not.toHaveBeenCalled();
+    });
+
+    it('puts markers on and off the map directly when nothing clusters them', async () => {
+        const mm = await initManager();
+        mm.clusterer = null;
+        const on = { setMap: jest.fn() };
+        const off = { setMap: jest.fn() };
+        mm.setMarkersOnMap([on], [off]);
+        expect(on.setMap).toHaveBeenCalledWith(mm.map);
+        expect(off.setMap).toHaveBeenCalledWith(null);
+    });
+});
