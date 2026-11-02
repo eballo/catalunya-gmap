@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.18.0] - 2026-11-02
+
+### Changed
+- Add the Segle a segle timeline mode (#80)
+
 ## [6.17.0] - 2026-11-01
 
 ### Changed
